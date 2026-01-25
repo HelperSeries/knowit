@@ -105,43 +105,61 @@
         .gallery-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); color: #fff; display: flex; justify-content: center; align-items: center; opacity: 0; transition: 0.3s; font-weight: bold; }
         .gallery-link:hover .gallery-overlay { opacity: 1; }
 
-        /* ▼▼▼ [중요] 80명 자동 정렬을 위한 핵심 스타일 ▼▼▼ */
+        /* ▼▼▼ [핵심 수정] 레이아웃 고정 스타일 ▼▼▼ */
         .schedule-board {
             background: #1a1a1a;
-            padding: 40px;
+            padding: 0; /* 패딩 제거하고 내부 row에서 처리 */
             border-radius: 4px;
             border: 1px solid #d4af37;
             margin-bottom: 40px;
+            overflow: hidden; /* 둥근 모서리 유지 */
         }
 
-        /* 테이블 구조 변경 */
-        .schedule-row {
-            display: block;
+        /* 테이블 헤더 역할 (제목 줄) */
+        .board-header {
+            display: flex;
+            background: #222;
             border-bottom: 1px solid #333;
-            padding: 30px 0;
+            padding: 15px 30px;
+            font-weight: bold;
+            color: #d4af37;
+        }
+        .header-date { width: 25%; min-width: 150px; } /* 날짜 영역 고정 너비 */
+        .header-list { width: 75%; }
+
+        /* 데이터 줄 (한 행) */
+        .schedule-row {
+            display: flex; /* 좌우 배치 (Flexbox) */
+            border-bottom: 1px solid #333;
+            padding: 30px;
+            align-items: flex-start; /* 위쪽 정렬 */
         }
         .schedule-row:last-child { border-bottom: none; }
 
+        /* 왼쪽: 날짜 정보 영역 */
         .schedule-info {
-            margin-bottom: 20px;
+            width: 25%; /* 전체의 25% 차지 */
+            min-width: 150px; /* 최소 너비 보장 */
             border-left: 3px solid #d4af37;
             padding-left: 15px;
+            margin-right: 20px; /* 오른쪽 참가자와 간격 */
+            flex-shrink: 0; /* 줄어들지 않음 */
         }
         .date-text { font-size: 1.5rem; color: #fff; font-weight: bold; font-family: 'Noto Serif KR', serif; }
         .location-text { font-size: 1rem; color: #888; margin-top: 5px; }
 
-        /* 여기가 4명씩 정렬하는 마법의 코드입니다 (Grid) */
+        /* 오른쪽: 참가자 리스트 영역 */
         .participants-grid {
+            width: 75%; /* 나머지 75% 차지 */
             display: grid;
-            grid-template-columns: repeat(4, 1fr); /* 한 줄에 4개씩 */
-            gap: 10px; /* 사이 간격 */
-            width: 100%;
+            grid-template-columns: repeat(3, 1fr); /* 한 줄에 3개씩 (공간 확보) */
+            gap: 10px;
         }
 
         .participant-card {
             background: #2a2a2a;
             border: 1px solid #444;
-            padding: 12px;
+            padding: 10px;
             border-radius: 6px;
             text-align: center;
             font-size: 0.9rem;
@@ -150,13 +168,10 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            min-height: 50px;
+            min-height: 45px;
+            word-break: break-all; /* 긴 단어 줄바꿈 */
         }
-        .participant-card:hover {
-            border-color: #d4af37;
-            background: #333;
-        }
-
+        .participant-card:hover { border-color: #d4af37; background: #333; }
         .status-open { color: #4caf50; font-weight: bold; border-color: #4caf50; }
         
         .status-badge {
@@ -166,16 +181,15 @@
             border-radius: 4px;
             margin-left: 10px;
             vertical-align: middle;
+            border: 1px solid #ccc;
         }
 
         /* 모바일 대응 */
         @media (max-width: 768px) {
-            .main-title { font-size: 2.5rem; }
-            .nav-links { display: none; }
-            .about-grid, .gallery { grid-template-columns: 1fr; }
-            
-            /* 모바일에서는 4명이 너무 좁으니 2명씩 보이게 자동 변경 */
-            .participants-grid { grid-template-columns: repeat(2, 1fr); }
+            .board-header { display: none; } /* 모바일에서 헤더 숨김 */
+            .schedule-row { flex-direction: column; } /* 모바일은 위아래 배치 */
+            .schedule-info { width: 100%; margin-bottom: 20px; margin-right: 0; }
+            .participants-grid { width: 100%; grid-template-columns: repeat(2, 1fr); } /* 모바일 2열 */
         }
 
         footer { text-align: center; padding: 50px; background: #000; color: #555; font-size: 0.8rem; border-top: 1px solid #222; }
@@ -250,7 +264,13 @@
             <p class="section-desc">매주 금/토 오후 8시 동시 진행</p>
 
             <div id="schedule-board" class="schedule-board">
-                <div style="text-align:center; padding:30px; color:#888;">일정 정보를 불러오는 중입니다...</div>
+                <div class="board-header">
+                    <div class="header-date">일정 / 장소</div>
+                    <div class="header-list">참가자 리스트 (실시간)</div>
+                </div>
+                <div id="board-content">
+                    <div style="text-align:center; padding:30px; color:#888;">일정 정보를 불러오는 중입니다...</div>
+                </div>
             </div>
 
             <div style="text-align: center; margin-top: 30px;">
@@ -271,18 +291,17 @@
     </footer>
 
     <script>
-        /* [구글 시트 실시간 연동 스크립트 - 4단 배열 버전] */
         const GOOGLE_SHEET_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSZVZ9QslRId6OXh3owAHaqLDQvQC5Ym672BOkDxxeGXIzcmrz1Twxm-6R5Nlim_cbK4QvoisCRnq5f/pub?gid=339069128&single=true&output=csv";
 
         async function loadSchedule() {
-            const board = document.getElementById('schedule-board');
+            const boardContent = document.getElementById('board-content');
             
             try {
                 const response = await fetch(GOOGLE_SHEET_CSV_URL);
                 const data = await response.text();
                 const rows = data.split("\n").slice(1); 
 
-                board.innerHTML = ""; // 초기화
+                boardContent.innerHTML = ""; // 초기화
 
                 rows.forEach(row => {
                     const cols = row.split(",");
@@ -298,10 +317,13 @@
                     
                     const status = cols[5] ? cols[5].trim() : ""; 
 
-                    // 참가자 리스트 HTML 생성 (4명씩 그리드로 변환)
+                    // [수정됨] 불필요한 '[참여]' 같은 글자 제거 (순수 참가자만 표시)
                     let p_cards = participantInfo.split("/").map(p => {
                         p = p.trim();
-                        if(!p) return ""; // 빈 값 제외
+                        // 엑셀에서 넘어온 [참여] 같은 상태값 텍스트 제거
+                        p = p.replace(/\[참여\]/g, "").replace(/참여/g, "").trim();
+
+                        if(!p) return ""; 
 
                         let className = "participant-card";
                         if(p.includes("신청가능") || p.includes("남음")) {
@@ -318,7 +340,7 @@
                         statusBadge = `<span class="status-badge" style="border:1px solid #ff5555; color:#ff5555;">● 마감</span>`;
                     }
 
-                    // HTML 구조 조립 (제목 + 4단 그리드)
+                    // HTML 구조 (좌우 분리 확실하게)
                     let htmlRow = `
                         <div class="schedule-row">
                             <div class="schedule-info">
@@ -330,12 +352,12 @@
                             </div>
                         </div>
                     `;
-                    board.innerHTML += htmlRow;
+                    boardContent.innerHTML += htmlRow;
                 });
 
             } catch (error) {
                 console.error("실패:", error);
-                board.innerHTML = `<div style="text-align:center; padding:30px; color:#888;">일정을 불러오는 중입니다...</div>`;
+                boardContent.innerHTML = `<div style="text-align:center; padding:30px; color:#888;">일정을 불러오는 중입니다...</div>`;
             }
         }
 
