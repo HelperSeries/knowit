@@ -5,6 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Knowit (노잇) - 알게 되는 밤</title>
     
+    <!-- [추가됨] 브라우저 탭 아이콘 (파비콘) 설정 -->
+    <!-- '노잇 로고.png'를 'favicon.png'로 이름 바꿔서 넣어주세요 -->
+    <link rel="icon" type="image/png" href="favicon.png">
+    <link rel="shortcut icon" type="image/png" href="favicon.png">
+    
     <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@300;500;700&family=Pretendard:wght@300;400;600&display=swap" rel="stylesheet">
 
     <style>
@@ -248,7 +253,6 @@
             <p class="section-desc">이미지를 클릭하면 <strong>'라이프헬퍼'</strong> 공간을 자세히 보실 수 있습니다.</p>
             <div class="gallery">
                 <a href="https://lifehelper.co.kr/" target="_blank" class="gallery-link">
-                    <!-- [수정됨] 이미지 확장자 jpg로 변경 -->
                     <img src="space1.jpg" alt="라이프헬퍼 라운지 메인" class="gallery-img">
                     <div class="gallery-overlay">라이프헬퍼 구경하기</div>
                 </a>
@@ -316,16 +320,21 @@
                     const date = cols[0];      
                     const location = cols[1];  
                     
-                    // [수정됨] C열(참가자 리스트)만 사용하고, 강제 병합 코드는 제거
                     let participantInfo = cols[2]; 
-                    // (기존에 D열, E열 합치던 코드는 삭제하여 '[ 년생]' 오류 방지)
+                    if(cols[3] && cols[3].trim() !== "") participantInfo += ` [${cols[3]}년생]`; 
+                    if(cols[4] && cols[4].trim() !== "") participantInfo += ` ${cols[4]}`;
                     
                     const status = cols[5] ? cols[5].trim() : ""; 
 
                     let p_cards = participantInfo.split("/").map(p => {
                         p = p.trim();
-                        // 1. 불필요한 텍스트 제거 ( [ 년생] 제거 포함)
-                        p = p.replace(/\[참여\]/g, "").replace(/참여/g, "").replace(/\[년생\]/g, "").trim();
+                        // 1. 불필요한 텍스트 제거
+                        // [참여], [년생], [ 년생] 등 찌꺼기 텍스트를 확실하게 지웁니다.
+                        p = p.replace(/\[참여\]/g, "")
+                             .replace(/참여/g, "")
+                             .replace(/\[년생\]/g, "")
+                             .replace(/\[\s*년생\]/g, "") // [ 년생] 제거
+                             .trim();
 
                         // 2. {숫자} -> {숫자년생} 으로 변환 (ex: {99} -> {99년생})
                         p = p.replace(/\{(\d+)\}/g, "{$1년생}");
@@ -371,4 +380,3 @@
 
 </body>
 </html>
-
