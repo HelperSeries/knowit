@@ -46,7 +46,7 @@
             font-weight: 300;
         }
 
-        /* [추가됨] 모바일 전용 줄바꿈 클래스 */
+        /* [모바일 전용 줄바꿈 클래스] */
         .mobile-br { display: none; }
 
         /* 네비게이션바 */
@@ -115,10 +115,10 @@
             word-break: keep-all;
         }
 
-        /* [수정됨] 갤러리 스타일: PC에서는 가로 3개 배치 (크기 축소) */
+        /* ▼▼▼ [PC 기본 설정] 갤러리: 가로 3개 배치 ▼▼▼ */
         .gallery { 
             display: grid; 
-            grid-template-columns: repeat(3, 1fr); /* 1줄에 3개 */
+            grid-template-columns: repeat(3, 1fr); /* 중요: 1줄에 3개 */
             gap: 20px; 
         }
         .gallery-link { 
@@ -137,8 +137,8 @@
         }
         .gallery-img { 
             width: 100%; 
-            height: 250px; /* PC에서는 높이를 250px로 고정하여 너무 크지 않게 */
-            object-fit: cover; /* 비율 유지하며 꽉 채움 */
+            height: 250px; /* PC에서는 높이 고정 (정렬 맞춤) */
+            object-fit: cover; 
             display: block; 
             transition: 0.3s; 
         }
@@ -231,14 +231,26 @@
             border: 1px solid #ccc;
         }
 
-        /* 모바일 대응 */
+        /* ▼▼▼ [모바일 전용 화면 설정 (@media)] ▼▼▼ */
         @media (max-width: 768px) {
-            /* [추가됨] 네비게이션 모바일 최적화 (오른쪽 정렬 및 한 줄 유지) */
-            .nav-links { gap: 10px; } /* 간격 좁힘 */
-            .nav-links a { font-size: 0.75rem; } /* 글자 크기 조정 */
-            .logo-text { font-size: 1.2rem; } /* 로고 크기 살짝 조정 */
+            /* 1. 모바일에서만 줄바꿈 작동 */
+            .mobile-br { display: block; }
 
-            /* 기존 모바일 스타일 */
+            /* 2. [수정됨] 네비게이션: 오른쪽 정렬 & 한 줄 유지 */
+            .nav-links { gap: 10px; }
+            .nav-links a { font-size: 0.75rem; }
+            .logo-text { font-size: 1.2rem; }
+
+            /* 3. [수정됨] 갤러리 모바일: 세로 1줄로 & 사진 원본 비율 유지 */
+            .gallery { 
+                grid-template-columns: 1fr; /* 중요: 세로로 1개씩 */
+                gap: 30px;
+            }
+            .gallery-img {
+                height: auto; /* 중요: 높이 제한 해제 (사진 전체 다 보임) */
+            }
+
+            /* 4. 일정표 모바일 레이아웃 고정 */
             .board-header { display: none; }
             .schedule-row { flex-direction: column; }
             .schedule-info { width: 100%; margin-bottom: 20px; margin-right: 0; }
@@ -320,7 +332,7 @@
     <section id="space">
         <div class="container">
             <h2 class="section-title">THE SPACE</h2>
-            <!-- [수정됨] 모바일 전용 줄바꿈(<br class="mobile-br">) 추가 -->
+            <!-- [수정됨] 모바일 전용 줄바꿈(<br class="mobile-br">) -->
             <p class="section-desc">이미지를 클릭하면 <strong>'라이프헬퍼'</strong><br class="mobile-br"> 공간을 자세히 보실 수 있습니다.</p>
             <div class="gallery">
                 <a href="https://lifehelper.co.kr/" target="_blank" class="gallery-link">
