@@ -253,7 +253,7 @@
             
             <div class="gallery">
                 <a href="https://lifehelper.co.kr/" target="_blank" class="gallery-link">
-                    <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=800&q=80" alt="공간1" class="gallery-img">
+                    <img src="space1.png" alt="라이프헬퍼 라운지 메인" class="gallery-img">
                     <div class="gallery-overlay">라이프헬퍼 구경하기</div>
                 </a>
                 
@@ -284,7 +284,8 @@
                         </tr>
                     </thead>
                     <tbody id="schedule-body">
-                        </tbody>
+                        <tr><td colspan="2" style="text-align:center; padding:30px; color:#888;">일정 정보를 불러오는 중입니다...</td></tr>
+                    </tbody>
                 </table>
             </div>
 
@@ -300,11 +301,11 @@
         <p>Host: Life Helper | Contact: Instagram @knoit_official</p>
     </footer>
 
-   <script>
+    <script>
         /* [구글 시트 실시간 연동 스크립트] */
         
-        // ▼▼▼ 아래 따옴표("") 안에 방금 복사한 링크를 붙여넣으세요 ▼▼▼
-        const GOOGLE_SHEET_CSV_URL = "여기에_복사한_링크를_붙여넣으세요";
+        // [수정됨] 대표님이 제공하신 구글 시트 CSV 링크가 적용되었습니다.
+        const GOOGLE_SHEET_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSZVZ9QslRId6OXh3owAHaqLDQvQC5Ym672BOkDxxeGXIzcmrz1Twxm-6R5Nlim_cbK4QvoisCRnq5f/pub?gid=339069128&single=true&output=csv";
 
         async function loadSchedule() {
             const tableBody = document.getElementById('schedule-body');
@@ -320,93 +321,21 @@
                     const cols = row.split(",");
                     if(cols.length < 3) return;
 
-                    const date = cols[0];      // 날짜
-                    const location = cols[1];  // 장소
-                    const rawParticipants = cols[2]; // 참가자
-                    const status = cols[3] ? cols[3].trim() : ""; // 상태
+                    const date = cols[0];      // A열
+                    const location = cols[1];  // B열
+                    const rawParticipants = cols[2]; // C열
+                    const status = cols[3] ? cols[3].trim() : ""; // D열
 
                     // 참가자 리스트 꾸미기 (슬래시 / 로 구분)
                     let p_list = rawParticipants.split("/").map(p => {
                         p = p.trim();
-                        // '신청가능' 또는 '남음'이 포함되면 초록색 강조
                         if(p.includes("신청가능") || p.includes("남음")) {
                             return `<span class="participant-tag status-open">${p}</span>`;
                         }
                         return `<span class="participant-tag">${p}</span>`;
                     }).join('');
 
-                    // 상태 뱃지 (모집중 / 마감)
-                    let statusBadge = "";
-                    if(status && status.includes("모집중")) {
-                        statusBadge = `<span style="color:#4caf50; font-size:0.8rem; border:1px solid #4caf50; padding:2px 6px; border-radius:4px; margin-left:5px;">● 모집중</span>`;
-                    } else if (status && status.includes("마감")) {
-                        statusBadge = `<span style="color:#ff5555; font-size:0.8rem; border:1px solid #ff5555; padding:2px 6px; border-radius:4px; margin-left:5px;">● 마감</span>`;
-                    }
-
-                    let htmlRow = `
-                        <tr>
-                            <td>
-                                <strong style="font-size:1.1rem; color:#fff;">${date}</strong>${statusBadge}<br>
-                                <span style="font-size:0.9rem; color:#888;">📍 ${location}</span>
-                            </td>
-                            <td>${p_list}</td>
-                        </tr>
-                    `;
-                    tableBody.innerHTML += htmlRow;
-                });
-
-            } catch (error) {
-                console.error("실패:", error);
-                tableBody.innerHTML = `<tr><td colspan="2" style="text-align:center; padding:30px; color:#888;">일정을 불러오는 중입니다...<br>관리자에게 문의해주세요.</td></tr>`;
-            }
-        }
-
-        loadSchedule();
-    </script>
-        /* [구글 시트 실시간 연동 스크립트] 
-           이제 코드를 수정할 필요 없이, 구글 시트만 수정하면 사이트가 바뀝니다.
-        */
-
-        // 1. 아까 복사한 '웹에 게시' 링크를 따옴표 안에 넣으세요.
-        const GOOGLE_SHEET_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSZVZ9QslRId6OXh3owAHaqLDQvQC5Ym672BOkDxxeGXIzcmrz1Twxm-6R5Nlim_cbK4QvoisCRnq5f/pub?gid=339069128&single=true&output=csv";
-
-        async function loadSchedule() {
-            const tableBody = document.getElementById('schedule-body');
-            
-            try {
-                // 구글 시트 데이터 가져오기
-                const response = await fetch(GOOGLE_SHEET_CSV_URL);
-                const data = await response.text();
-                
-                // 가져온 엑셀 데이터(CSV)를 한 줄씩 쪼개기
-                const rows = data.split("\n").slice(1); // 첫 줄(제목)은 버림
-
-                tableBody.innerHTML = ""; // 기존 내용 초기화
-
-                rows.forEach(row => {
-                    // 콤마(,)로 칸 나누기
-                    // 주의: 데이터 안에 콤마가 있으면 안 됩니다.
-                    const cols = row.split(",");
-                    
-                    // 빈 줄이면 무시
-                    if(cols.length < 3) return;
-
-                    const date = cols[0];      // A열: 날짜
-                    const location = cols[1];  // B열: 장소
-                    const rawParticipants = cols[2]; // C열: 참가자들 (슬래시 / 로 구분 추천)
-                    const status = cols[3] ? cols[3].trim() : ""; // D열: 상태
-
-                    // 참가자 리스트 꾸미기 (슬래시 / 기호로 여러 명 구분해서 적으세요)
-                    // 예: 👨변호사/👩무용수/✨신청가능
-                    let p_list = rawParticipants.split("/").map(p => {
-                        p = p.trim(); // 공백 제거
-                        if(p.includes("신청가능") || p.includes("남음")) {
-                            return `<span class="participant-tag status-open">${p}</span>`;
-                        }
-                        return `<span class="participant-tag">${p}</span>`;
-                    }).join('');
-
-                    // 상태(모집중/마감) 뱃지
+                    // 상태 뱃지
                     let statusBadge = "";
                     if(status.includes("모집중")) {
                         statusBadge = `<span style="color:#4caf50; font-size:0.8rem; border:1px solid #4caf50; padding:2px 6px; border-radius:4px; margin-left:5px;">● 모집중</span>`;
@@ -414,7 +343,6 @@
                         statusBadge = `<span style="color:#ff5555; font-size:0.8rem; border:1px solid #ff5555; padding:2px 6px; border-radius:4px; margin-left:5px;">● 마감</span>`;
                     }
 
-                    // 화면에 그리기
                     let htmlRow = `
                         <tr>
                             <td>
@@ -429,12 +357,12 @@
 
             } catch (error) {
                 console.error("데이터 로딩 실패:", error);
-                tableBody.innerHTML = `<tr><td colspan="2" style="text-align:center; color:#888;">일정 정보를 불러오는 중입니다...<br>(잠시 후 새로고침 해주세요)</td></tr>`;
+                tableBody.innerHTML = `<tr><td colspan="2" style="text-align:center; padding:30px; color:#888;">일정을 불러오는 중입니다...<br>(잠시 후 새로고침 해주세요)</td></tr>`;
             }
         }
 
-        // 페이지 켜지면 바로 실행
         loadSchedule();
     </script>
 
-
+</body>
+</html>
