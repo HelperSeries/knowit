@@ -115,10 +115,10 @@
             word-break: keep-all;
         }
 
-        /* [수정됨] 갤러리 스타일: PC에서는 가로 3개 배치 */
+        /* [수정됨] 갤러리 스타일: PC에서는 가로 3개 배치 (크기 축소) */
         .gallery { 
             display: grid; 
-            grid-template-columns: repeat(3, 1fr); /* 기본: 가로 3개 */
+            grid-template-columns: repeat(3, 1fr); /* 1줄에 3개 */
             gap: 20px; 
         }
         .gallery-link { 
@@ -137,7 +137,7 @@
         }
         .gallery-img { 
             width: 100%; 
-            height: 250px; /* PC에서는 높이 고정하여 깔끔하게 정렬 */
+            height: 250px; /* PC에서는 높이를 250px로 고정하여 너무 크지 않게 */
             object-fit: cover; /* 비율 유지하며 꽉 채움 */
             display: block; 
             transition: 0.3s; 
@@ -238,7 +238,7 @@
 
             /* [수정됨] 갤러리 모바일: 세로 1줄로 변경 & 사진 전체 보이게 */
             .gallery { 
-                grid-template-columns: 1fr; /* 세로 배치 */
+                grid-template-columns: 1fr; /* 모바일: 세로 배치 */
                 gap: 30px;
             }
             .gallery-img {
@@ -315,7 +315,7 @@
                     </p>
                     <ul style="list-style:none; padding:0;">
                         <li style="margin-bottom:8px;"><strong>📅 일시:</strong> 신원 확인 완료 후, 일정 공유 링크를 전해 드립니다.</li>
-                        <li style="margin-bottom:8px;"><strong>📍 장소:</strong> 서울전역 (신원 인증 완료자에게만 개별 안내)</li>
+                        <li style="margin-bottom:8px;"><strong>📍 장소:</strong> 서울전역 (신원 인증 절차자에게만 개별 안내)</li>
                         <li style="margin-bottom:8px;"><strong>🍷 제공:</strong> 와인 + 핑거푸드 케이터링</li>
                     </ul>
                 </div>
