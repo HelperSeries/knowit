@@ -3,424 +3,296 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NOIT - 프리미엄 소셜 파티</title>
-    <!-- Tailwind CSS (CDN) -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Lucide Icons (CDN) -->
-    <script src="https://unpkg.com/lucide@latest"></script>
+    <title>노잇 (Noit) - 알게 되는 밤</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@300;500;700&family=Pretendard:wght@300;400;600&display=swap" rel="stylesheet">
+
     <style>
-        /* 커스텀 애니메이션 설정 */
-        @keyframes fade-in-up {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
+        /* === [디자인: CSS 영역] === */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: 'Pretendard', sans-serif;
+            background-color: #111; /* 전체 배경: 딥 블랙 */
+            color: #fff;
+            line-height: 1.6;
         }
-        .animate-fade-in-up {
-            animation: fade-in-up 0.8s ease-out forwards;
+
+        a { text-decoration: none; color: inherit; }
+        ul { list-style: none; }
+
+        /* 포인트 컬러: 샴페인 골드 */
+        .gold-text { color: #d4af37; }
+        
+        /* 공통 섹션 스타일 */
+        section { padding: 100px 5%; }
+        .container { max-width: 1200px; margin: 0 auto; }
+        
+        .section-title {
+            font-family: 'Noto Serif KR', serif; /* 우아한 명조체 */
+            font-size: 2.5rem;
+            color: #d4af37;
+            text-align: center;
+            margin-bottom: 20px;
         }
-        html { scroll-behavior: smooth; }
+        .section-desc {
+            text-align: center;
+            color: #ccc;
+            margin-bottom: 60px;
+            font-weight: 300;
+        }
+
+        /* 1. 네비게이션바 */
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 5%;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            background: rgba(0, 0, 0, 0.9);
+            border-bottom: 1px solid #333;
+            z-index: 1000;
+        }
+        .logo { font-family: 'Noto Serif KR', serif; font-size: 1.5rem; font-weight: bold; color: #d4af37; }
+        .nav-links { display: flex; gap: 30px; }
+        .nav-links a { font-size: 0.9rem; font-weight: 500; transition: 0.3s; }
+        .nav-links a:hover { color: #d4af37; }
+
+        /* 2. 메인 화면 (Hero Section) */
+        header {
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80'); /* 임시 배경 이미지 */
+            background-size: cover;
+            background-position: center;
+            text-align: center;
+        }
+        .main-title {
+            font-family: 'Noto Serif KR', serif;
+            font-size: 4rem;
+            margin-bottom: 20px;
+            text-shadow: 0 4px 10px rgba(0,0,0,0.5);
+        }
+        .sub-title { font-size: 1.3rem; margin-bottom: 40px; color: #ddd; font-weight: 300; }
+
+        /* 골드 버튼 스타일 */
+        .btn-gold {
+            display: inline-block;
+            border: 1px solid #d4af37;
+            color: #d4af37;
+            padding: 15px 50px;
+            font-size: 1rem;
+            transition: 0.3s;
+            cursor: pointer;
+        }
+        .btn-gold:hover { background-color: #d4af37; color: #000; font-weight: bold; }
+
+        /* 3. ABOUT 섹션 */
+        .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
+        .about-card {
+            background: #1a1a1a;
+            padding: 50px 30px;
+            text-align: center;
+            border: 1px solid #333;
+            transition: 0.3s;
+        }
+        .about-card:hover { border-color: #d4af37; transform: translateY(-5px); }
+        .about-card h3 { color: #d4af37; margin-bottom: 20px; font-size: 1.4rem; }
+
+        /* 4. SPACE (갤러리) */
+        .gallery { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; }
+        .gallery-item {
+            height: 250px;
+            background-color: #333;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #777;
+            font-weight: bold;
+            background-size: cover;
+            background-position: center;
+        }
+        /* 임시 이미지 플레이스홀더 */
+        .g1 { background-image: url('https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=800&q=80'); }
+        .g2 { background-image: url('https://images.unsplash.com/photo-1560624052-449f5ddf0c31?auto=format&fit=crop&w=800&q=80'); }
+        .g3 { background-image: url('https://images.unsplash.com/photo-1543007630-9710e4a00a20?auto=format&fit=crop&w=800&q=80'); }
+
+        /* 5. RESERVE (일정표) */
+        .schedule-board {
+            background: #1a1a1a;
+            padding: 40px;
+            border-radius: 4px;
+            border: 1px solid #d4af37;
+            margin-bottom: 40px;
+        }
+        table { width: 100%; border-collapse: collapse; text-align: left; }
+        th, td { padding: 20px; border-bottom: 1px solid #333; }
+        th { color: #d4af37; width: 30%; font-weight: 500; }
+        td { color: #ddd; vertical-align: middle; }
+        
+        .participant-tag {
+            display: inline-block;
+            background: #333;
+            color: #fff;
+            padding: 6px 12px;
+            border-radius: 20px;
+            margin: 4px;
+            font-size: 0.85rem;
+            border: 1px solid #444;
+        }
+        .status-open { color: #4caf50; font-weight: bold; } /* 모집중 초록색 */
+
+        /* 모바일 대응 */
+        @media (max-width: 768px) {
+            .main-title { font-size: 2.5rem; }
+            .nav-links { display: none; }
+            .about-grid, .gallery { grid-template-columns: 1fr; }
+            th, td { display: block; width: 100%; }
+            th { border-bottom: none; margin-top: 15px; color: #d4af37; }
+            td { padding-top: 5px; }
+        }
+
+        footer {
+            text-align: center;
+            padding: 50px;
+            background: #000;
+            color: #555;
+            font-size: 0.8rem;
+            border-top: 1px solid #222;
+        }
     </style>
 </head>
-<body class="bg-slate-950 text-slate-200 font-sans selection:bg-rose-500 selection:text-white">
+<body>
 
-    <!-- Navigation -->
-    <nav class="fixed top-0 w-full z-50 bg-slate-950/80 backdrop-blur-md border-b border-slate-800">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between h-16 items-center">
-                <!-- Logo -->
-                <div class="flex-shrink-0 flex items-center cursor-pointer" onclick="scrollToSection('home')">
-                    <span class="text-2xl font-bold bg-gradient-to-r from-rose-400 to-amber-200 bg-clip-text text-transparent tracking-tighter">
-                        NOIT
-                    </span>
-                </div>
-                
-                <!-- Desktop Menu -->
-                <div class="hidden md:flex space-x-8">
-                    <button onclick="scrollToSection('about')" class="text-sm font-medium hover:text-rose-400 transition-colors duration-200">About</button>
-                    <button onclick="scrollToSection('program')" class="text-sm font-medium hover:text-rose-400 transition-colors duration-200">Program</button>
-                    <button onclick="scrollToSection('review')" class="text-sm font-medium hover:text-rose-400 transition-colors duration-200">Review</button>
-                    <button onclick="scrollToSection('faq')" class="text-sm font-medium hover:text-rose-400 transition-colors duration-200">FAQ</button>
-                    <button onclick="window.open('https://google.com', '_blank')" class="bg-rose-600 hover:bg-rose-700 text-white px-5 py-2 rounded-full text-sm font-medium transition-all shadow-lg shadow-rose-900/20">
-                        참가 신청하기
-                    </button>
-                </div>
-
-                <!-- Mobile Menu Button -->
-                <div class="md:hidden flex items-center">
-                    <button onclick="toggleMenu()" class="text-slate-300 hover:text-white">
-                        <i data-lucide="menu" id="menu-icon"></i>
-                    </button>
-                </div>
-            </div>
-        </div>
-
-        <!-- Mobile Menu Dropdown -->
-        <div id="mobile-menu" class="hidden md:hidden bg-slate-900 border-b border-slate-800">
-            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-                <button onclick="scrollToSection('about')" class="block w-full text-left px-3 py-3 text-base font-medium hover:bg-slate-800 hover:text-rose-400 rounded-md">About</button>
-                <button onclick="scrollToSection('program')" class="block w-full text-left px-3 py-3 text-base font-medium hover:bg-slate-800 hover:text-rose-400 rounded-md">Program</button>
-                <button onclick="scrollToSection('review')" class="block w-full text-left px-3 py-3 text-base font-medium hover:bg-slate-800 hover:text-rose-400 rounded-md">Review</button>
-                <button onclick="scrollToSection('faq')" class="block w-full text-left px-3 py-3 text-base font-medium hover:bg-slate-800 hover:text-rose-400 rounded-md">FAQ</button>
-                <button onclick="window.open('https://google.com', '_blank')" class="block w-full text-center mt-4 bg-rose-600 text-white px-3 py-3 rounded-md font-bold">
-                    지금 신청하기
-                </button>
-            </div>
-        </div>
+    <nav>
+        <div class="logo">NOIT</div>
+        <ul class="nav-links">
+            <li><a href="#home">HOME</a></li>
+            <li><a href="#about">ABOUT</a></li>
+            <li><a href="#space">SPACE</a></li>
+            <li><a href="#reserve">RESERVE</a></li>
+        </ul>
     </nav>
 
-    <!-- Hero Section -->
-    <section id="home" class="relative pt-32 pb-20 lg:pt-48 lg:pb-32 overflow-hidden">
-        <!-- Abstract Background -->
-        <div class="absolute top-0 left-0 w-full h-full overflow-hidden -z-10">
-            <div class="absolute top-1/4 left-1/4 w-96 h-96 bg-rose-600/20 rounded-full blur-[100px]"></div>
-            <div class="absolute bottom-1/4 right-1/4 w-96 h-96 bg-amber-500/10 rounded-full blur-[100px]"></div>
+    <header id="home">
+        <div class="hero-content">
+            <h1 class="main-title">알게 되는 밤, <span class="gold-text">노잇</span></h1>
+            <p class="sub-title">같은 시간, 성공한 남녀들을 위한<br>High-End Private Social Club</p>
+            <a href="#reserve" class="btn-gold">참가 신청하기</a>
         </div>
+    </header>
 
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <div class="inline-flex items-center px-4 py-2 rounded-full bg-slate-800/50 border border-slate-700 text-rose-400 text-sm font-medium mb-8 animate-fade-in-up">
-                <span class="flex h-2 w-2 rounded-full bg-rose-500 mr-2 animate-pulse"></span>
-                이번 주말, 새로운 설렘이 시작됩니다
-            </div>
-            
-            <h1 class="text-4xl md:text-6xl lg:text-7xl font-bold tracking-tight mb-8 text-white leading-tight">
-                정적인 당신에게 <br class="md:hidden" />
-                <span class="text-rose-500">동적인 설렘</span>을
-            </h1>
-            
-            <p class="mt-6 max-w-2xl mx-auto text-lg md:text-xl text-slate-400 leading-relaxed">
-                검증된 <strong>전문직 남성</strong>과 매력적인 <strong>댄서 여성</strong>의 만남.<br/>
-                서로 다른 세상에서 온 두 사람이 만들어내는<br class="md:hidden"/> 완벽한 케미스트리를 경험하세요.
-            </p>
-
-            <div class="mt-10 flex flex-col sm:flex-row justify-center gap-4">
-                <button onclick="window.open('https://google.com', '_blank')" class="px-8 py-4 bg-rose-600 hover:bg-rose-700 text-white rounded-xl font-bold text-lg transition-all shadow-lg shadow-rose-900/30 flex items-center justify-center group">
-                    파티 신청하기
-                    <i data-lucide="arrow-right" class="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform"></i>
-                </button>
-                <button onclick="scrollToSection('program')" class="px-8 py-4 bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 rounded-xl font-medium text-lg transition-all flex items-center justify-center">
-                    진행 방식 보기
-                </button>
-            </div>
-
-            <!-- Stats -->
-            <div class="mt-16 grid grid-cols-2 md:grid-cols-4 gap-8 border-t border-slate-800 pt-8">
-                <div><div class="text-2xl md:text-3xl font-bold text-white mb-1">1,200+</div><div class="text-sm text-slate-500">누적 매칭 수</div></div>
-                <div><div class="text-2xl md:text-3xl font-bold text-white mb-1">100%</div><div class="text-sm text-slate-500">전문직 인증</div></div>
-                <div><div class="text-2xl md:text-3xl font-bold text-white mb-1">4.9/5.0</div><div class="text-sm text-slate-500">평균 만족도</div></div>
-                <div><div class="text-2xl md:text-3xl font-bold text-white mb-1">98%</div><div class="text-sm text-slate-500">재참여 의사</div></div>
-            </div>
-        </div>
-    </section>
-
-    <!-- About Section -->
-    <section id="about" class="py-20 bg-slate-900 relative">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid md:grid-cols-2 gap-12 items-center">
-                <div class="relative">
-                    <div class="aspect-[4/5] rounded-2xl overflow-hidden bg-slate-800 relative shadow-2xl">
-                         <div class="absolute inset-0 bg-gradient-to-tr from-slate-800 via-slate-700 to-slate-800 flex items-center justify-center">
-                            <i data-lucide="heart" class="w-32 h-32 text-rose-500/20"></i>
-                         </div>
-                         <div class="absolute bottom-0 left-0 w-full p-6 bg-gradient-to-t from-black/80 to-transparent">
-                            <p class="text-white font-medium">Noit Party Lounge</p>
-                         </div>
-                    </div>
-                    
-                    <!-- Floating Card -->
-                    <div class="absolute -bottom-6 -right-6 bg-slate-800 p-6 rounded-xl shadow-xl border border-slate-700 max-w-xs hidden md:block">
-                        <div class="flex items-center space-x-3 mb-3">
-                            <div class="p-2 bg-rose-500/10 rounded-lg">
-                                <i data-lucide="music" class="w-6 h-6 text-rose-500"></i>
-                            </div>
-                            <div class="font-bold text-white">Dynamic Vibe</div>
-                        </div>
-                        <p class="text-sm text-slate-400">어색한 대화 대신, 음악과 춤으로 시작하는 자연스러운 만남</p>
-                    </div>
+    <section id="about">
+        <div class="container">
+            <h2 class="section-title">WHY NOIT?</h2>
+            <p class="section-desc">무분별한 만남이 아닌, '결'이 맞는 사람들의 품격 있는 교류</p>
+            <div class="about-grid">
+                <div class="about-card">
+                    <h3>Reason & Sense</h3>
+                    <p>사회적 기반을 갖춘 <strong>전문직 남성</strong>의 이성과<br>예술적 깊이를 지닌 <strong>무용수 여성</strong>의 감성.<br>가장 완벽한 조화를 경험하세요.</p>
                 </div>
-
-                <div>
-                    <h2 class="text-rose-500 font-semibold tracking-wide uppercase mb-3">About Noit</h2>
-                    <h3 class="text-3xl md:text-4xl font-bold text-white mb-6">
-                        서로 다른 에너지가 만나<br />
-                        완벽한 조화를 이룹니다.
-                    </h3>
-                    <div class="space-y-6 text-slate-400 leading-relaxed">
-                        <p>
-                            열심히 일하며 사회적 지위를 얻었지만, 반복되는 일상 속에서 가슴 뛰는 설렘을 잊으셨나요? 
-                            무대 위에서 누구보다 빛나지만, 무대 아래에서는 편안하게 기댈 수 있는 사람을 찾고 계신가요?
-                        </p>
-                        <p>
-                            <strong>노잇(Noit)</strong>은 단순한 소개팅이 아닙니다. 
-                            <span class="text-amber-200"> 전문직 남성의 든든함</span>과 
-                            <span class="text-rose-400"> 댄서 여성의 생동감</span>이 만나 
-                            서로에게 없는 매력을 채워주는 공간입니다.
-                        </p>
-                        <ul class="space-y-4 mt-8">
-                            <li class="flex items-start"><i data-lucide="check-circle-2" class="w-6 h-6 text-rose-500 mr-3 flex-shrink-0"></i><span class="text-slate-300">철저한 신원 인증 (전문직 자격 / 댄서 경력)</span></li>
-                            <li class="flex items-start"><i data-lucide="check-circle-2" class="w-6 h-6 text-rose-500 mr-3 flex-shrink-0"></i><span class="text-slate-300">어색함 없는 아이스브레이킹 & 댄스 클래스</span></li>
-                            <li class="flex items-start"><i data-lucide="check-circle-2" class="w-6 h-6 text-rose-500 mr-3 flex-shrink-0"></i><span class="text-slate-300">매너와 품격이 있는 사교 파티 문화</span></li>
-                        </ul>
-                    </div>
+                <div class="about-card">
+                    <h3>Strict Curation</h3>
+                    <p>아무나 초대하지 않습니다.<br>직업, 신원, 이미지가 <strong>엄격하게 검증된 분</strong>들만<br>이 프라이빗한 공간에 입장할 수 있습니다.</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Program Section -->
-    <section id="program" class="py-20 bg-slate-950">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center mb-16">
-            <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">Noit Curtain Call</h2>
-            <p class="text-slate-400">어색할 틈 없이 설계된 노잇만의 프리미엄 커리큘럼</p>
-        </div>
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid md:grid-cols-4 gap-8">
-                <!-- Step 1 -->
-                <div class="bg-slate-900 p-8 rounded-2xl border border-slate-800 hover:border-rose-500/50 transition-all hover:-translate-y-1 group">
-                    <div class="w-16 h-16 bg-slate-800 rounded-full flex items-center justify-center mb-6 text-rose-500 group-hover:bg-rose-500 group-hover:text-white transition-colors">
-                        <i data-lucide="briefcase" class="w-8 h-8"></i>
-                    </div>
-                    <h3 class="text-xl font-bold text-white mb-3">01. 검증 및 입장</h3>
-                    <p class="text-slate-400 text-sm leading-relaxed">사전 인증된 멤버만 입장 가능합니다. 웰컴 드링크와 함께 파티를 준비하세요.</p>
-                </div>
-                <!-- Step 2 -->
-                <div class="bg-slate-900 p-8 rounded-2xl border border-slate-800 hover:border-rose-500/50 transition-all hover:-translate-y-1 group">
-                    <div class="w-16 h-16 bg-slate-800 rounded-full flex items-center justify-center mb-6 text-rose-500 group-hover:bg-rose-500 group-hover:text-white transition-colors">
-                        <i data-lucide="music" class="w-8 h-8"></i>
-                    </div>
-                    <h3 class="text-xl font-bold text-white mb-3">02. 댄스 클래스</h3>
-                    <p class="text-slate-400 text-sm leading-relaxed">손을 잡고 눈을 맞추며 배우는 간단한 커플 댄스로 어색함을 날려버립니다.</p>
-                </div>
-                <!-- Step 3 -->
-                <div class="bg-slate-900 p-8 rounded-2xl border border-slate-800 hover:border-rose-500/50 transition-all hover:-translate-y-1 group">
-                    <div class="w-16 h-16 bg-slate-800 rounded-full flex items-center justify-center mb-6 text-rose-500 group-hover:bg-rose-500 group-hover:text-white transition-colors">
-                        <i data-lucide="message-circle" class="w-8 h-8"></i>
-                    </div>
-                    <h3 class="text-xl font-bold text-white mb-3">03. 로테이션 토크</h3>
-                    <p class="text-slate-400 text-sm leading-relaxed">1:1 대화 시간을 통해 서로의 가치관과 매력을 깊이 있게 알아갑니다.</p>
-                </div>
-                <!-- Step 4 -->
-                <div class="bg-slate-900 p-8 rounded-2xl border border-slate-800 hover:border-rose-500/50 transition-all hover:-translate-y-1 group">
-                    <div class="w-16 h-16 bg-slate-800 rounded-full flex items-center justify-center mb-6 text-rose-500 group-hover:bg-rose-500 group-hover:text-white transition-colors">
-                        <i data-lucide="heart" class="w-8 h-8"></i>
-                    </div>
-                    <h3 class="text-xl font-bold text-white mb-3">04. 매칭 & 애프터</h3>
-                    <p class="text-slate-400 text-sm leading-relaxed">마음에 드는 이성을 선택하세요. 매칭 성공 시 애프터 데이트를 지원합니다.</p>
-                </div>
+    <section id="space">
+        <div class="container">
+            <h2 class="section-title">THE SPACE</h2>
+            <p class="section-desc">공간 전문가 <strong>'라이프헬퍼'</strong>가 제공하는 최상의 프라이빗 라운지</p>
+            <div class="gallery">
+                <div class="gallery-item g1"></div>
+                <div class="gallery-item g2"></div>
+                <div class="gallery-item g3"></div>
             </div>
         </div>
     </section>
 
-    <!-- Target Audience -->
-    <section class="py-20 bg-gradient-to-b from-slate-900 to-slate-950">
-        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <h2 class="text-3xl font-bold text-white mb-12">Who Joins Noit?</h2>
-            <div class="grid md:grid-cols-2 gap-8">
-                <!-- Gentlemen -->
-                <div class="bg-slate-800 rounded-2xl overflow-hidden border border-slate-700">
-                    <div class="bg-slate-700 p-6 flex justify-center items-center">
-                         <i data-lucide="briefcase" class="w-12 h-12 text-amber-200"></i>
-                    </div>
-                    <div class="p-8 text-left">
-                        <h3 class="text-2xl font-bold text-white mb-2">Professional Men</h3>
-                        <p class="text-amber-200/80 text-sm font-medium mb-4">의사, 변호사, 회계사, 대기업 연구원 등</p>
-                        <p class="text-slate-300 text-sm">"사회적으로 인정받았지만, 반복되는 일상이 지루하신가요? 당신의 안정감에 활력을 불어넣어 줄 매력적인 파트너가 기다립니다."</p>
-                    </div>
-                </div>
-                <!-- Ladies -->
-                <div class="bg-slate-800 rounded-2xl overflow-hidden border border-slate-700">
-                    <div class="bg-rose-900/30 p-6 flex justify-center items-center">
-                         <i data-lucide="star" class="w-12 h-12 text-rose-400"></i>
-                    </div>
-                    <div class="p-8 text-left">
-                        <h3 class="text-2xl font-bold text-white mb-2">Artistic Women</h3>
-                        <p class="text-rose-400/80 text-sm font-medium mb-4">무용수, 발레리나, 댄스 트레이너 등</p>
-                        <p class="text-slate-300 text-sm">"무대 위의 화려함 뒤, 진솔한 대화와 든든한 내 편이 필요하신가요? 당신의 예술적 영감을 이해하고 지지해 줄 분들을 만나보세요."</p>
-                    </div>
-                </div>
+    <section id="reserve">
+        <div class="container">
+            <h2 class="section-title">THIS WEEK'S LINE-UP</h2>
+            <p class="section-desc">매주 금/토 오후 8시 동시 진행</p>
+
+            <div class="schedule-board">
+                <table id="schedule-table">
+                    <thead>
+                        <tr>
+                            <th>일정 / 장소</th>
+                            <th>참가자 리스트 (실시간)</th>
+                        </tr>
+                    </thead>
+                    <tbody id="schedule-body">
+                        </tbody>
+                </table>
+            </div>
+
+            <div style="text-align: center;">
+                <p style="margin-bottom: 20px; color: #aaa;">원하는 날짜를 확인하셨나요?</p>
+                <a href="https://forms.gle/q9RCXT6oCfF3wxdk7" target="_blank" class="btn-gold">지금 신청하기 (Google Form)</a>
             </div>
         </div>
     </section>
 
-    <!-- Reviews -->
-    <section id="review" class="py-20 bg-slate-950">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 class="text-3xl font-bold text-white text-center mb-12">Noit Story</h2>
-            <div class="grid md:grid-cols-3 gap-6">
-                <!-- Review 1 -->
-                <div class="bg-slate-900 p-6 rounded-xl border border-slate-800 shadow-lg">
-                    <div class="flex gap-1 mb-4">
-                        <i data-lucide="star" class="w-4 h-4 text-amber-400 fill-amber-400"></i>
-                        <i data-lucide="star" class="w-4 h-4 text-amber-400 fill-amber-400"></i>
-                        <i data-lucide="star" class="w-4 h-4 text-amber-400 fill-amber-400"></i>
-                        <i data-lucide="star" class="w-4 h-4 text-amber-400 fill-amber-400"></i>
-                        <i data-lucide="star" class="w-4 h-4 text-amber-400 fill-amber-400"></i>
-                    </div>
-                    <p class="text-slate-300 mb-6 italic">"처음엔 춤을 춘다는 게 어색했지만, 막상 손을 잡고 움직이다 보니 금방 친해졌어요. 정적인 제 삶에 큰 에너지를 얻고 갑니다."</p>
-                    <div class="flex justify-between items-center border-t border-slate-800 pt-4">
-                        <span class="text-white font-medium">의사 (34세, 남)</span>
-                        <span class="text-xs text-rose-400 bg-rose-400/10 px-2 py-1 rounded-full">#설렘 #힐링</span>
-                    </div>
-                </div>
-                <!-- Review 2 -->
-                <div class="bg-slate-900 p-6 rounded-xl border border-slate-800 shadow-lg">
-                    <div class="flex gap-1 mb-4">
-                        <i data-lucide="star" class="w-4 h-4 text-amber-400 fill-amber-400"></i>
-                        <i data-lucide="star" class="w-4 h-4 text-amber-400 fill-amber-400"></i>
-                        <i data-lucide="star" class="w-4 h-4 text-amber-400 fill-amber-400"></i>
-                        <i data-lucide="star" class="w-4 h-4 text-amber-400 fill-amber-400"></i>
-                        <i data-lucide="star" class="w-4 h-4 text-amber-400 fill-amber-400"></i>
-                    </div>
-                    <p class="text-slate-300 mb-6 italic">"가벼운 만남이 싫어서 참여했는데, 정말 매너 좋으신 분들만 계셔서 놀랐어요. 대화가 이렇게 잘 통할 줄 몰랐습니다."</p>
-                    <div class="flex justify-between items-center border-t border-slate-800 pt-4">
-                        <span class="text-white font-medium">현대무용가 (29세, 여)</span>
-                        <span class="text-xs text-rose-400 bg-rose-400/10 px-2 py-1 rounded-full">#매너 #진중함</span>
-                    </div>
-                </div>
-                <!-- Review 3 -->
-                <div class="bg-slate-900 p-6 rounded-xl border border-slate-800 shadow-lg">
-                    <div class="flex gap-1 mb-4">
-                        <i data-lucide="star" class="w-4 h-4 text-amber-400 fill-amber-400"></i>
-                        <i data-lucide="star" class="w-4 h-4 text-amber-400 fill-amber-400"></i>
-                        <i data-lucide="star" class="w-4 h-4 text-amber-400 fill-amber-400"></i>
-                        <i data-lucide="star" class="w-4 h-4 text-amber-400 fill-amber-400"></i>
-                        <i data-lucide="star" class="w-4 h-4 text-amber-400 fill-amber-400"></i>
-                    </div>
-                    <p class="text-slate-300 mb-6 italic">"일만 하느라 연애 세포가 죽은 줄 알았는데, 노잇 덕분에 소중한 인연을 만났습니다. 주말이 기다려져요."</p>
-                    <div class="flex justify-between items-center border-t border-slate-800 pt-4">
-                        <span class="text-white font-medium">변호사 (36세, 남)</span>
-                        <span class="text-xs text-rose-400 bg-rose-400/10 px-2 py-1 rounded-full">#커플성공 #감사</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- FAQ -->
-    <section id="faq" class="py-20 bg-slate-900">
-        <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 class="text-3xl font-bold text-white text-center mb-12">자주 묻는 질문</h2>
-            <div class="space-y-4">
-                <!-- FAQ Item 1 -->
-                <div class="bg-slate-800 rounded-lg overflow-hidden">
-                    <button class="w-full px-6 py-4 text-left flex justify-between items-center hover:bg-slate-750 focus:outline-none" onclick="toggleFaq('faq1', 'icon1')">
-                        <span class="font-medium text-slate-200">Q. 춤을 한 번도 춰본 적이 없는데 괜찮나요?</span>
-                        <i id="icon1" data-lucide="chevron-down" class="w-5 h-5 text-slate-400 transition-transform"></i>
-                    </button>
-                    <div id="faq1" class="hidden px-6 pb-4 text-slate-400 text-sm leading-relaxed border-t border-slate-700 pt-4">
-                        A. 물론입니다! 노잇의 댄스 클래스는 춤 실력을 뽐내는 자리가 아니라, 친밀감을 높이기 위한 가벼운 스킨십 프로그램입니다. 전문 강사님이 아주 기초적인 동작부터 알려드립니다.
-                    </div>
-                </div>
-                <!-- FAQ Item 2 -->
-                <div class="bg-slate-800 rounded-lg overflow-hidden">
-                    <button class="w-full px-6 py-4 text-left flex justify-between items-center hover:bg-slate-750 focus:outline-none" onclick="toggleFaq('faq2', 'icon2')">
-                        <span class="font-medium text-slate-200">Q. 신원 인증은 어떻게 진행되나요?</span>
-                        <i id="icon2" data-lucide="chevron-down" class="w-5 h-5 text-slate-400 transition-transform"></i>
-                    </button>
-                    <div id="faq2" class="hidden px-6 pb-4 text-slate-400 text-sm leading-relaxed border-t border-slate-700 pt-4">
-                        A. 참가 신청 후, 남성분은 전문직 자격증이나 재직증명서, 여성분은 경력 증빙 자료를 제출해주셔야 최종 확정됩니다. 모든 자료는 확인 즉시 폐기됩니다.
-                    </div>
-                </div>
-                <!-- FAQ Item 3 -->
-                <div class="bg-slate-800 rounded-lg overflow-hidden">
-                    <button class="w-full px-6 py-4 text-left flex justify-between items-center hover:bg-slate-750 focus:outline-none" onclick="toggleFaq('faq3', 'icon3')">
-                        <span class="font-medium text-slate-200">Q. 복장 규정(Dress Code)이 있나요?</span>
-                        <i id="icon3" data-lucide="chevron-down" class="w-5 h-5 text-slate-400 transition-transform"></i>
-                    </button>
-                    <div id="faq3" class="hidden px-6 pb-4 text-slate-400 text-sm leading-relaxed border-t border-slate-700 pt-4">
-                        A. 네, 남성분은 세미 정장이나 깔끔한 셔츠 슬랙스, 여성분은 원피스나 세련된 파티룩을 권장합니다. 트레이닝복이나 슬리퍼는 입장이 제한될 수 있습니다.
-                    </div>
-                </div>
-                 <!-- FAQ Item 4 -->
-                 <div class="bg-slate-800 rounded-lg overflow-hidden">
-                    <button class="w-full px-6 py-4 text-left flex justify-between items-center hover:bg-slate-750 focus:outline-none" onclick="toggleFaq('faq4', 'icon4')">
-                        <span class="font-medium text-slate-200">Q. 혼자 신청해도 되나요?</span>
-                        <i id="icon4" data-lucide="chevron-down" class="w-5 h-5 text-slate-400 transition-transform"></i>
-                    </button>
-                    <div id="faq4" class="hidden px-6 pb-4 text-slate-400 text-sm leading-relaxed border-t border-slate-700 pt-4">
-                        A. 네, 참가자의 80% 이상이 혼자 오십니다. 오시면 어색하지 않게 운영진이 케어해드리니 걱정하지 않으셔도 됩니다.
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer class="bg-slate-950 border-t border-slate-800 py-12 text-sm text-slate-500">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid md:grid-cols-4 gap-8 mb-8">
-                <div class="col-span-1 md:col-span-2">
-                    <span class="text-2xl font-bold text-white mb-4 block">NOIT</span>
-                    <p class="mb-4 max-w-sm">
-                        프리미엄 소셜 파티, 노잇<br/>
-                        당신의 주말에 특별한 설렘을 선물합니다.
-                    </p>
-                </div>
-                <div>
-                    <h4 class="text-white font-bold mb-4">Contact</h4>
-                    <p class="mb-2">010-1234-5678</p>
-                    <p class="mb-2">contact@noit.com</p>
-                </div>
-                <div>
-                    <h4 class="text-white font-bold mb-4">Address</h4>
-                    <p>서울시 강남구 테헤란로 123<br/>노잇 라운지 2F</p>
-                </div>
-            </div>
-            <div class="border-t border-slate-800 pt-8 text-center md:text-left">
-                <p>&copy; 2024 Noit. All rights reserved.</p>
-            </div>
-        </div>
+    <footer>
+        <p>&copy; 2026 NOIT. All Rights Reserved.</p>
+        <p>Host: Life Helper | Contact: Instagram @noit_official</p>
     </footer>
 
-    <!-- Scripts -->
     <script>
-        // 아이콘 렌더링
-        lucide.createIcons();
-
-        // 메뉴 토글 기능
-        function toggleMenu() {
-            const menu = document.getElementById('mobile-menu');
-            const icon = document.getElementById('menu-icon');
-            
-            if (menu.classList.contains('hidden')) {
-                menu.classList.remove('hidden');
-                icon.setAttribute('data-lucide', 'x');
-            } else {
-                menu.classList.add('hidden');
-                icon.setAttribute('data-lucide', 'menu');
+        /* === [기능: 데이터 관리 영역] === */
+        // ▼ 대표님이 여기 내용만 바꾸면 사이트가 바뀝니다! ▼
+        const scheduleData = [
+            {
+                date: "1월 27일 (금) 20:00",
+                location: "강남 라이프헬퍼 라운지",
+                participants: [
+                    "👨 [90년생] 변호사 (지인추천)",
+                    "👨 [92년생] 성형외과 원장",
+                    "👩 [00년생] 국립무용단원",
+                    "👩 [98년생] 한국무용 전공"
+                ]
+            },
+            {
+                date: "1월 28일 (토) 20:00",
+                location: "이태원 프라이빗 룸",
+                participants: [
+                    "👨 [89년생] 외국계 IT 임원",
+                    "👨 [93년생] 회계사",
+                    "👩 [99년생] 프리랜서 무용수",
+                    "✨ [신청가능] 여성 1자리 남음"
+                ]
             }
-            lucide.createIcons(); // 아이콘 변경 적용
-        }
+        ];
+        // ▲ 수정 끝 ▲
 
-        // 스크롤 이동 기능
-        function scrollToSection(id) {
-            const element = document.getElementById(id);
-            const menu = document.getElementById('mobile-menu');
-            const icon = document.getElementById('menu-icon');
-            
-            // 모바일 메뉴 닫기
-            if (!menu.classList.contains('hidden')) {
-                menu.classList.add('hidden');
-                icon.setAttribute('data-lucide', 'menu');
-                lucide.createIcons();
-            }
+        // 화면에 그리기 (건드리지 마세요)
+        const tableBody = document.getElementById('schedule-body');
+        scheduleData.forEach(item => {
+            let participantHTML = item.participants.map(p => {
+                // '신청가능' 글자가 포함되면 초록색으로 표시
+                if(p.includes("신청가능")) return `<span class="participant-tag status-open">${p}</span>`;
+                return `<span class="participant-tag">${p}</span>`;
+            }).join('');
 
-            if (element) {
-                element.scrollIntoView({ behavior: 'smooth' });
-            }
-        }
-
-        // FAQ 토글 기능
-        function toggleFaq(contentId, iconId) {
-            const content = document.getElementById(contentId);
-            const icon = document.getElementById(iconId);
-            
-            if (content.classList.contains('hidden')) {
-                content.classList.remove('hidden');
-                icon.style.transform = 'rotate(180deg)';
-            } else {
-                content.classList.add('hidden');
-                icon.style.transform = 'rotate(0deg)';
-            }
-        }
+            let row = `
+                <tr>
+                    <td>
+                        <strong style="font-size:1.1rem; color:#fff;">${item.date}</strong><br>
+                        <span style="font-size:0.9rem; color:#888;">📍 ${item.location}</span>
+                    </td>
+                    <td>${participantHTML}</td>
+                </tr>
+            `;
+            tableBody.innerHTML += row;
+        });
     </script>
+
 </body>
 </html>
