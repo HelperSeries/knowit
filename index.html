@@ -300,7 +300,69 @@
         <p>Host: Life Helper | Contact: Instagram @knoit_official</p>
     </footer>
 
-    <script>
+   <script>
+        /* [구글 시트 실시간 연동 스크립트] */
+        
+        // ▼▼▼ 아래 따옴표("") 안에 방금 복사한 링크를 붙여넣으세요 ▼▼▼
+        const GOOGLE_SHEET_CSV_URL = "여기에_복사한_링크를_붙여넣으세요";
+
+        async function loadSchedule() {
+            const tableBody = document.getElementById('schedule-body');
+            
+            try {
+                const response = await fetch(GOOGLE_SHEET_CSV_URL);
+                const data = await response.text();
+                const rows = data.split("\n").slice(1); // 제목 줄 제거
+
+                tableBody.innerHTML = ""; // 초기화
+
+                rows.forEach(row => {
+                    const cols = row.split(",");
+                    if(cols.length < 3) return;
+
+                    const date = cols[0];      // 날짜
+                    const location = cols[1];  // 장소
+                    const rawParticipants = cols[2]; // 참가자
+                    const status = cols[3] ? cols[3].trim() : ""; // 상태
+
+                    // 참가자 리스트 꾸미기 (슬래시 / 로 구분)
+                    let p_list = rawParticipants.split("/").map(p => {
+                        p = p.trim();
+                        // '신청가능' 또는 '남음'이 포함되면 초록색 강조
+                        if(p.includes("신청가능") || p.includes("남음")) {
+                            return `<span class="participant-tag status-open">${p}</span>`;
+                        }
+                        return `<span class="participant-tag">${p}</span>`;
+                    }).join('');
+
+                    // 상태 뱃지 (모집중 / 마감)
+                    let statusBadge = "";
+                    if(status && status.includes("모집중")) {
+                        statusBadge = `<span style="color:#4caf50; font-size:0.8rem; border:1px solid #4caf50; padding:2px 6px; border-radius:4px; margin-left:5px;">● 모집중</span>`;
+                    } else if (status && status.includes("마감")) {
+                        statusBadge = `<span style="color:#ff5555; font-size:0.8rem; border:1px solid #ff5555; padding:2px 6px; border-radius:4px; margin-left:5px;">● 마감</span>`;
+                    }
+
+                    let htmlRow = `
+                        <tr>
+                            <td>
+                                <strong style="font-size:1.1rem; color:#fff;">${date}</strong>${statusBadge}<br>
+                                <span style="font-size:0.9rem; color:#888;">📍 ${location}</span>
+                            </td>
+                            <td>${p_list}</td>
+                        </tr>
+                    `;
+                    tableBody.innerHTML += htmlRow;
+                });
+
+            } catch (error) {
+                console.error("실패:", error);
+                tableBody.innerHTML = `<tr><td colspan="2" style="text-align:center; padding:30px; color:#888;">일정을 불러오는 중입니다...<br>관리자에게 문의해주세요.</td></tr>`;
+            }
+        }
+
+        loadSchedule();
+    </script>
         /* [구글 시트 실시간 연동 스크립트] 
            이제 코드를 수정할 필요 없이, 구글 시트만 수정하면 사이트가 바뀝니다.
         */
@@ -374,4 +436,5 @@
         // 페이지 켜지면 바로 실행
         loadSchedule();
     </script>
+
 
