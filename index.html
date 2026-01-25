@@ -115,11 +115,42 @@
             word-break: keep-all;
         }
 
-        .gallery { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; }
-        .gallery-link { display: block; height: 250px; background-color: #333; position: relative; overflow: hidden; border: 1px solid #333; transition: 0.3s; }
-        .gallery-link:hover { border-color: #d4af37; transform: scale(1.02); z-index: 10; }
-        .gallery-img { width: 100%; height: 100%; object-fit: cover; transition: 0.3s; }
-        .gallery-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); color: #fff; display: flex; justify-content: center; align-items: center; opacity: 0; transition: 0.3s; font-weight: bold; }
+        /* [수정됨] 갤러리 스타일 변경: 세로 배치 & 원본 비율 유지 */
+        .gallery { 
+            display: grid; 
+            grid-template-columns: 1fr; /* 한 줄에 1개씩 (세로 배치) */
+            gap: 40px; /* 사진 사이 간격 넓힘 */
+        }
+        .gallery-link { 
+            display: block; 
+            height: auto; /* 고정 높이 제거 (사진 비율대로) */
+            background-color: #333; 
+            position: relative; 
+            overflow: hidden; 
+            border: 1px solid #333; 
+            transition: 0.3s; 
+        }
+        .gallery-link:hover { 
+            border-color: #d4af37; 
+            transform: scale(1.01); /* 살짝 커짐 */
+            z-index: 10; 
+        }
+        .gallery-img { 
+            width: 100%; 
+            height: auto; /* 원본 비율 유지 (잘리지 않음) */
+            display: block; /* 하단 여백 제거 */
+            transition: 0.3s; 
+        }
+        .gallery-overlay { 
+            position: absolute; 
+            top: 0; left: 0; width: 100%; height: 100%; 
+            background: rgba(0,0,0,0.6); 
+            color: #fff; 
+            display: flex; justify-content: center; align-items: center; 
+            opacity: 0; 
+            transition: 0.3s; 
+            font-weight: bold; 
+        }
         .gallery-link:hover .gallery-overlay { opacity: 1; }
 
         /* 레이아웃 고정 스타일 */
