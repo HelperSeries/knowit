@@ -248,7 +248,8 @@
             <p class="section-desc">이미지를 클릭하면 <strong>'라이프헬퍼'</strong> 공간을 자세히 보실 수 있습니다.</p>
             <div class="gallery">
                 <a href="https://lifehelper.co.kr/" target="_blank" class="gallery-link">
-                    <img src="space1.png" alt="라이프헬퍼 라운지 메인" class="gallery-img">
+                    <!-- [수정] space1.png -> space1.jpg 로 변경 (가지고 계신 파일이 jpg라고 가정) -->
+                    <img src="space1.jpg" alt="라이프헬퍼 라운지 메인" class="gallery-img">
                     <div class="gallery-overlay">라이프헬퍼 구경하기</div>
                 </a>
                 <a href="https://lifehelper.co.kr/" target="_blank" class="gallery-link">
@@ -315,15 +316,13 @@
                     const date = cols[0];      
                     const location = cols[1];  
                     
-                    // [수정 완료] '년생' 글자를 강제로 붙이는 코드 삭제
+                    // [수정 완료] [89년생] 형태로 표시되도록 복구
                     let participantInfo = cols[2]; 
-                    
-                    // 나이(년생) 정보가 있을 때만 띄어쓰기와 함께 추가 (괄호 없이)
+                    // 년생(D열)이 있으면: [89년생] 형태로 붙임
                     if(cols[3] && cols[3].trim() !== "") {
-                        participantInfo += ` ${cols[3]}`; 
+                        participantInfo += ` [${cols[3]}년생]`; 
                     }
-                    
-                    // 직업 정보가 있을 때만 띄어쓰기와 함께 추가
+                    // 직업(E열)이 있으면: 띄어쓰기 후 붙임
                     if(cols[4] && cols[4].trim() !== "") {
                         participantInfo += ` ${cols[4]}`;
                     }
@@ -332,8 +331,8 @@
 
                     let p_cards = participantInfo.split("/").map(p => {
                         p = p.trim();
-                        // 엑셀에서 넘어온 [참여] 및 혹시 모를 [년생] 찌꺼기 텍스트 제거
-                        p = p.replace(/\[참여\]/g, "").replace(/참여/g, "").replace(/\[년생\]/g, "").trim();
+                        // 엑셀에서 넘어온 [참여] 같은 상태값 텍스트 제거
+                        p = p.replace(/\[참여\]/g, "").replace(/참여/g, "").trim();
 
                         if(!p) return ""; 
 
