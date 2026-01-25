@@ -184,12 +184,54 @@
             border: 1px solid #ccc;
         }
 
-        /* 모바일 대응 */
+        /* ▼▼▼ [수정됨] 모바일 레이아웃 최적화 ▼▼▼ */
         @media (max-width: 768px) {
-            .board-header { display: none; }
-            .schedule-row { flex-direction: column; }
-            .schedule-info { width: 100%; margin-bottom: 20px; margin-right: 0; }
-            .participants-grid { width: 100%; grid-template-columns: repeat(2, 1fr); }
+            /* 네비게이션: 글씨를 작게 해서 한 줄에 보이게 유지 */
+            .nav-links { gap: 15px; }
+            .nav-links a { font-size: 0.75rem; }
+            .logo-text { font-size: 1.2rem; }
+            
+            /* 메인 화면 */
+            .main-title { font-size: 2.2rem; }
+            section { padding: 60px 5%; } /* 여백 축소 */
+
+            /* 공간 사진 갤러리: 1줄로 보이면 너무 기니까 1줄 유지하되 비율 조정 (또는 1열) */
+            .gallery { grid-template-columns: 1fr; }
+
+            /* ★★★ 일정표 모바일 설정 (PC처럼 좌우 배치 유지) ★★★ */
+            .board-header { 
+                display: flex; /* 헤더 숨기지 않음 */
+                padding: 10px 15px; 
+                font-size: 0.8rem; 
+            }
+            
+            .schedule-row { 
+                flex-direction: row; /* 좌우 배치 강제 유지 */
+                padding: 15px; 
+            }
+            
+            .schedule-info { 
+                width: 30%; /* 날짜 영역 좁게 */
+                min-width: auto; /* 고정 너비 해제 */
+                margin-right: 10px; 
+                padding-left: 10px; /* 왼쪽 선 간격 축소 */
+            }
+            
+            .date-text { font-size: 1rem; } /* 날짜 글씨 축소 */
+            .location-text { font-size: 0.75rem; margin-top: 3px; }
+            .status-badge { display: block; margin: 5px 0 0 0; width: fit-content; } /* 뱃지 줄바꿈 */
+
+            .participants-grid { 
+                width: 70%; 
+                grid-template-columns: repeat(2, 1fr); /* 2명씩 보이게 (3명은 너무 좁음) */
+                gap: 5px;
+            }
+            
+            .participant-card {
+                font-size: 0.75rem; /* 카드 글씨 축소 */
+                padding: 5px;
+                min-height: auto;
+            }
         }
 
         footer { text-align: center; padding: 50px; background: #000; color: #555; font-size: 0.8rem; border-top: 1px solid #222; }
