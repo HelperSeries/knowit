@@ -315,17 +315,25 @@
                     const date = cols[0];      
                     const location = cols[1];  
                     
-                    // [수정됨] 대괄호 [] 제거 + 년생 글자 제거 
-                    // 이제 시트에 적힌 내용 그대로 순수하게 나옵니다.
+                    // [수정 완료] '년생' 글자를 강제로 붙이는 코드 삭제
                     let participantInfo = cols[2]; 
-                    if(cols[3] && cols[3].trim() !== "") participantInfo += ` ${cols[3]}`; // [89] 대신 89
-                    if(cols[4] && cols[4].trim() !== "") participantInfo += ` ${cols[4]}`;
+                    
+                    // 나이(년생) 정보가 있을 때만 띄어쓰기와 함께 추가 (괄호 없이)
+                    if(cols[3] && cols[3].trim() !== "") {
+                        participantInfo += ` ${cols[3]}`; 
+                    }
+                    
+                    // 직업 정보가 있을 때만 띄어쓰기와 함께 추가
+                    if(cols[4] && cols[4].trim() !== "") {
+                        participantInfo += ` ${cols[4]}`;
+                    }
                     
                     const status = cols[5] ? cols[5].trim() : ""; 
 
                     let p_cards = participantInfo.split("/").map(p => {
                         p = p.trim();
-                        p = p.replace(/\[참여\]/g, "").replace(/참여/g, "").trim();
+                        // 엑셀에서 넘어온 [참여] 및 혹시 모를 [년생] 찌꺼기 텍스트 제거
+                        p = p.replace(/\[참여\]/g, "").replace(/참여/g, "").replace(/\[년생\]/g, "").trim();
 
                         if(!p) return ""; 
 
