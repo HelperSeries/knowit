@@ -105,16 +105,17 @@
         .gallery-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); color: #fff; display: flex; justify-content: center; align-items: center; opacity: 0; transition: 0.3s; font-weight: bold; }
         .gallery-link:hover .gallery-overlay { opacity: 1; }
 
-        /* 레이아웃 고정 스타일 */
+        /* ▼▼▼ [핵심 수정] 레이아웃 고정 스타일 ▼▼▼ */
         .schedule-board {
             background: #1a1a1a;
-            padding: 0; 
+            padding: 0; /* 패딩 제거하고 내부 row에서 처리 */
             border-radius: 4px;
             border: 1px solid #d4af37;
             margin-bottom: 40px;
-            overflow: hidden; 
+            overflow: hidden; /* 둥근 모서리 유지 */
         }
 
+        /* 테이블 헤더 역할 (제목 줄) */
         .board-header {
             display: flex;
             background: #222;
@@ -123,32 +124,35 @@
             font-weight: bold;
             color: #d4af37;
         }
-        .header-date { width: 25%; min-width: 150px; }
+        .header-date { width: 25%; min-width: 150px; } /* 날짜 영역 고정 너비 */
         .header-list { width: 75%; }
 
+        /* 데이터 줄 (한 행) */
         .schedule-row {
-            display: flex; 
+            display: flex; /* 좌우 배치 (Flexbox) */
             border-bottom: 1px solid #333;
             padding: 30px;
-            align-items: flex-start;
+            align-items: flex-start; /* 위쪽 정렬 */
         }
         .schedule-row:last-child { border-bottom: none; }
 
+        /* 왼쪽: 날짜 정보 영역 */
         .schedule-info {
-            width: 25%; 
-            min-width: 150px; 
+            width: 25%; /* 전체의 25% 차지 */
+            min-width: 150px; /* 최소 너비 보장 */
             border-left: 3px solid #d4af37;
             padding-left: 15px;
-            margin-right: 20px; 
-            flex-shrink: 0;
+            margin-right: 20px; /* 오른쪽 참가자와 간격 */
+            flex-shrink: 0; /* 줄어들지 않음 */
         }
         .date-text { font-size: 1.5rem; color: #fff; font-weight: bold; font-family: 'Noto Serif KR', serif; }
         .location-text { font-size: 1rem; color: #888; margin-top: 5px; }
 
+        /* 오른쪽: 참가자 리스트 영역 */
         .participants-grid {
-            width: 75%; 
+            width: 75%; /* 나머지 75% 차지 */
             display: grid;
-            grid-template-columns: repeat(3, 1fr); 
+            grid-template-columns: repeat(3, 1fr); /* 한 줄에 3개씩 (공간 확보) */
             gap: 10px;
         }
 
@@ -165,7 +169,7 @@
             align-items: center;
             justify-content: center;
             min-height: 45px;
-            word-break: break-all;
+            word-break: break-all; /* 긴 단어 줄바꿈 */
         }
         .participant-card:hover { border-color: #d4af37; background: #333; }
         .status-open { color: #4caf50; font-weight: bold; border-color: #4caf50; }
@@ -182,10 +186,10 @@
 
         /* 모바일 대응 */
         @media (max-width: 768px) {
-            .board-header { display: none; }
-            .schedule-row { flex-direction: column; }
+            .board-header { display: none; } /* 모바일에서 헤더 숨김 */
+            .schedule-row { flex-direction: column; } /* 모바일은 위아래 배치 */
             .schedule-info { width: 100%; margin-bottom: 20px; margin-right: 0; }
-            .participants-grid { width: 100%; grid-template-columns: repeat(2, 1fr); }
+            .participants-grid { width: 100%; grid-template-columns: repeat(2, 1fr); } /* 모바일 2열 */
         }
 
         footer { text-align: center; padding: 50px; background: #000; color: #555; font-size: 0.8rem; border-top: 1px solid #222; }
@@ -230,15 +234,6 @@
                     <p>아무나 초대하지 않습니다.<br>직업, 신원, 이미지가 <strong>엄격하게 검증된 분</strong>들만<br>이 프라이빗한 공간에 입장할 수 있습니다.</p>
                 </div>
             </div>
-            <!-- 상세 안내 추가 -->
-            <div style="background:#222; padding:30px; margin-top:40px; border-radius:10px; border:1px solid #333;">
-                <h3 style="color:#d4af37; margin-bottom:15px;">📌 노잇(Knowit) 안내</h3>
-                <ul style="list-style:disc; padding-left:20px; color:#ddd; font-size:0.95rem;">
-                    <li style="margin-bottom:10px;">노잇은 철저한 신원 인증을 거친 <strong>전문직 남성</strong>과 <strong>한국무용수 여성</strong>을 위한 프라이빗 매칭 커뮤니티입니다.</li>
-                    <li style="margin-bottom:10px;"><strong>장소:</strong> 서울 주요 프라이빗 라운지 (<strong>신원 인증 완료자</strong>에게만 개별 안내)</li>
-                    <li style="margin-bottom:10px;"><strong>친구 초대:</strong> 결이 맞는 지인 초대가 가능합니다. (단, 초대받은 분도 <strong>운영진의 신원 인증을 거쳐야 입장</strong> 가능합니다.)</li>
-                </ul>
-            </div>
         </div>
     </section>
 
@@ -248,16 +243,15 @@
             <p class="section-desc">이미지를 클릭하면 <strong>'라이프헬퍼'</strong> 공간을 자세히 보실 수 있습니다.</p>
             <div class="gallery">
                 <a href="https://lifehelper.co.kr/" target="_blank" class="gallery-link">
-                    <!-- [수정] space1.png -> space1.jpg 로 변경 (가지고 계신 파일이 jpg라고 가정) -->
-                    <img src="space1.jpg" alt="라이프헬퍼 라운지 메인" class="gallery-img">
+                    <img src="space1.png" alt="라이프헬퍼 라운지 메인" class="gallery-img">
                     <div class="gallery-overlay">라이프헬퍼 구경하기</div>
                 </a>
                 <a href="https://lifehelper.co.kr/" target="_blank" class="gallery-link">
-                    <img src="space2.jpg" alt="공간2" class="gallery-img">
+                    <img src="https://images.unsplash.com/photo-1560624052-449f5ddf0c31?auto=format&fit=crop&w=800&q=80" alt="공간2" class="gallery-img">
                     <div class="gallery-overlay">라이프헬퍼 구경하기</div>
                 </a>
                 <a href="https://lifehelper.co.kr/" target="_blank" class="gallery-link">
-                    <img src="space3.jpg" alt="공간3" class="gallery-img">
+                    <img src="https://images.unsplash.com/photo-1543007630-9710e4a00a20?auto=format&fit=crop&w=800&q=80" alt="공간3" class="gallery-img">
                     <div class="gallery-overlay">라이프헬퍼 구경하기</div>
                 </a>
             </div>
@@ -307,7 +301,7 @@
                 const data = await response.text();
                 const rows = data.split("\n").slice(1); 
 
-                boardContent.innerHTML = ""; 
+                boardContent.innerHTML = ""; // 초기화
 
                 rows.forEach(row => {
                     const cols = row.split(",");
@@ -316,19 +310,14 @@
                     const date = cols[0];      
                     const location = cols[1];  
                     
-                    // [수정 완료] [89년생] 형태로 표시되도록 복구
+                    // 참가자 정보 합치기
                     let participantInfo = cols[2]; 
-                    // 년생(D열)이 있으면: [89년생] 형태로 붙임
-                    if(cols[3] && cols[3].trim() !== "") {
-                        participantInfo += ` [${cols[3]}년생]`; 
-                    }
-                    // 직업(E열)이 있으면: 띄어쓰기 후 붙임
-                    if(cols[4] && cols[4].trim() !== "") {
-                        participantInfo += ` ${cols[4]}`;
-                    }
+                    if(cols[3] && cols[3].trim() !== "") participantInfo += ` [${cols[3]}]`;
+                    if(cols[4] && cols[4].trim() !== "") participantInfo += ` ${cols[4]}`;
                     
                     const status = cols[5] ? cols[5].trim() : ""; 
 
+                    // [수정됨] 불필요한 '[참여]' 같은 글자 제거 (순수 참가자만 표시)
                     let p_cards = participantInfo.split("/").map(p => {
                         p = p.trim();
                         // 엑셀에서 넘어온 [참여] 같은 상태값 텍스트 제거
@@ -343,6 +332,7 @@
                         return `<div class="${className}">${p}</div>`;
                     }).join('');
 
+                    // 상태 뱃지
                     let statusBadge = "";
                     if(status.includes("모집중")) {
                         statusBadge = `<span class="status-badge" style="border:1px solid #4caf50; color:#4caf50;">● 모집중</span>`;
@@ -350,6 +340,7 @@
                         statusBadge = `<span class="status-badge" style="border:1px solid #ff5555; color:#ff5555;">● 마감</span>`;
                     }
 
+                    // HTML 구조 (좌우 분리 확실하게)
                     let htmlRow = `
                         <div class="schedule-row">
                             <div class="schedule-info">
