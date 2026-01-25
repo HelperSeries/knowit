@@ -42,7 +42,7 @@
             font-weight: 300;
         }
 
-        /* 1. 네비게이션바 */
+        /* 네비게이션바 */
         nav {
             display: flex;
             justify-content: space-between;
@@ -55,30 +55,18 @@
             border-bottom: 1px solid #333;
             z-index: 1000;
         }
-        /* 로고 스타일: 이미지가 있으면 이미지를 쓰고, 깨지면 글자가 나옵니다 */
-        .logo-img { 
-            height: 40px; 
-            vertical-align: middle; 
-        } 
-        /* 로고 텍스트 (이미지 없을 때 대비) */
-        .logo-text {
-            font-family: 'Noto Serif KR', serif; 
-            font-size: 1.5rem; 
-            font-weight: bold; 
-            color: #d4af37;
-        }
-
+        .logo-img { height: 40px; vertical-align: middle; } 
+        .logo-text { font-family: 'Noto Serif KR', serif; font-size: 1.5rem; font-weight: bold; color: #d4af37; }
         .nav-links { display: flex; gap: 30px; }
         .nav-links a { font-size: 0.9rem; font-weight: 500; transition: 0.3s; }
         .nav-links a:hover { color: #d4af37; }
 
-        /* 2. 메인 화면 (Hero Section) */
+        /* 메인 화면 */
         header {
             height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            /* 배경 이미지 (수정 가능) */
             background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80');
             background-size: cover;
             background-position: center;
@@ -92,7 +80,6 @@
         }
         .sub-title { font-size: 1.3rem; margin-bottom: 40px; color: #ddd; font-weight: 300; }
 
-        /* 골드 버튼 스타일 */
         .btn-gold {
             display: inline-block;
             border: 1px solid #d4af37;
@@ -101,64 +88,24 @@
             font-size: 1rem;
             transition: 0.3s;
             cursor: pointer;
-            background: rgba(0,0,0,0.3); /* 배경 살짝 어둡게 */
+            background: rgba(0,0,0,0.3);
         }
         .btn-gold:hover { background-color: #d4af37; color: #000; font-weight: bold; }
 
-        /* 3. ABOUT 섹션 */
+        /* 소개 및 공간 섹션 */
         .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
-        .about-card {
-            background: #1a1a1a;
-            padding: 50px 30px;
-            text-align: center;
-            border: 1px solid #333;
-            transition: 0.3s;
-        }
+        .about-card { background: #1a1a1a; padding: 50px 30px; text-align: center; border: 1px solid #333; transition: 0.3s; }
         .about-card:hover { border-color: #d4af37; transform: translateY(-5px); }
         .about-card h3 { color: #d4af37; margin-bottom: 20px; font-size: 1.4rem; }
 
-        /* 4. SPACE (갤러리) - 링크 기능 추가 */
         .gallery { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; }
-        
-        /* 갤러리 아이템을 a태그(링크)로 변경 */
-        .gallery-link {
-            display: block;
-            height: 250px;
-            background-color: #333;
-            position: relative;
-            overflow: hidden;
-            border: 1px solid #333;
-            transition: 0.3s;
-        }
-        .gallery-link:hover {
-            border-color: #d4af37;
-            transform: scale(1.02);
-            z-index: 10;
-        }
-        
-        .gallery-img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: 0.3s;
-        }
-        
-        /* 마우스 올리면 '보러가기' 텍스트 뜨게 하기 */
-        .gallery-overlay {
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.6);
-            color: #fff;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            opacity: 0;
-            transition: 0.3s;
-            font-weight: bold;
-        }
+        .gallery-link { display: block; height: 250px; background-color: #333; position: relative; overflow: hidden; border: 1px solid #333; transition: 0.3s; }
+        .gallery-link:hover { border-color: #d4af37; transform: scale(1.02); z-index: 10; }
+        .gallery-img { width: 100%; height: 100%; object-fit: cover; transition: 0.3s; }
+        .gallery-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); color: #fff; display: flex; justify-content: center; align-items: center; opacity: 0; transition: 0.3s; font-weight: bold; }
         .gallery-link:hover .gallery-overlay { opacity: 1; }
 
-        /* 5. RESERVE (일정표) */
+        /* ▼▼▼ [중요] 80명 자동 정렬을 위한 핵심 스타일 ▼▼▼ */
         .schedule-board {
             background: #1a1a1a;
             padding: 40px;
@@ -166,41 +113,72 @@
             border: 1px solid #d4af37;
             margin-bottom: 40px;
         }
-        table { width: 100%; border-collapse: collapse; text-align: left; }
-        th, td { padding: 20px; border-bottom: 1px solid #333; }
-        th { color: #d4af37; width: 30%; font-weight: 500; }
-        td { color: #ddd; vertical-align: middle; }
-        
-        .participant-tag {
-            display: inline-block;
-            background: #333;
-            color: #fff;
-            padding: 6px 12px;
-            border-radius: 20px;
-            margin: 4px;
-            font-size: 0.85rem;
-            border: 1px solid #444;
+
+        /* 테이블 구조 변경 */
+        .schedule-row {
+            display: block;
+            border-bottom: 1px solid #333;
+            padding: 30px 0;
         }
-        .status-open { color: #4caf50; font-weight: bold; }
+        .schedule-row:last-child { border-bottom: none; }
+
+        .schedule-info {
+            margin-bottom: 20px;
+            border-left: 3px solid #d4af37;
+            padding-left: 15px;
+        }
+        .date-text { font-size: 1.5rem; color: #fff; font-weight: bold; font-family: 'Noto Serif KR', serif; }
+        .location-text { font-size: 1rem; color: #888; margin-top: 5px; }
+
+        /* 여기가 4명씩 정렬하는 마법의 코드입니다 (Grid) */
+        .participants-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr); /* 한 줄에 4개씩 */
+            gap: 10px; /* 사이 간격 */
+            width: 100%;
+        }
+
+        .participant-card {
+            background: #2a2a2a;
+            border: 1px solid #444;
+            padding: 12px;
+            border-radius: 6px;
+            text-align: center;
+            font-size: 0.9rem;
+            color: #eee;
+            transition: 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 50px;
+        }
+        .participant-card:hover {
+            border-color: #d4af37;
+            background: #333;
+        }
+
+        .status-open { color: #4caf50; font-weight: bold; border-color: #4caf50; }
+        
+        .status-badge {
+            display: inline-block;
+            font-size: 0.8rem;
+            padding: 3px 8px;
+            border-radius: 4px;
+            margin-left: 10px;
+            vertical-align: middle;
+        }
 
         /* 모바일 대응 */
         @media (max-width: 768px) {
             .main-title { font-size: 2.5rem; }
             .nav-links { display: none; }
             .about-grid, .gallery { grid-template-columns: 1fr; }
-            th, td { display: block; width: 100%; }
-            th { border-bottom: none; margin-top: 15px; color: #d4af37; }
-            td { padding-top: 5px; }
+            
+            /* 모바일에서는 4명이 너무 좁으니 2명씩 보이게 자동 변경 */
+            .participants-grid { grid-template-columns: repeat(2, 1fr); }
         }
 
-        footer {
-            text-align: center;
-            padding: 50px;
-            background: #000;
-            color: #555;
-            font-size: 0.8rem;
-            border-top: 1px solid #222;
-        }
+        footer { text-align: center; padding: 50px; background: #000; color: #555; font-size: 0.8rem; border-top: 1px solid #222; }
     </style>
 </head>
 <body>
@@ -224,7 +202,6 @@
         <div class="hero-content">
             <h1 class="main-title">알게 되는 밤, <span class="gold-text">Knoit</span></h1>
             <p class="sub-title">같은 시간, 성공한 남녀들을 위한<br>High-End Private Social Club</p>
-            
             <a href="https://forms.gle/q9RCXT6oCfF3wxdk7" target="_blank" class="btn-gold">참가 신청하기</a>
         </div>
     </header>
@@ -250,18 +227,15 @@
         <div class="container">
             <h2 class="section-title">THE SPACE</h2>
             <p class="section-desc">이미지를 클릭하면 <strong>'라이프헬퍼'</strong> 공간을 자세히 보실 수 있습니다.</p>
-            
             <div class="gallery">
                 <a href="https://lifehelper.co.kr/" target="_blank" class="gallery-link">
                     <img src="space1.png" alt="라이프헬퍼 라운지 메인" class="gallery-img">
                     <div class="gallery-overlay">라이프헬퍼 구경하기</div>
                 </a>
-                
                 <a href="https://lifehelper.co.kr/" target="_blank" class="gallery-link">
                     <img src="https://images.unsplash.com/photo-1560624052-449f5ddf0c31?auto=format&fit=crop&w=800&q=80" alt="공간2" class="gallery-img">
                     <div class="gallery-overlay">라이프헬퍼 구경하기</div>
                 </a>
-
                 <a href="https://lifehelper.co.kr/" target="_blank" class="gallery-link">
                     <img src="https://images.unsplash.com/photo-1543007630-9710e4a00a20?auto=format&fit=crop&w=800&q=80" alt="공간3" class="gallery-img">
                     <div class="gallery-overlay">라이프헬퍼 구경하기</div>
@@ -275,21 +249,11 @@
             <h2 class="section-title">THIS WEEK'S LINE-UP</h2>
             <p class="section-desc">매주 금/토 오후 8시 동시 진행</p>
 
-            <div class="schedule-board">
-                <table id="schedule-table">
-                    <thead>
-                        <tr>
-                            <th>일정 / 장소</th>
-                            <th>참가자 리스트 (실시간)</th>
-                        </tr>
-                    </thead>
-                    <tbody id="schedule-body">
-                        <tr><td colspan="2" style="text-align:center; padding:30px; color:#888;">일정 정보를 불러오는 중입니다...</td></tr>
-                    </tbody>
-                </table>
+            <div id="schedule-board" class="schedule-board">
+                <div style="text-align:center; padding:30px; color:#888;">일정 정보를 불러오는 중입니다...</div>
             </div>
 
-            <div style="text-align: center;">
+            <div style="text-align: center; margin-top: 30px;">
                 <p style="margin-bottom: 20px; color: #aaa;">원하는 날짜를 확인하셨나요?</p>
                 <a href="https://forms.gle/q9RCXT6oCfF3wxdk7" target="_blank" class="btn-gold">지금 신청하기 (Google Form)</a>
             </div>
@@ -307,79 +271,76 @@
     </footer>
 
     <script>
-        /* [구글 시트 실시간 연동 스크립트 - 업그레이드 버전] */
-        
-        // 여기에 아까 그 CSV 링크를 그대로 두시면 됩니다.
+        /* [구글 시트 실시간 연동 스크립트 - 4단 배열 버전] */
         const GOOGLE_SHEET_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSZVZ9QslRId6OXh3owAHaqLDQvQC5Ym672BOkDxxeGXIzcmrz1Twxm-6R5Nlim_cbK4QvoisCRnq5f/pub?gid=339069128&single=true&output=csv";
 
         async function loadSchedule() {
-            const tableBody = document.getElementById('schedule-body');
+            const board = document.getElementById('schedule-board');
             
             try {
                 const response = await fetch(GOOGLE_SHEET_CSV_URL);
                 const data = await response.text();
-                const rows = data.split("\n").slice(1); // 제목 줄 제거
+                const rows = data.split("\n").slice(1); 
 
-                tableBody.innerHTML = ""; // 초기화
+                board.innerHTML = ""; // 초기화
 
                 rows.forEach(row => {
-                    // 쉼표로 데이터 나누기
                     const cols = row.split(",");
-                    if(cols.length < 2) return; // 빈 줄 무시
+                    if(cols.length < 2) return;
 
-                    const date = cols[0];      // A열: 날짜
-                    const location = cols[1];  // B열: 장소
+                    const date = cols[0];      
+                    const location = cols[1];  
                     
-                    // C, D, E열 합치기 (닉네임 + 년생 + 직업)
-                    let participantInfo = cols[2]; // C열: 참가자(닉네임)
-                    if(cols[3] && cols[3].trim() !== "") participantInfo += ` [${cols[3]}]`; // D열: 년생
-                    if(cols[4] && cols[4].trim() !== "") participantInfo += ` ${cols[4]}`;   // E열: 직업
+                    // 참가자 정보 합치기
+                    let participantInfo = cols[2]; 
+                    if(cols[3] && cols[3].trim() !== "") participantInfo += ` [${cols[3]}]`;
+                    if(cols[4] && cols[4].trim() !== "") participantInfo += ` ${cols[4]}`;
                     
-                    // F열: 상태 (모집중/마감) - 이제 6번째 칸(인덱스 5)에서 가져옵니다
                     const status = cols[5] ? cols[5].trim() : ""; 
 
-                    // 만약 한 줄에 여러 명을 넣고 싶으시면, C열에 그냥 쭉 적으셔도 됩니다.
-                    // (슬래시 / 로 구분)
-                    let p_list = participantInfo.split("/").map(p => {
+                    // 참가자 리스트 HTML 생성 (4명씩 그리드로 변환)
+                    let p_cards = participantInfo.split("/").map(p => {
                         p = p.trim();
-                        // '신청가능' 또는 '남음'이 포함되면 초록색 강조
+                        if(!p) return ""; // 빈 값 제외
+
+                        let className = "participant-card";
                         if(p.includes("신청가능") || p.includes("남음")) {
-                            return `<span class="participant-tag status-open">${p}</span>`;
+                            className += " status-open";
                         }
-                        return `<span class="participant-tag">${p}</span>`;
+                        return `<div class="${className}">${p}</div>`;
                     }).join('');
 
-                    // 상태 뱃지 (모집중 / 마감)
+                    // 상태 뱃지
                     let statusBadge = "";
                     if(status.includes("모집중")) {
-                        statusBadge = `<span style="color:#4caf50; font-size:0.8rem; border:1px solid #4caf50; padding:2px 6px; border-radius:4px; margin-left:5px;">● 모집중</span>`;
+                        statusBadge = `<span class="status-badge" style="border:1px solid #4caf50; color:#4caf50;">● 모집중</span>`;
                     } else if (status.includes("마감") || status.includes("완료")) {
-                        statusBadge = `<span style="color:#ff5555; font-size:0.8rem; border:1px solid #ff5555; padding:2px 6px; border-radius:4px; margin-left:5px;">● 마감</span>`;
+                        statusBadge = `<span class="status-badge" style="border:1px solid #ff5555; color:#ff5555;">● 마감</span>`;
                     }
 
+                    // HTML 구조 조립 (제목 + 4단 그리드)
                     let htmlRow = `
-                        <tr>
-                            <td>
-                                <strong style="font-size:1.1rem; color:#fff;">${date}</strong>${statusBadge}<br>
-                                <span style="font-size:0.9rem; color:#888;">📍 ${location}</span>
-                            </td>
-                            <td>${p_list}</td>
-                        </tr>
+                        <div class="schedule-row">
+                            <div class="schedule-info">
+                                <div class="date-text">${date} ${statusBadge}</div>
+                                <div class="location-text">📍 ${location}</div>
+                            </div>
+                            <div class="participants-grid">
+                                ${p_cards}
+                            </div>
+                        </div>
                     `;
-                    tableBody.innerHTML += htmlRow;
+                    board.innerHTML += htmlRow;
                 });
 
             } catch (error) {
-                console.error("데이터 로딩 실패:", error);
-                tableBody.innerHTML = `<tr><td colspan="2" style="text-align:center; padding:30px; color:#888;">일정을 불러오는 중입니다...<br>(잠시 후 새로고침 해주세요)</td></tr>`;
+                console.error("실패:", error);
+                board.innerHTML = `<div style="text-align:center; padding:30px; color:#888;">일정을 불러오는 중입니다...</div>`;
             }
         }
 
         loadSchedule();
     </script>
-    
+
 </body>
 </html>
-
-
-
