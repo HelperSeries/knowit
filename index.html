@@ -302,9 +302,9 @@
     </footer>
 
     <script>
-        /* [구글 시트 실시간 연동 스크립트] */
+        /* [구글 시트 실시간 연동 스크립트 - 업그레이드 버전] */
         
-        // [수정됨] 대표님이 제공하신 구글 시트 CSV 링크가 적용되었습니다.
+        // 여기에 아까 그 CSV 링크를 그대로 두시면 됩니다.
         const GOOGLE_SHEET_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSZVZ9QslRId6OXh3owAHaqLDQvQC5Ym672BOkDxxeGXIzcmrz1Twxm-6R5Nlim_cbK4QvoisCRnq5f/pub?gid=339069128&single=true&output=csv";
 
         async function loadSchedule() {
@@ -318,28 +318,37 @@
                 tableBody.innerHTML = ""; // 초기화
 
                 rows.forEach(row => {
+                    // 쉼표로 데이터 나누기
                     const cols = row.split(",");
-                    if(cols.length < 3) return;
+                    if(cols.length < 2) return; // 빈 줄 무시
 
-                    const date = cols[0];      // A열
-                    const location = cols[1];  // B열
-                    const rawParticipants = cols[2]; // C열
-                    const status = cols[3] ? cols[3].trim() : ""; // D열
+                    const date = cols[0];      // A열: 날짜
+                    const location = cols[1];  // B열: 장소
+                    
+                    // C, D, E열 합치기 (닉네임 + 년생 + 직업)
+                    let participantInfo = cols[2]; // C열: 참가자(닉네임)
+                    if(cols[3] && cols[3].trim() !== "") participantInfo += ` [${cols[3]}]`; // D열: 년생
+                    if(cols[4] && cols[4].trim() !== "") participantInfo += ` ${cols[4]}`;   // E열: 직업
+                    
+                    // F열: 상태 (모집중/마감) - 이제 6번째 칸(인덱스 5)에서 가져옵니다
+                    const status = cols[5] ? cols[5].trim() : ""; 
 
-                    // 참가자 리스트 꾸미기 (슬래시 / 로 구분)
-                    let p_list = rawParticipants.split("/").map(p => {
+                    // 만약 한 줄에 여러 명을 넣고 싶으시면, C열에 그냥 쭉 적으셔도 됩니다.
+                    // (슬래시 / 로 구분)
+                    let p_list = participantInfo.split("/").map(p => {
                         p = p.trim();
+                        // '신청가능' 또는 '남음'이 포함되면 초록색 강조
                         if(p.includes("신청가능") || p.includes("남음")) {
                             return `<span class="participant-tag status-open">${p}</span>`;
                         }
                         return `<span class="participant-tag">${p}</span>`;
                     }).join('');
 
-                    // 상태 뱃지
+                    // 상태 뱃지 (모집중 / 마감)
                     let statusBadge = "";
                     if(status.includes("모집중")) {
                         statusBadge = `<span style="color:#4caf50; font-size:0.8rem; border:1px solid #4caf50; padding:2px 6px; border-radius:4px; margin-left:5px;">● 모집중</span>`;
-                    } else if (status.includes("마감")) {
+                    } else if (status.includes("마감") || status.includes("완료")) {
                         statusBadge = `<span style="color:#ff5555; font-size:0.8rem; border:1px solid #ff5555; padding:2px 6px; border-radius:4px; margin-left:5px;">● 마감</span>`;
                     }
 
@@ -363,6 +372,7 @@
 
         loadSchedule();
     </script>
-
+    
 </body>
 </html>
+
