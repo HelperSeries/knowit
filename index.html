@@ -312,7 +312,7 @@
                     
                     // 참가자 정보 합치기
                     let participantInfo = cols[2]; 
-                    if(cols[3] && cols[3].trim() !== "") participantInfo += ` [${cols[3]}]`;
+                    if(cols[3] && cols[3].trim() !== "") participantInfo += ` [${cols[3]}년생]`; // [수정됨] 년생 추가
                     if(cols[4] && cols[4].trim() !== "") participantInfo += ` ${cols[4]}`;
                     
                     const status = cols[5] ? cols[5].trim() : ""; 
