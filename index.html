@@ -115,15 +115,15 @@
             word-break: keep-all;
         }
 
-        /* [수정됨] 갤러리 스타일 변경: 세로 배치 & 원본 비율 유지 */
+        /* [수정됨] 갤러리 스타일: PC에서는 가로 3개 배치 */
         .gallery { 
             display: grid; 
-            grid-template-columns: 1fr; /* 한 줄에 1개씩 (세로 배치) */
-            gap: 40px; /* 사진 사이 간격 넓힘 */
+            grid-template-columns: repeat(3, 1fr); /* 기본: 가로 3개 */
+            gap: 20px; 
         }
         .gallery-link { 
             display: block; 
-            height: auto; /* 고정 높이 제거 (사진 비율대로) */
+            height: auto; 
             background-color: #333; 
             position: relative; 
             overflow: hidden; 
@@ -132,13 +132,14 @@
         }
         .gallery-link:hover { 
             border-color: #d4af37; 
-            transform: scale(1.01); /* 살짝 커짐 */
+            transform: scale(1.02); 
             z-index: 10; 
         }
         .gallery-img { 
             width: 100%; 
-            height: auto; /* 원본 비율 유지 (잘리지 않음) */
-            display: block; /* 하단 여백 제거 */
+            height: 250px; /* PC에서는 높이 고정하여 깔끔하게 정렬 */
+            object-fit: cover; /* 비율 유지하며 꽉 채움 */
+            display: block; 
             transition: 0.3s; 
         }
         .gallery-overlay { 
@@ -235,6 +236,15 @@
             /* [추가됨] 모바일에서만 줄바꿈 작동 */
             .mobile-br { display: block; }
 
+            /* [수정됨] 갤러리 모바일: 세로 1줄로 변경 & 사진 전체 보이게 */
+            .gallery { 
+                grid-template-columns: 1fr; /* 세로 배치 */
+                gap: 30px;
+            }
+            .gallery-img {
+                height: auto; /* 높이 제한 해제 (전체 다 보이게) */
+            }
+
             .board-header { display: none; }
             .schedule-row { flex-direction: column; }
             .schedule-info { width: 100%; margin-bottom: 20px; margin-right: 0; }
@@ -305,7 +315,7 @@
                     </p>
                     <ul style="list-style:none; padding:0;">
                         <li style="margin-bottom:8px;"><strong>📅 일시:</strong> 신원 확인 완료 후, 일정 공유 링크를 전해 드립니다.</li>
-                        <li style="margin-bottom:8px;"><strong>📍 장소:</strong> 서울전역 (신원 인증 절차자에게만 개별 안내)</li>
+                        <li style="margin-bottom:8px;"><strong>📍 장소:</strong> 서울전역 (신원 인증 완료자에게만 개별 안내)</li>
                         <li style="margin-bottom:8px;"><strong>🍷 제공:</strong> 와인 + 핑거푸드 케이터링</li>
                     </ul>
                 </div>
@@ -331,6 +341,11 @@
                     <img src="space3.jpg" alt="공간3" class="gallery-img">
                     <div class="gallery-overlay">라이프헬퍼 구경하기</div>
                 </a>
+            </div>
+            
+            <!-- [추가됨] 숙소 섹션 하단 신청하기 버튼 -->
+            <div style="text-align: center; margin-top: 40px;">
+                <a href="https://forms.gle/q9RCXT6oCfF3wxdk7" target="_blank" class="btn-gold">지금 신청하기</a>
             </div>
         </div>
     </section>
