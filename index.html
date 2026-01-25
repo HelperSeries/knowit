@@ -315,21 +315,17 @@
                     const date = cols[0];      
                     const location = cols[1];  
                     
-                    // [수정됨] 년생 자동 추가 코드 제거! 
-                    // 이제 시트에 적힌 그대로 나옵니다. 예: [89]
+                    // [수정됨] 대괄호 [] 제거 + 년생 글자 제거 
+                    // 이제 시트에 적힌 내용 그대로 순수하게 나옵니다.
                     let participantInfo = cols[2]; 
-                    if(cols[3] && cols[3].trim() !== "") participantInfo += ` [${cols[3]}]`; // 여기 '년생' 삭제함
+                    if(cols[3] && cols[3].trim() !== "") participantInfo += ` ${cols[3]}`; // [89] 대신 89
                     if(cols[4] && cols[4].trim() !== "") participantInfo += ` ${cols[4]}`;
                     
                     const status = cols[5] ? cols[5].trim() : ""; 
 
                     let p_cards = participantInfo.split("/").map(p => {
                         p = p.trim();
-                        // 엑셀에서 넘어온 [참여] 같은 상태값 텍스트 제거
                         p = p.replace(/\[참여\]/g, "").replace(/참여/g, "").trim();
-
-                        // [수정됨] 강제로 '년생' 붙이는 코드 삭제
-                        // p = p.replace(/([({])(\d{2})([)}])/g, '$1$2년생$3'); <--- 이거 삭제함
 
                         if(!p) return ""; 
 
