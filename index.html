@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>노잇 (Noit) - 알게 되는 밤</title>
+    <title>Knoit (노잇) - 알게 되는 밤</title>
     
     <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@300;500;700&family=Pretendard:wght@300;400;600&display=swap" rel="stylesheet">
 
@@ -13,7 +13,7 @@
         
         body {
             font-family: 'Pretendard', sans-serif;
-            background-color: #111; /* 전체 배경: 딥 블랙 */
+            background-color: #111;
             color: #fff;
             line-height: 1.6;
         }
@@ -21,7 +21,7 @@
         a { text-decoration: none; color: inherit; }
         ul { list-style: none; }
 
-        /* 포인트 컬러: 샴페인 골드 */
+        /* 포인트 컬러 */
         .gold-text { color: #d4af37; }
         
         /* 공통 섹션 스타일 */
@@ -29,7 +29,7 @@
         .container { max-width: 1200px; margin: 0 auto; }
         
         .section-title {
-            font-family: 'Noto Serif KR', serif; /* 우아한 명조체 */
+            font-family: 'Noto Serif KR', serif;
             font-size: 2.5rem;
             color: #d4af37;
             text-align: center;
@@ -47,7 +47,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 20px 5%;
+            padding: 15px 5%;
             position: fixed;
             width: 100%;
             top: 0;
@@ -55,7 +55,19 @@
             border-bottom: 1px solid #333;
             z-index: 1000;
         }
-        .logo { font-family: 'Noto Serif KR', serif; font-size: 1.5rem; font-weight: bold; color: #d4af37; }
+        /* 로고 스타일: 이미지가 있으면 이미지를 쓰고, 깨지면 글자가 나옵니다 */
+        .logo-img { 
+            height: 40px; 
+            vertical-align: middle; 
+        } 
+        /* 로고 텍스트 (이미지 없을 때 대비) */
+        .logo-text {
+            font-family: 'Noto Serif KR', serif; 
+            font-size: 1.5rem; 
+            font-weight: bold; 
+            color: #d4af37;
+        }
+
         .nav-links { display: flex; gap: 30px; }
         .nav-links a { font-size: 0.9rem; font-weight: 500; transition: 0.3s; }
         .nav-links a:hover { color: #d4af37; }
@@ -66,7 +78,8 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80'); /* 임시 배경 이미지 */
+            /* 배경 이미지 (수정 가능) */
+            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80');
             background-size: cover;
             background-position: center;
             text-align: center;
@@ -88,6 +101,7 @@
             font-size: 1rem;
             transition: 0.3s;
             cursor: pointer;
+            background: rgba(0,0,0,0.3); /* 배경 살짝 어둡게 */
         }
         .btn-gold:hover { background-color: #d4af37; color: #000; font-weight: bold; }
 
@@ -103,23 +117,46 @@
         .about-card:hover { border-color: #d4af37; transform: translateY(-5px); }
         .about-card h3 { color: #d4af37; margin-bottom: 20px; font-size: 1.4rem; }
 
-        /* 4. SPACE (갤러리) */
+        /* 4. SPACE (갤러리) - 링크 기능 추가 */
         .gallery { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; }
-        .gallery-item {
+        
+        /* 갤러리 아이템을 a태그(링크)로 변경 */
+        .gallery-link {
+            display: block;
             height: 250px;
             background-color: #333;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #777;
-            font-weight: bold;
-            background-size: cover;
-            background-position: center;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid #333;
+            transition: 0.3s;
         }
-        /* 임시 이미지 플레이스홀더 */
-        .g1 { background-image: url('https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=800&q=80'); }
-        .g2 { background-image: url('https://images.unsplash.com/photo-1560624052-449f5ddf0c31?auto=format&fit=crop&w=800&q=80'); }
-        .g3 { background-image: url('https://images.unsplash.com/photo-1543007630-9710e4a00a20?auto=format&fit=crop&w=800&q=80'); }
+        .gallery-link:hover {
+            border-color: #d4af37;
+            transform: scale(1.02);
+            z-index: 10;
+        }
+        
+        .gallery-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: 0.3s;
+        }
+        
+        /* 마우스 올리면 '보러가기' 텍스트 뜨게 하기 */
+        .gallery-overlay {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.6);
+            color: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: 0.3s;
+            font-weight: bold;
+        }
+        .gallery-link:hover .gallery-overlay { opacity: 1; }
 
         /* 5. RESERVE (일정표) */
         .schedule-board {
@@ -144,7 +181,7 @@
             font-size: 0.85rem;
             border: 1px solid #444;
         }
-        .status-open { color: #4caf50; font-weight: bold; } /* 모집중 초록색 */
+        .status-open { color: #4caf50; font-weight: bold; }
 
         /* 모바일 대응 */
         @media (max-width: 768px) {
@@ -169,7 +206,12 @@
 <body>
 
     <nav>
-        <div class="logo">NOIT</div>
+        <div class="logo">
+            <a href="#home">
+                <img src="logo.png" alt="Knoit Logo" class="logo-img" onerror="this.style.display='none'; document.querySelector('.logo-text').style.display='inline';">
+                <span class="logo-text" style="display:none;">Knoit</span>
+            </a>
+        </div>
         <ul class="nav-links">
             <li><a href="#home">HOME</a></li>
             <li><a href="#about">ABOUT</a></li>
@@ -180,15 +222,16 @@
 
     <header id="home">
         <div class="hero-content">
-            <h1 class="main-title">알게 되는 밤, <span class="gold-text">노잇</span></h1>
+            <h1 class="main-title">알게 되는 밤, <span class="gold-text">Knoit</span></h1>
             <p class="sub-title">같은 시간, 성공한 남녀들을 위한<br>High-End Private Social Club</p>
-            <a href="#reserve" class="btn-gold">참가 신청하기</a>
+            
+            <a href="https://forms.gle/q9RCXT6oCfF3wxdk7" target="_blank" class="btn-gold">참가 신청하기</a>
         </div>
     </header>
 
     <section id="about">
         <div class="container">
-            <h2 class="section-title">WHY NOIT?</h2>
+            <h2 class="section-title">WHY Knoit?</h2>
             <p class="section-desc">무분별한 만남이 아닌, '결'이 맞는 사람들의 품격 있는 교류</p>
             <div class="about-grid">
                 <div class="about-card">
@@ -206,11 +249,23 @@
     <section id="space">
         <div class="container">
             <h2 class="section-title">THE SPACE</h2>
-            <p class="section-desc">공간 전문가 <strong>'라이프헬퍼'</strong>가 제공하는 최상의 프라이빗 라운지</p>
+            <p class="section-desc">이미지를 클릭하면 <strong>'라이프헬퍼'</strong> 공간을 자세히 보실 수 있습니다.</p>
+            
             <div class="gallery">
-                <div class="gallery-item g1"></div>
-                <div class="gallery-item g2"></div>
-                <div class="gallery-item g3"></div>
+                <a href="https://lifehelper.co.kr/" target="_blank" class="gallery-link">
+                    <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=800&q=80" alt="공간1" class="gallery-img">
+                    <div class="gallery-overlay">라이프헬퍼 구경하기</div>
+                </a>
+                
+                <a href="https://lifehelper.co.kr/" target="_blank" class="gallery-link">
+                    <img src="https://images.unsplash.com/photo-1560624052-449f5ddf0c31?auto=format&fit=crop&w=800&q=80" alt="공간2" class="gallery-img">
+                    <div class="gallery-overlay">라이프헬퍼 구경하기</div>
+                </a>
+
+                <a href="https://lifehelper.co.kr/" target="_blank" class="gallery-link">
+                    <img src="https://images.unsplash.com/photo-1543007630-9710e4a00a20?auto=format&fit=crop&w=800&q=80" alt="공간3" class="gallery-img">
+                    <div class="gallery-overlay">라이프헬퍼 구경하기</div>
+                </a>
             </div>
         </div>
     </section>
@@ -241,13 +296,12 @@
     </section>
 
     <footer>
-        <p>&copy; 2026 NOIT. All Rights Reserved.</p>
-        <p>Host: Life Helper | Contact: Instagram @noit_official</p>
+        <p>&copy; 2026 Knoit. All Rights Reserved.</p>
+        <p>Host: Life Helper | Contact: Instagram @knoit_official</p>
     </footer>
 
     <script>
         /* === [기능: 데이터 관리 영역] === */
-        // ▼ 대표님이 여기 내용만 바꾸면 사이트가 바뀝니다! ▼
         const scheduleData = [
             {
                 date: "1월 27일 (금) 20:00",
@@ -270,13 +324,11 @@
                 ]
             }
         ];
-        // ▲ 수정 끝 ▲
 
-        // 화면에 그리기 (건드리지 마세요)
+        // 화면에 그리기
         const tableBody = document.getElementById('schedule-body');
         scheduleData.forEach(item => {
             let participantHTML = item.participants.map(p => {
-                // '신청가능' 글자가 포함되면 초록색으로 표시
                 if(p.includes("신청가능")) return `<span class="participant-tag status-open">${p}</span>`;
                 return `<span class="participant-tag">${p}</span>`;
             }).join('');
