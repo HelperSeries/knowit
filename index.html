@@ -301,50 +301,76 @@
     </footer>
 
     <script>
-        /* === [기능: 데이터 관리 영역] === */
-        const scheduleData = [
-            {
-                date: "1월 27일 (금) 20:00",
-                location: "강남 라이프헬퍼 라운지",
-                participants: [
-                    "👨 [90년생] 변호사 (지인추천)",
-                    "👨 [92년생] 성형외과 원장",
-                    "👩 [00년생] 국립무용단원",
-                    "👩 [98년생] 한국무용 전공"
-                ]
-            },
-            {
-                date: "1월 28일 (토) 20:00",
-                location: "이태원 프라이빗 룸",
-                participants: [
-                    "👨 [89년생] 외국계 IT 임원",
-                    "👨 [93년생] 회계사",
-                    "👩 [99년생] 프리랜서 무용수",
-                    "✨ [신청가능] 여성 1자리 남음"
-                ]
+        /* [구글 시트 실시간 연동 스크립트] 
+           이제 코드를 수정할 필요 없이, 구글 시트만 수정하면 사이트가 바뀝니다.
+        */
+
+        // 1. 아까 복사한 '웹에 게시' 링크를 따옴표 안에 넣으세요.
+        const GOOGLE_SHEET_CSV_URL = "여기에_구글시트_링크를_붙여넣으세요";
+
+        async function loadSchedule() {
+            const tableBody = document.getElementById('schedule-body');
+            
+            try {
+                // 구글 시트 데이터 가져오기
+                const response = await fetch(GOOGLE_SHEET_CSV_URL);
+                const data = await response.text();
+                
+                // 가져온 엑셀 데이터(CSV)를 한 줄씩 쪼개기
+                const rows = data.split("\n").slice(1); // 첫 줄(제목)은 버림
+
+                tableBody.innerHTML = ""; // 기존 내용 초기화
+
+                rows.forEach(row => {
+                    // 콤마(,)로 칸 나누기
+                    // 주의: 데이터 안에 콤마가 있으면 안 됩니다.
+                    const cols = row.split(",");
+                    
+                    // 빈 줄이면 무시
+                    if(cols.length < 3) return;
+
+                    const date = cols[0];      // A열: 날짜
+                    const location = cols[1];  // B열: 장소
+                    const rawParticipants = cols[2]; // C열: 참가자들 (슬래시 / 로 구분 추천)
+                    const status = cols[3] ? cols[3].trim() : ""; // D열: 상태
+
+                    // 참가자 리스트 꾸미기 (슬래시 / 기호로 여러 명 구분해서 적으세요)
+                    // 예: 👨변호사/👩무용수/✨신청가능
+                    let p_list = rawParticipants.split("/").map(p => {
+                        p = p.trim(); // 공백 제거
+                        if(p.includes("신청가능") || p.includes("남음")) {
+                            return `<span class="participant-tag status-open">${p}</span>`;
+                        }
+                        return `<span class="participant-tag">${p}</span>`;
+                    }).join('');
+
+                    // 상태(모집중/마감) 뱃지
+                    let statusBadge = "";
+                    if(status.includes("모집중")) {
+                        statusBadge = `<span style="color:#4caf50; font-size:0.8rem; border:1px solid #4caf50; padding:2px 6px; border-radius:4px; margin-left:5px;">● 모집중</span>`;
+                    } else if (status.includes("마감")) {
+                        statusBadge = `<span style="color:#ff5555; font-size:0.8rem; border:1px solid #ff5555; padding:2px 6px; border-radius:4px; margin-left:5px;">● 마감</span>`;
+                    }
+
+                    // 화면에 그리기
+                    let htmlRow = `
+                        <tr>
+                            <td>
+                                <strong style="font-size:1.1rem; color:#fff;">${date}</strong>${statusBadge}<br>
+                                <span style="font-size:0.9rem; color:#888;">📍 ${location}</span>
+                            </td>
+                            <td>${p_list}</td>
+                        </tr>
+                    `;
+                    tableBody.innerHTML += htmlRow;
+                });
+
+            } catch (error) {
+                console.error("데이터 로딩 실패:", error);
+                tableBody.innerHTML = `<tr><td colspan="2" style="text-align:center; color:#888;">일정 정보를 불러오는 중입니다...<br>(잠시 후 새로고침 해주세요)</td></tr>`;
             }
-        ];
+        }
 
-        // 화면에 그리기
-        const tableBody = document.getElementById('schedule-body');
-        scheduleData.forEach(item => {
-            let participantHTML = item.participants.map(p => {
-                if(p.includes("신청가능")) return `<span class="participant-tag status-open">${p}</span>`;
-                return `<span class="participant-tag">${p}</span>`;
-            }).join('');
-
-            let row = `
-                <tr>
-                    <td>
-                        <strong style="font-size:1.1rem; color:#fff;">${item.date}</strong><br>
-                        <span style="font-size:0.9rem; color:#888;">📍 ${item.location}</span>
-                    </td>
-                    <td>${participantHTML}</td>
-                </tr>
-            `;
-            tableBody.innerHTML += row;
-        });
+        // 페이지 켜지면 바로 실행
+        loadSchedule();
     </script>
-
-</body>
-</html>
