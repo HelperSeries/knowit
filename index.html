@@ -98,9 +98,20 @@
 
         /* 소개 및 공간 섹션 */
         .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
-        .about-card { background: #1a1a1a; padding: 50px 30px; text-align: center; border: 1px solid #333; transition: 0.3s; }
+        .about-card { 
+            background: #1a1a1a; 
+            padding: 50px 30px; 
+            text-align: center; 
+            border: 1px solid #333; 
+            transition: 0.3s; 
+        }
         .about-card:hover { border-color: #d4af37; transform: translateY(-5px); }
         .about-card h3 { color: #d4af37; margin-bottom: 20px; font-size: 1.4rem; }
+        /* [추가됨] 카드 텍스트 가독성 개선 */
+        .about-card p {
+            line-height: 1.8; /* 줄간격을 조금 더 넓게 */
+            word-break: keep-all; /* 단어 중간에 끊기지 않게 */
+        }
 
         .gallery { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; }
         .gallery-link { display: block; height: 250px; background-color: #333; position: relative; overflow: hidden; border: 1px solid #333; transition: 0.3s; }
@@ -184,63 +195,12 @@
             border: 1px solid #ccc;
         }
 
-        /* ▼▼▼ [수정됨] 모바일 레이아웃 최적화 (이 부분이 핵심입니다!) ▼▼▼ */
+        /* 모바일 대응 */
         @media (max-width: 768px) {
-            /* 네비게이션 간소화 */
-            .nav-links { gap: 15px; }
-            .nav-links a { font-size: 0.75rem; }
-            .logo-text { font-size: 1.2rem; }
-            
-            /* 메인 타이틀 크기 조정 */
-            .main-title { font-size: 2.2rem; }
-            section { padding: 50px 5%; }
-
-            /* 갤러리 1열로 */
-            .gallery { grid-template-columns: 1fr; }
-
-            /* ★ 일정표 모바일 레이아웃 강력 고정 ★ */
-            .board-header { display: none; } /* 헤더 숨김 */
-            
-            .schedule-row { 
-                flex-direction: row; /* 좌우 배치 유지 */
-                padding: 15px 10px; /* 패딩 축소 */
-                align-items: flex-start;
-            }
-            
-            /* 왼쪽 날짜 영역 (30% 차지) */
-            .schedule-info { 
-                width: 30%; 
-                min-width: auto; 
-                margin-right: 10px; 
-                padding-left: 10px;
-                border-left-width: 2px;
-            }
-            
-            .date-text { font-size: 0.9rem; word-break: keep-all; line-height: 1.2; } /* 날짜 글씨 작게 */
-            .location-text { font-size: 0.7rem; margin-top: 3px; }
-            
-            /* 상태 뱃지 (모집중 등) */
-            .status-badge { 
-                display: block; 
-                margin: 4px 0 0 0; 
-                padding: 2px 4px;
-                font-size: 0.65rem;
-                width: fit-content;
-            }
-
-            /* 오른쪽 참가자 영역 (70% 차지) */
-            .participants-grid { 
-                width: 70%; 
-                grid-template-columns: repeat(2, 1fr); /* 2명씩 나열 */
-                gap: 5px;
-            }
-            
-            .participant-card {
-                font-size: 0.75rem; /* 참가자 글씨 작게 */
-                padding: 6px 4px;
-                min-height: auto;
-                line-height: 1.3;
-            }
+            .board-header { display: none; }
+            .schedule-row { flex-direction: column; }
+            .schedule-info { width: 100%; margin-bottom: 20px; margin-right: 0; }
+            .participants-grid { width: 100%; grid-template-columns: repeat(2, 1fr); }
         }
 
         footer { text-align: center; padding: 50px; background: #000; color: #555; font-size: 0.8rem; border-top: 1px solid #222; }
@@ -278,11 +238,23 @@
             <div class="about-grid">
                 <div class="about-card">
                     <h3>Reason & Sense</h3>
-                    <p>사회적 기반을 갖춘 <strong>전문직 남성</strong>의 이성과<br>예술적 깊이를 지닌 <strong>무용수 여성</strong>의 감성.<br>가장 완벽한 조화를 경험하세요.</p>
+                    <p>
+                        사회적 기반을 갖춘 <br>
+                        <strong>전문직 남성</strong>의 이성과<br>
+                        예술적 깊이를 지닌 <br>
+                        <strong>무용수 여성</strong>의 감성.<br>
+                        가장 완벽한 조화를 경험하세요.
+                    </p>
                 </div>
                 <div class="about-card">
                     <h3>Strict Curation</h3>
-                    <p>아무나 초대하지 않습니다.<br>직업, 신원, 이미지가 <strong>엄격하게 검증된 분</strong>들만<br>이 프라이빗한 공간에 입장할 수 있습니다.</p>
+                    <p>
+                        아무나 초대하지 않습니다.<br>
+                        직업, 신원, 이미지가 <strong>엄격하게</strong> <br>
+                        <strong>검증된 분</strong>들만<br>
+                        이 프라이빗한 공간에 <br>
+                        입장할 수 있습니다.
+                    </p>
                 </div>
             </div>
             <!-- 상세 안내 추가 -->
@@ -295,7 +267,7 @@
                     </p>
                     <ul style="list-style:none; padding:0;">
                         <li style="margin-bottom:8px;"><strong>📅 일시:</strong> 신원 확인 완료 후, 일정 공유 링크를 전해 드립니다.</li>
-                        <li style="margin-bottom:8px;"><strong>📍 장소:</strong> 서울전역 (신원 인증 완료자에게만 개별 안내)</li>
+                        <li style="margin-bottom:8px;"><strong>📍 장소:</strong> 서울전역 (신원 인증 절차자에게만 개별 안내)</li>
                         <li style="margin-bottom:8px;"><strong>🍷 제공:</strong> 와인 + 핑거푸드 케이터링</li>
                     </ul>
                 </div>
