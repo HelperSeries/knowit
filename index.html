@@ -316,17 +316,19 @@
                     const date = cols[0];      
                     const location = cols[1];  
                     
-                    // [수정됨] '닉네임 [00년생] 직업' 포맷으로 변경
+                    // [수정됨] C열(참가자 리스트)만 사용하고, 강제 병합 코드는 제거
                     let participantInfo = cols[2]; 
-                    if(cols[3] && cols[3].trim() !== "") participantInfo += ` [${cols[3]}년생]`; // [86년생] 형태로 강제 적용
-                    if(cols[4] && cols[4].trim() !== "") participantInfo += ` ${cols[4]}`;
+                    // (기존에 D열, E열 합치던 코드는 삭제하여 '[ 년생]' 오류 방지)
                     
                     const status = cols[5] ? cols[5].trim() : ""; 
 
                     let p_cards = participantInfo.split("/").map(p => {
                         p = p.trim();
-                        // 엑셀에서 넘어온 [참여] 같은 상태값 텍스트 제거
-                        p = p.replace(/\[참여\]/g, "").replace(/참여/g, "").trim();
+                        // 1. 불필요한 텍스트 제거 ( [ 년생] 제거 포함)
+                        p = p.replace(/\[참여\]/g, "").replace(/참여/g, "").replace(/\[년생\]/g, "").trim();
+
+                        // 2. {숫자} -> {숫자년생} 으로 변환 (ex: {99} -> {99년생})
+                        p = p.replace(/\{(\d+)\}/g, "{$1년생}");
 
                         if(!p) return ""; 
 
