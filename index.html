@@ -233,18 +233,12 @@
 
         /* 모바일 대응 */
         @media (max-width: 768px) {
-            /* [추가됨] 모바일에서만 줄바꿈 작동 */
-            .mobile-br { display: block; }
+            /* [추가됨] 네비게이션 모바일 최적화 (오른쪽 정렬 및 한 줄 유지) */
+            .nav-links { gap: 10px; } /* 간격 좁힘 */
+            .nav-links a { font-size: 0.75rem; } /* 글자 크기 조정 */
+            .logo-text { font-size: 1.2rem; } /* 로고 크기 살짝 조정 */
 
-            /* [수정됨] 갤러리 모바일: 세로 1줄로 변경 & 사진 전체 보이게 */
-            .gallery { 
-                grid-template-columns: 1fr; /* 모바일: 세로 배치 */
-                gap: 30px;
-            }
-            .gallery-img {
-                height: auto; /* 높이 제한 해제 (전체 다 보이게) */
-            }
-
+            /* 기존 모바일 스타일 */
             .board-header { display: none; }
             .schedule-row { flex-direction: column; }
             .schedule-info { width: 100%; margin-bottom: 20px; margin-right: 0; }
