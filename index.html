@@ -184,53 +184,62 @@
             border: 1px solid #ccc;
         }
 
-        /* ▼▼▼ [수정됨] 모바일 레이아웃 최적화 ▼▼▼ */
+        /* ▼▼▼ [수정됨] 모바일 레이아웃 최적화 (이 부분이 핵심입니다!) ▼▼▼ */
         @media (max-width: 768px) {
-            /* 네비게이션: 글씨를 작게 해서 한 줄에 보이게 유지 */
+            /* 네비게이션 간소화 */
             .nav-links { gap: 15px; }
             .nav-links a { font-size: 0.75rem; }
             .logo-text { font-size: 1.2rem; }
             
-            /* 메인 화면 */
+            /* 메인 타이틀 크기 조정 */
             .main-title { font-size: 2.2rem; }
-            section { padding: 60px 5%; } /* 여백 축소 */
+            section { padding: 50px 5%; }
 
-            /* 공간 사진 갤러리: 1줄로 보이면 너무 기니까 1줄 유지하되 비율 조정 (또는 1열) */
+            /* 갤러리 1열로 */
             .gallery { grid-template-columns: 1fr; }
 
-            /* ★★★ 일정표 모바일 설정 (PC처럼 좌우 배치 유지) ★★★ */
-            .board-header { 
-                display: flex; /* 헤더 숨기지 않음 */
-                padding: 10px 15px; 
-                font-size: 0.8rem; 
-            }
+            /* ★ 일정표 모바일 레이아웃 강력 고정 ★ */
+            .board-header { display: none; } /* 헤더 숨김 */
             
             .schedule-row { 
-                flex-direction: row; /* 좌우 배치 강제 유지 */
-                padding: 15px; 
+                flex-direction: row; /* 좌우 배치 유지 */
+                padding: 15px 10px; /* 패딩 축소 */
+                align-items: flex-start;
             }
             
+            /* 왼쪽 날짜 영역 (30% 차지) */
             .schedule-info { 
-                width: 30%; /* 날짜 영역 좁게 */
-                min-width: auto; /* 고정 너비 해제 */
+                width: 30%; 
+                min-width: auto; 
                 margin-right: 10px; 
-                padding-left: 10px; /* 왼쪽 선 간격 축소 */
+                padding-left: 10px;
+                border-left-width: 2px;
             }
             
-            .date-text { font-size: 1rem; } /* 날짜 글씨 축소 */
-            .location-text { font-size: 0.75rem; margin-top: 3px; }
-            .status-badge { display: block; margin: 5px 0 0 0; width: fit-content; } /* 뱃지 줄바꿈 */
+            .date-text { font-size: 0.9rem; word-break: keep-all; line-height: 1.2; } /* 날짜 글씨 작게 */
+            .location-text { font-size: 0.7rem; margin-top: 3px; }
+            
+            /* 상태 뱃지 (모집중 등) */
+            .status-badge { 
+                display: block; 
+                margin: 4px 0 0 0; 
+                padding: 2px 4px;
+                font-size: 0.65rem;
+                width: fit-content;
+            }
 
+            /* 오른쪽 참가자 영역 (70% 차지) */
             .participants-grid { 
                 width: 70%; 
-                grid-template-columns: repeat(2, 1fr); /* 2명씩 보이게 (3명은 너무 좁음) */
+                grid-template-columns: repeat(2, 1fr); /* 2명씩 나열 */
                 gap: 5px;
             }
             
             .participant-card {
-                font-size: 0.75rem; /* 카드 글씨 축소 */
-                padding: 5px;
+                font-size: 0.75rem; /* 참가자 글씨 작게 */
+                padding: 6px 4px;
                 min-height: auto;
+                line-height: 1.3;
             }
         }
 
@@ -286,7 +295,7 @@
                     </p>
                     <ul style="list-style:none; padding:0;">
                         <li style="margin-bottom:8px;"><strong>📅 일시:</strong> 신원 확인 완료 후, 일정 공유 링크를 전해 드립니다.</li>
-                        <li style="margin-bottom:8px;"><strong>📍 장소:</strong> 서울전역 (신원 인증 절차자에게만 개별 안내)</li>
+                        <li style="margin-bottom:8px;"><strong>📍 장소:</strong> 서울전역 (신원 인증 완료자에게만 개별 안내)</li>
                         <li style="margin-bottom:8px;"><strong>🍷 제공:</strong> 와인 + 핑거푸드 케이터링</li>
                     </ul>
                 </div>
@@ -300,7 +309,6 @@
             <p class="section-desc">이미지를 클릭하면 <strong>'라이프헬퍼'</strong> 공간을 자세히 보실 수 있습니다.</p>
             <div class="gallery">
                 <a href="https://lifehelper.co.kr/" target="_blank" class="gallery-link">
-                    <!-- 원래 이미지 파일로 복구 -->
                     <img src="space1.jpg" alt="라이프헬퍼 라운지 메인" class="gallery-img">
                     <div class="gallery-overlay">라이프헬퍼 구경하기</div>
                 </a>
@@ -376,23 +384,17 @@
 
                     let p_cards = participantInfo.split("/").map(p => {
                         p = p.trim();
-                        // 1. 불필요한 텍스트 및 괄호 내용 제거
-                        // (매출 인증), (의사 ...) 등 괄호로 묶인 모든 내용 삭제
-                        // [참여], [년생], [ 년생], " 등 찌꺼기 텍스트 삭제
                         p = p.replace(/\[참여\]/g, "")
                              .replace(/참여/g, "")
                              .replace(/\[년생\]/g, "")
                              .replace(/\[\s*년생\]/g, "")
                              .replace(/\([^)]*\)/g, "") // 소괄호 ( ) 안의 내용 모두 삭제
-                             .replace(/"/g, "")         // 큰따옴표 " 삭제
-                             .replace(/년생]/g, "")     // 년생] 찌꺼기 삭제
-                             .replace(/\[\s*\]/g, "")   // 빈 대괄호 [] 삭제
+                             .replace(/"/g, "")         
+                             .replace(/년생]/g, "")     
+                             .replace(/\[\s*\]/g, "")   
                              .trim();
 
-                        // 2. {숫자} -> [숫자년생] 으로 변환
                         p = p.replace(/\{(\d+)\}/g, "[$1년생]");
-
-                        // 3. [숫자] -> [숫자년생] 으로 변환
                         p = p.replace(/\[(\d+)\]/g, "[$1년생]");
 
                         if(!p) return ""; 
