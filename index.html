@@ -229,7 +229,7 @@
             border: 1px solid #ccc;
         }
 
-        /* [NEW] 안내 문구 박스 스타일 */
+        /* [NEW] 안내 문구 박스 스타일 (왼쪽 정렬 & 링크 스타일) */
         .notice-box {
             background: #222; 
             padding: 30px; 
@@ -239,7 +239,11 @@
             color: #ddd;
             font-size: 0.95rem;
             line-height: 1.8;
+            
+            /* ★★★ 핵심 수정: 왼쪽 정렬 강제 적용 ★★★ */
+            text-align: left !important; 
             white-space: pre-wrap; /* 줄바꿈 반영 */
+            word-break: break-all; /* 긴 링크가 박스를 뚫고 나가지 않게 */
         }
         /* 공지사항 내 링크 스타일 (금색 + 밑줄) */
         .notice-box a {
@@ -394,12 +398,11 @@
     </footer>
 
     <script>
-        // [1] 일정표 데이터 링크 (기존 것)
+        // [1] 일정표 데이터 링크 (기존 유지)
         const SCHEDULE_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSZVZ9QslRId6OXh3owAHaqLDQvQC5Ym672BOkDxxeGXIzcmrz1Twxm-6R5Nlim_cbK4QvoisCRnq5f/pub?gid=339069128&single=true&output=csv";
         
-        // [2] 공지사항 데이터 링크 (대표님이 만드신 시트의 '웹 게시' 주소)
-        // ID: 1Sy-JGo-sWSLh65_r53IA0H39WGeSmE_LvNNbtFN6JBs
-        // GID: 1660717033 (Notice 시트)
+        // [2] 공지사항 데이터 링크 (대표님이 만드신 시트 - Notice 시트 GID: 1660717033)
+        // 이 링크를 통해 텍스트를 가져오고, 그 안에 있는 URL은 자동으로 클릭 가능한 링크로 변환합니다.
         const NOTICE_CSV_URL = "https://docs.google.com/spreadsheets/d/1Sy-JGo-sWSLh65_r53IA0H39WGeSmE_LvNNbtFN6JBs/pub?gid=1660717033&single=true&output=csv";
 
         async function loadAllData() {
@@ -407,7 +410,7 @@
             loadSchedule();
         }
 
-        // 공지사항 불러오기 (링크 자동 변환 기능 포함)
+        // 공지사항 불러오기 (자동 링크 변환 기능 추가)
         async function loadNotice() {
             try {
                 const response = await fetch(NOTICE_CSV_URL);
@@ -416,23 +419,14 @@
                 // 1. CSV 따옴표 제거
                 text = text.replace(/^"|"$/g, '').replace(/""/g, '"');
                 
-                // 2. URL 링크 자동 변환 (https://... -> <a href...>)
+                // 2. [핵심] URL 링크 자동 변환 (https://... -> <a href...>)
+                // 인스타, 카톡 링크가 자동으로 클릭 가능한 금색 링크로 바뀝니다.
                 text = text.replace(/(https?:\/\/[^\s]+)/g, '<a href="$1" target="_blank">$1</a>');
 
-                // 3. 줄바꿈 처리
-                // (CSS white-space: pre-wrap 덕분에 \n도 먹히지만 확실하게 <br>로 변환할 수도 있음)
-                // text = text.replace(/\n/g, "<br>"); 
-                
                 document.getElementById('notice-content').innerHTML = text;
             } catch (error) {
                 console.error("공지 로드 실패:", error);
-                // 실패 시 기본 안내 문구 표시 (비상용)
-                document.getElementById('notice-content').innerHTML = `
-                    <div style="text-align:center; padding:20px;">
-                        📌 노잇(Knowit) 안내<br><br>
-                        전문직 남성과 한국무용수 여성 분들을 위한<br>프라이빗 매칭 커뮤니티입니다.
-                    </div>
-                `;
+                document.getElementById('notice-content').innerHTML = "공지사항을 불러오는 중입니다.";
             }
         }
 
