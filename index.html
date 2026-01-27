@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Knowit (노잇) - 알게 되는 밤</title>
     
-    <!-- ▼▼▼ [1. 아이콘 설정] ▼▼▼ -->
     <link rel="icon" type="image/png" href="favicon.png">
     <link rel="shortcut icon" type="image/png" href="favicon.png">
     
@@ -115,10 +114,10 @@
             word-break: keep-all;
         }
 
-        /* ▼▼▼ [PC 기본 설정] 갤러리: 가로 3개 배치 ▼▼▼ */
+        /* ▼▼▼ [PC 설정] 갤러리: 가로 3개 & 높이 고정 ▼▼▼ */
         .gallery { 
             display: grid; 
-            grid-template-columns: repeat(3, 1fr); /* 중요: 1줄에 3개 */
+            grid-template-columns: repeat(3, 1fr); /* 1줄에 3개 */
             gap: 20px; 
         }
         .gallery-link { 
@@ -137,7 +136,7 @@
         }
         .gallery-img { 
             width: 100%; 
-            height: 250px; /* PC에서는 높이 고정 (정렬 맞춤) */
+            height: 250px; /* PC: 높이 고정 (정렬) */
             object-fit: cover; 
             display: block; 
             transition: 0.3s; 
@@ -215,7 +214,6 @@
             justify-content: center;
             min-height: 45px;
             word-break: break-all;
-            /* [중요] 직업이 다음 줄로 내려갈 때 줄간격 조정 */
             line-height: 1.4; 
         }
         .participant-card:hover { border-color: #d4af37; background: #333; }
@@ -231,26 +229,45 @@
             border: 1px solid #ccc;
         }
 
-        /* ▼▼▼ [모바일 전용 화면 설정 (@media)] ▼▼▼ */
+        /* [NEW] 안내 문구 박스 스타일 */
+        .notice-box {
+            background: #222; 
+            padding: 30px; 
+            margin-top: 40px; 
+            border-radius: 10px; 
+            border: 1px solid #333;
+            color: #ddd;
+            font-size: 0.95rem;
+            line-height: 1.8;
+            white-space: pre-wrap; /* 줄바꿈 반영 */
+        }
+        /* 공지사항 내 링크 스타일 (금색 + 밑줄) */
+        .notice-box a {
+            color: #d4af37;
+            text-decoration: underline;
+            font-weight: bold;
+        }
+
+        /* ▼▼▼ [모바일 전용 화면 설정] ▼▼▼ */
         @media (max-width: 768px) {
-            /* 1. 모바일에서만 줄바꿈 작동 */
+            /* 1. 모바일 줄바꿈 */
             .mobile-br { display: block; }
 
-            /* 2. [수정됨] 네비게이션: 오른쪽 정렬 & 한 줄 유지 */
+            /* 2. 네비게이션: 오른쪽 정렬 & 한 줄 유지 */
             .nav-links { gap: 10px; }
             .nav-links a { font-size: 0.75rem; }
             .logo-text { font-size: 1.2rem; }
 
-            /* 3. [수정됨] 갤러리 모바일: 세로 1줄로 & 사진 원본 비율 유지 */
+            /* 3. [모바일] 갤러리: 세로 1줄 배치 & 사진 전체 보기 */
             .gallery { 
-                grid-template-columns: 1fr; /* 중요: 세로로 1개씩 */
+                grid-template-columns: 1fr; /* 세로로 1개씩 */
                 gap: 30px;
             }
             .gallery-img {
-                height: auto; /* 중요: 높이 제한 해제 (사진 전체 다 보임) */
+                height: auto; /* 모바일: 높이 제한 해제 */
             }
 
-            /* 4. 일정표 모바일 레이아웃 고정 */
+            /* 4. 일정표 모바일 레이아웃 */
             .board-header { display: none; }
             .schedule-row { flex-direction: column; }
             .schedule-info { width: 100%; margin-bottom: 20px; margin-right: 0; }
@@ -311,20 +328,9 @@
                     </p>
                 </div>
             </div>
-            <!-- 상세 안내 추가 -->
-            <div style="background:#222; padding:30px; margin-top:40px; border-radius:10px; border:1px solid #333;">
-                <h3 style="color:#d4af37; margin-bottom:15px;">📌 노잇(Knowit) 안내</h3>
-                <div style="color:#ddd; font-size:0.95rem; line-height:1.8;">
-                    <p style="margin-bottom:20px;">
-                        · 노잇은 철저한 신원 인증을 거친<br>
-                        · <strong>전문직 남성</strong>과 <strong>한국무용수 여성</strong> 분들을 위한 프라이빗 매칭 커뮤니티입니다.
-                    </p>
-                    <ul style="list-style:none; padding:0;">
-                        <li style="margin-bottom:8px;"><strong>📅 일시:</strong> 신원 확인 완료 후, 일정 공유 링크를 전해 드립니다.</li>
-                        <li style="margin-bottom:8px;"><strong>📍 장소:</strong> 서울전역 (신원 인증 절차자에게만 개별 안내)</li>
-                        <li style="margin-bottom:8px;"><strong>🍷 제공:</strong> 와인 + 핑거푸드 케이터링</li>
-                    </ul>
-                </div>
+            
+            <div id="notice-content" class="notice-box">
+                <div style="text-align:center; color:#666;">공지사항을 불러오는 중입니다...</div>
             </div>
         </div>
     </section>
@@ -332,8 +338,8 @@
     <section id="space">
         <div class="container">
             <h2 class="section-title">THE SPACE</h2>
-            <!-- [수정됨] 모바일 전용 줄바꿈(<br class="mobile-br">) -->
             <p class="section-desc">이미지를 클릭하면 <strong>'라이프헬퍼'</strong><br class="mobile-br"> 공간을 자세히 보실 수 있습니다.</p>
+            
             <div class="gallery">
                 <a href="https://lifehelper.co.kr/" target="_blank" class="gallery-link">
                     <img src="space1.jpg" alt="라이프헬퍼 라운지 메인" class="gallery-img">
@@ -349,7 +355,6 @@
                 </a>
             </div>
             
-            <!-- [추가됨] 숙소 섹션 하단 신청하기 버튼 -->
             <div style="text-align: center; margin-top: 40px;">
                 <a href="https://forms.gle/q9RCXT6oCfF3wxdk7" target="_blank" class="btn-gold">지금 신청하기</a>
             </div>
@@ -389,13 +394,53 @@
     </footer>
 
     <script>
-        const GOOGLE_SHEET_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSZVZ9QslRId6OXh3owAHaqLDQvQC5Ym672BOkDxxeGXIzcmrz1Twxm-6R5Nlim_cbK4QvoisCRnq5f/pub?gid=339069128&single=true&output=csv";
+        // [1] 일정표 데이터 링크 (기존 것)
+        const SCHEDULE_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSZVZ9QslRId6OXh3owAHaqLDQvQC5Ym672BOkDxxeGXIzcmrz1Twxm-6R5Nlim_cbK4QvoisCRnq5f/pub?gid=339069128&single=true&output=csv";
+        
+        // [2] 공지사항 데이터 링크 (대표님이 만드신 시트의 '웹 게시' 주소)
+        // ID: 1Sy-JGo-sWSLh65_r53IA0H39WGeSmE_LvNNbtFN6JBs
+        // GID: 1660717033 (Notice 시트)
+        const NOTICE_CSV_URL = "https://docs.google.com/spreadsheets/d/1Sy-JGo-sWSLh65_r53IA0H39WGeSmE_LvNNbtFN6JBs/pub?gid=1660717033&single=true&output=csv";
 
+        async function loadAllData() {
+            loadNotice();
+            loadSchedule();
+        }
+
+        // 공지사항 불러오기 (링크 자동 변환 기능 포함)
+        async function loadNotice() {
+            try {
+                const response = await fetch(NOTICE_CSV_URL);
+                let text = await response.text();
+                
+                // 1. CSV 따옴표 제거
+                text = text.replace(/^"|"$/g, '').replace(/""/g, '"');
+                
+                // 2. URL 링크 자동 변환 (https://... -> <a href...>)
+                text = text.replace(/(https?:\/\/[^\s]+)/g, '<a href="$1" target="_blank">$1</a>');
+
+                // 3. 줄바꿈 처리
+                // (CSS white-space: pre-wrap 덕분에 \n도 먹히지만 확실하게 <br>로 변환할 수도 있음)
+                // text = text.replace(/\n/g, "<br>"); 
+                
+                document.getElementById('notice-content').innerHTML = text;
+            } catch (error) {
+                console.error("공지 로드 실패:", error);
+                // 실패 시 기본 안내 문구 표시 (비상용)
+                document.getElementById('notice-content').innerHTML = `
+                    <div style="text-align:center; padding:20px;">
+                        📌 노잇(Knowit) 안내<br><br>
+                        전문직 남성과 한국무용수 여성 분들을 위한<br>프라이빗 매칭 커뮤니티입니다.
+                    </div>
+                `;
+            }
+        }
+
+        // 일정표 불러오기 (기존과 동일)
         async function loadSchedule() {
             const boardContent = document.getElementById('board-content');
-            
             try {
-                const response = await fetch(GOOGLE_SHEET_CSV_URL);
+                const response = await fetch(SCHEDULE_CSV_URL);
                 const data = await response.text();
                 const rows = data.split("\n").slice(1); 
 
@@ -420,7 +465,7 @@
                              .replace(/참여/g, "")
                              .replace(/\[년생\]/g, "")
                              .replace(/\[\s*년생\]/g, "")
-                             .replace(/\([^)]*\)/g, "") // 소괄호 내용 제거
+                             .replace(/\([^)]*\)/g, "")
                              .replace(/"/g, "")         
                              .replace(/년생]/g, "")     
                              .replace(/\[\s*\]/g, "")   
@@ -428,9 +473,8 @@
 
                         p = p.replace(/\{(\d+)\}/g, "[$1년생]");
                         p = p.replace(/\[(\d+)\]/g, "[$1년생]");
-
-                        // [수정됨] 직업을 다음 줄로 내리는 코드 추가
-                        // 1. [00년생] 뒤에 줄바꿈(<br>) 태그 삽입
+                        
+                        // 직업 줄바꿈 처리
                         p = p.replace(/(\[\d+년생\])\s*/g, '$1<br>');
 
                         if(!p) return ""; 
@@ -469,7 +513,7 @@
             }
         }
 
-        loadSchedule();
+        loadAllData();
     </script>
 
 </body>
