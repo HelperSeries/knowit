@@ -5,7 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Knowit (노잇) - 알게 되는 밤</title>
     
+    <!-- ▼▼▼ [1. 아이콘 설정] ▼▼▼ -->
     <link rel="icon" type="image/png" href="favicon.png">
+    <link rel="shortcut icon" type="image/png" href="favicon.png">
     
     <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@300;500;700&family=Pretendard:wght@300;400;600&display=swap" rel="stylesheet">
 
@@ -23,8 +25,10 @@
         a { text-decoration: none; color: inherit; }
         ul { list-style: none; }
 
+        /* 포인트 컬러 */
         .gold-text { color: #d4af37; }
         
+        /* 공통 섹션 스타일 */
         section { padding: 100px 5%; }
         .container { max-width: 1200px; margin: 0 auto; }
         
@@ -42,9 +46,10 @@
             font-weight: 300;
         }
 
+        /* [모바일 전용 줄바꿈 클래스] */
         .mobile-br { display: none; }
 
-        /* 네비게이션 바 */
+        /* 네비게이션바 */
         nav {
             display: flex;
             justify-content: space-between;
@@ -57,12 +62,13 @@
             border-bottom: 1px solid #333;
             z-index: 1000;
         }
+        .logo-img { height: 40px; vertical-align: middle; } 
         .logo-text { font-family: 'Noto Serif KR', serif; font-size: 1.5rem; font-weight: bold; color: #d4af37; }
         .nav-links { display: flex; gap: 30px; }
         .nav-links a { font-size: 0.9rem; font-weight: 500; transition: 0.3s; }
         .nav-links a:hover { color: #d4af37; }
 
-        /* 메인 헤더 (배경 이미지 영역) */
+        /* 메인 화면 */
         header {
             height: 100vh;
             display: flex;
@@ -93,7 +99,7 @@
         }
         .btn-gold:hover { background-color: #d4af37; color: #000; font-weight: bold; }
 
-        /* About 섹션 */
+        /* 소개 및 공간 섹션 */
         .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
         .about-card { 
             background: #1a1a1a; 
@@ -104,15 +110,20 @@
         }
         .about-card:hover { border-color: #d4af37; transform: translateY(-5px); }
         .about-card h3 { color: #d4af37; margin-bottom: 20px; font-size: 1.4rem; }
+        .about-card p {
+            line-height: 1.8;
+            word-break: keep-all;
+        }
 
-        /* 갤러리 섹션 */
+        /* ▼▼▼ [PC 기본 설정] 갤러리: 가로 3개 배치 ▼▼▼ */
         .gallery { 
             display: grid; 
-            grid-template-columns: repeat(3, 1fr);
+            grid-template-columns: repeat(3, 1fr); /* 중요: 1줄에 3개 */
             gap: 20px; 
         }
         .gallery-link { 
             display: block; 
+            height: auto; 
             background-color: #333; 
             position: relative; 
             overflow: hidden; 
@@ -126,8 +137,8 @@
         }
         .gallery-img { 
             width: 100%; 
-            height: 250px;
-            object-fit: cover;
+            height: 250px; /* PC에서는 높이 고정 (정렬 맞춤) */
+            object-fit: cover; 
             display: block; 
             transition: 0.3s; 
         }
@@ -143,14 +154,16 @@
         }
         .gallery-link:hover .gallery-overlay { opacity: 1; }
 
-        /* 일정표 스타일 */
+        /* 레이아웃 고정 스타일 */
         .schedule-board {
             background: #1a1a1a;
+            padding: 0; 
             border-radius: 4px;
             border: 1px solid #d4af37;
             margin-bottom: 40px;
             overflow: hidden; 
         }
+
         .board-header {
             display: flex;
             background: #222;
@@ -202,6 +215,7 @@
             justify-content: center;
             min-height: 45px;
             word-break: break-all;
+            /* [중요] 직업이 다음 줄로 내려갈 때 줄간격 조정 */
             line-height: 1.4; 
         }
         .participant-card:hover { border-color: #d4af37; background: #333; }
@@ -217,38 +231,26 @@
             border: 1px solid #ccc;
         }
 
-        /* 공지사항 박스 */
-        .notice-box {
-            background: #222; 
-            padding: 30px; 
-            margin-top: 40px; 
-            border-radius: 10px; 
-            border: 1px solid #333;
-            color: #ddd;
-            font-size: 0.95rem;
-            line-height: 1.8;
-            text-align: left !important; 
-            white-space: pre-wrap; 
-            word-break: break-all;
-        }
-        .notice-box a {
-            color: #d4af37;
-            text-decoration: underline;
-            font-weight: bold;
-        }
-
-        /* 모바일 최적화 */
+        /* ▼▼▼ [모바일 전용 화면 설정 (@media)] ▼▼▼ */
         @media (max-width: 768px) {
+            /* 1. 모바일에서만 줄바꿈 작동 */
             .mobile-br { display: block; }
+
+            /* 2. [수정됨] 네비게이션: 오른쪽 정렬 & 한 줄 유지 */
             .nav-links { gap: 10px; }
             .nav-links a { font-size: 0.75rem; }
             .logo-text { font-size: 1.2rem; }
-            .main-title { font-size: 2.5rem; }
 
-            .gallery { grid-template-columns: 1fr; gap: 30px; }
-            .gallery-img { height: auto; }
-            .about-grid { grid-template-columns: 1fr; }
+            /* 3. [수정됨] 갤러리 모바일: 세로 1줄로 & 사진 원본 비율 유지 */
+            .gallery { 
+                grid-template-columns: 1fr; /* 중요: 세로로 1개씩 */
+                gap: 30px;
+            }
+            .gallery-img {
+                height: auto; /* 중요: 높이 제한 해제 (사진 전체 다 보임) */
+            }
 
+            /* 4. 일정표 모바일 레이아웃 고정 */
             .board-header { display: none; }
             .schedule-row { flex-direction: column; }
             .schedule-info { width: 100%; margin-bottom: 20px; margin-right: 0; }
@@ -263,7 +265,8 @@
     <nav>
         <div class="logo">
             <a href="#home">
-                <span class="logo-text">Knowit</span>
+                <img src="logo.png" alt="Knowit Logo" class="logo-img" onerror="this.style.display='none'; document.querySelector('.logo-text').style.display='inline';">
+                <span class="logo-text" style="display:none;">Knowit</span>
             </a>
         </div>
         <ul class="nav-links">
@@ -277,7 +280,7 @@
     <header id="home">
         <div class="hero-content">
             <h1 class="main-title">알게 되는 밤, <span class="gold-text">Knowit</span></h1>
-            <p class="sub-title">성공한 남녀들을 위한<br>High-End Private Social Club</p>
+            <p class="sub-title">같은 시간, 성공한 남녀들을 위한<br>High-End Private Social Club</p>
             <a href="https://forms.gle/q9RCXT6oCfF3wxdk7" target="_blank" class="btn-gold">참가 신청하기</a>
         </div>
     </header>
@@ -308,9 +311,20 @@
                     </p>
                 </div>
             </div>
-            
-            <div id="notice-content" class="notice-box">
-                <div style="text-align:center; color:#666;">공지사항을 불러오는 중입니다...</div>
+            <!-- 상세 안내 추가 -->
+            <div style="background:#222; padding:30px; margin-top:40px; border-radius:10px; border:1px solid #333;">
+                <h3 style="color:#d4af37; margin-bottom:15px;">📌 노잇(Knowit) 안내</h3>
+                <div style="color:#ddd; font-size:0.95rem; line-height:1.8;">
+                    <p style="margin-bottom:20px;">
+                        · 노잇은 철저한 신원 인증을 거친<br>
+                        · <strong>전문직 남성</strong>과 <strong>한국무용수 여성</strong> 분들을 위한 프라이빗 매칭 커뮤니티입니다.
+                    </p>
+                    <ul style="list-style:none; padding:0;">
+                        <li style="margin-bottom:8px;"><strong>📅 일시:</strong> 신원 확인 완료 후, 일정 공유 링크를 전해 드립니다.</li>
+                        <li style="margin-bottom:8px;"><strong>📍 장소:</strong> 서울전역 (신원 인증 절차자에게만 개별 안내)</li>
+                        <li style="margin-bottom:8px;"><strong>🍷 제공:</strong> 와인 + 핑거푸드 케이터링</li>
+                    </ul>
+                </div>
             </div>
         </div>
     </section>
@@ -318,22 +332,24 @@
     <section id="space">
         <div class="container">
             <h2 class="section-title">THE SPACE</h2>
+            <!-- [수정됨] 모바일 전용 줄바꿈(<br class="mobile-br">) -->
             <p class="section-desc">이미지를 클릭하면 <strong>'라이프헬퍼'</strong><br class="mobile-br"> 공간을 자세히 보실 수 있습니다.</p>
-            
             <div class="gallery">
                 <a href="https://lifehelper.co.kr/" target="_blank" class="gallery-link">
-                    <img src="space1.jpg" alt="라운지 공간" class="gallery-img" onerror="this.src='https://via.placeholder.com/400x300/333/d4af37?text=Private+Lounge'">
+                    <img src="space1.jpg" alt="라이프헬퍼 라운지 메인" class="gallery-img">
                     <div class="gallery-overlay">라이프헬퍼 구경하기</div>
                 </a>
                 <a href="https://lifehelper.co.kr/" target="_blank" class="gallery-link">
-                    <img src="space2.jpg" alt="와인 파티" class="gallery-img" onerror="this.src='https://via.placeholder.com/400x300/333/d4af37?text=Wine+%26+Social'">
+                    <img src="space2.jpg" alt="공간2" class="gallery-img">
                     <div class="gallery-overlay">라이프헬퍼 구경하기</div>
                 </a>
                 <a href="https://lifehelper.co.kr/" target="_blank" class="gallery-link">
-                    <img src="space3.jpg" alt="프라이빗 룸" class="gallery-img" onerror="this.src='https://via.placeholder.com/400x300/333/d4af37?text=Classy+Vibe'">
+                    <img src="space3.jpg" alt="공간3" class="gallery-img">
                     <div class="gallery-overlay">라이프헬퍼 구경하기</div>
                 </a>
             </div>
+            
+            <!-- [추가됨] 숙소 섹션 하단 신청하기 버튼 -->
             <div style="text-align: center; margin-top: 40px;">
                 <a href="https://forms.gle/q9RCXT6oCfF3wxdk7" target="_blank" class="btn-gold">지금 신청하기</a>
             </div>
@@ -357,7 +373,7 @@
 
             <div style="text-align: center; margin-top: 30px;">
                 <p style="margin-bottom: 20px; color: #aaa;">원하는 날짜를 확인하셨나요?</p>
-                <a href="https://forms.gle/q9RCXT6oCfF3wxdk7" target="_blank" class="btn-gold">참가 신청서 작성하기</a>
+                <a href="https://forms.gle/q9RCXT6oCfF3wxdk7" target="_blank" class="btn-gold">지금 신청하기 (Google Form)</a>
             </div>
         </div>
     </section>
@@ -373,93 +389,48 @@
     </footer>
 
     <script>
-        // === [설정 영역] ===
-        const SHEET_ID = "1Sy-JGo-sWSLh65_r53IA0H39WGeSmE_LvNNbtFN6JBs"; // 대표님 시트 ID
-        const NOTICE_GID = "1660717033";   // 안내 공지 시트
-        const SCHEDULE_GID = "339069128";  // 홈페이지 공지용 시트
+        const GOOGLE_SHEET_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSZVZ9QslRId6OXh3owAHaqLDQvQC5Ym672BOkDxxeGXIzcmrz1Twxm-6R5Nlim_cbK4QvoisCRnq5f/pub?gid=339069128&single=true&output=csv";
 
-        // === [데이터 로드 시작] ===
-        async function loadAllData() {
-            loadNotice();
-            loadSchedule();
-        }
-
-        // 1. 공지사항 불러오기
-        async function loadNotice() {
-            // 캐시 방지(&t=)를 넣어 수정 즉시 반영
-            const url = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/pub?gid=${NOTICE_GID}&single=true&output=csv&t=${new Date().getTime()}`;
+        async function loadSchedule() {
+            const boardContent = document.getElementById('board-content');
             
             try {
-                const response = await fetch(url);
-                if (!response.ok) throw new Error("Network response was not ok");
-                let text = await response.text();
-                
-                // 따옴표 제거 및 링크 변환
-                text = text.replace(/^"|"$/g, '').replace(/""/g, '"');
-                // URL 주소를 찾아서 클릭 가능한 링크로 변환
-                text = text.replace(/(https?:\/\/[^\s]+)/g, '<a href="$1" target="_blank">$1</a>');
-
-                document.getElementById('notice-content').innerHTML = text;
-            } catch (error) {
-                console.error("공지 로드 실패:", error);
-                document.getElementById('notice-content').innerHTML = `
-                    <div style="text-align:center; padding:20px;">
-                        📌 노잇(Knowit) 안내<br><br>
-                        데이터를 불러오지 못했습니다.<br>
-                        (잠시 후 다시 접속해주세요)
-                    </div>
-                `;
-            }
-        }
-
-        // 2. 일정표 불러오기
-        async function loadSchedule() {
-            const url = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/pub?gid=${SCHEDULE_GID}&single=true&output=csv&t=${new Date().getTime()}`;
-            const boardContent = document.getElementById('board-content');
-
-            try {
-                const response = await fetch(url);
-                if (!response.ok) throw new Error("Network response was not ok");
+                const response = await fetch(GOOGLE_SHEET_CSV_URL);
                 const data = await response.text();
-                
-                // 첫 줄(헤더) 제외하고 데이터만 가져오기
                 const rows = data.split("\n").slice(1); 
 
                 boardContent.innerHTML = ""; 
 
-                if (rows.length === 0 || rows[0].trim() === "") {
-                    boardContent.innerHTML = `<div style="text-align:center; padding:30px; color:#888;">현재 등록된 일정이 없습니다.</div>`;
-                    return;
-                }
-
                 rows.forEach(row => {
-                    // 콤마(,)로 데이터 분리 (따옴표 안의 콤마는 무시하는 정규식)
-                    const cols = row.match(/(".*?"|[^",\s]+)(?=\s*,|\s*$)/g);
-                    if(!cols || cols.length < 2) return;
+                    const cols = row.split(",");
+                    if(cols.length < 2) return;
 
-                    // 데이터 정제 (따옴표 제거)
-                    const cleanCols = cols.map(c => c.replace(/^"|"$/g, '').trim());
-
-                    const date = cleanCols[0];      
-                    const location = cleanCols[1];  
+                    const date = cols[0];      
+                    const location = cols[1];  
                     
-                    let participantInfo = cleanCols[2] || ""; 
-                    if(cleanCols[3]) participantInfo += ` [${cleanCols[3]}년생]`; 
-                    if(cleanCols[4]) participantInfo += ` ${cleanCols[4]}`;
+                    let participantInfo = cols[2]; 
+                    if(cols[3] && cols[3].trim() !== "") participantInfo += ` [${cols[3]}년생]`; 
+                    if(cols[4] && cols[4].trim() !== "") participantInfo += ` ${cols[4]}`;
                     
-                    const status = cleanCols[5] || ""; 
+                    const status = cols[5] ? cols[5].trim() : ""; 
 
-                    // 참가자 카드 생성
                     let p_cards = participantInfo.split("/").map(p => {
                         p = p.trim();
-                        // 불필요한 기호 제거
-                        p = p.replace(/\[참여\]/g, "").replace(/참여/g, "").replace(/\[년생\]/g, "")
-                             .replace(/\[\s*년생\]/g, "").replace(/\([^)]*\)/g, "")
-                             .replace(/"/g, "").replace(/년생]/g, "").replace(/\[\s*\]/g, "").trim();
+                        p = p.replace(/\[참여\]/g, "")
+                             .replace(/참여/g, "")
+                             .replace(/\[년생\]/g, "")
+                             .replace(/\[\s*년생\]/g, "")
+                             .replace(/\([^)]*\)/g, "") // 소괄호 내용 제거
+                             .replace(/"/g, "")         
+                             .replace(/년생]/g, "")     
+                             .replace(/\[\s*\]/g, "")   
+                             .trim();
 
-                        // {99} -> [99년생] 자동 변환
                         p = p.replace(/\{(\d+)\}/g, "[$1년생]");
                         p = p.replace(/\[(\d+)\]/g, "[$1년생]");
+
+                        // [수정됨] 직업을 다음 줄로 내리는 코드 추가
+                        // 1. [00년생] 뒤에 줄바꿈(<br>) 태그 삽입
                         p = p.replace(/(\[\d+년생\])\s*/g, '$1<br>');
 
                         if(!p) return ""; 
@@ -471,7 +442,6 @@
                         return `<div class="${className}">${p}</div>`;
                     }).join('');
 
-                    // 모집 상태 뱃지
                     let statusBadge = "";
                     if(status.includes("모집중")) {
                         statusBadge = `<span class="status-badge" style="border:1px solid #4caf50; color:#4caf50;">● 모집중</span>`;
@@ -479,7 +449,6 @@
                         statusBadge = `<span class="status-badge" style="border:1px solid #ff5555; color:#ff5555;">● 마감</span>`;
                     }
 
-                    // HTML 조립
                     let htmlRow = `
                         <div class="schedule-row">
                             <div class="schedule-info">
@@ -495,12 +464,12 @@
                 });
 
             } catch (error) {
-                console.error("일정 로드 실패:", error);
-                boardContent.innerHTML = `<div style="text-align:center; padding:30px; color:#888;">일정을 불러오는 중입니다...<br>(잠시 후 다시 시도해주세요)</div>`;
+                console.error("실패:", error);
+                boardContent.innerHTML = `<div style="text-align:center; padding:30px; color:#888;">일정을 불러오는 중입니다...</div>`;
             }
         }
 
-        loadAllData();
+        loadSchedule();
     </script>
 
 </body>
