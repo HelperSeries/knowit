@@ -428,11 +428,14 @@
             }
         }
 
-        // 일정표 불러오기
+        // 일정표 불러오기 (실시간 반영 - 캐시 방지)
         async function loadSchedule() {
             const boardContent = document.getElementById('board-content');
             try {
-                const response = await fetch(SCHEDULE_CSV_URL);
+                // ✨ 캐시 방지: URL에 현재 시간을 추가하여 항상 최신 데이터 가져오기
+                const freshUrl = SCHEDULE_CSV_URL + "&t=" + new Date().getTime();
+                
+                const response = await fetch(freshUrl);
                 const data = await response.text();
                 const rows = data.split("\n").slice(1); 
 
@@ -503,7 +506,18 @@
             }
         }
 
+        // ✨ 실시간 자동 업데이트: 5분마다 일정표 새로고침
+        function startAutoRefresh() {
+            // 5분 = 300,000 밀리초
+            setInterval(() => {
+                console.log("일정표 자동 새로고침...");
+                loadSchedule();
+            }, 300000); // 5분마다
+        }
+
+        // 페이지 로드 시 초기 데이터 불러오기 + 자동 새로고침 시작
         loadAllData();
+        startAutoRefresh();
     </script>
 
 </body>

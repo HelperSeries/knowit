@@ -633,7 +633,7 @@ function onFormSubmit(e) {
 }
 
 // ============================================
-// 일정표 시트 자동 업데이트 (신규 기능)
+// 일정표 시트 자동 업데이트 (신규 기능 - 완전 유연 버전)
 // ============================================
 function updateScheduleSheet(submittedRow) {
   try {
@@ -650,28 +650,32 @@ function updateScheduleSheet(submittedRow) {
     }
     
     // 제출된 데이터 가져오기
-    var locationRaw = formSheet.getRange(submittedRow, CONFIG.COL.LOCATION).getValue();
+    var locationFull = formSheet.getRange(submittedRow, CONFIG.COL.LOCATION).getValue();
     var nickname = formSheet.getRange(submittedRow, CONFIG.COL.NICKNAME).getValue();
     var birth = String(formSheet.getRange(submittedRow, CONFIG.COL.BIRTH).getValue());
     var jobType = formSheet.getRange(submittedRow, CONFIG.COL.JOB_TYPE).getValue();
     
     // 장소가 비어있으면 스킵
-    if (!locationRaw || String(locationRaw).trim() === "") {
+    if (!locationFull || String(locationFull).trim() === "") {
       Logger.log("장소 정보 없음 - 스킵");
       return;
     }
     
-    // 장소에서 정보 추출
-    // 예: "26.02.28 천호역 근처 5:5" → 날짜: "26.02.28", 장소: "천호역 근처 5:5"
-    var dateMatch = String(locationRaw).match(/^(\d{2}\.\d{2}\.\d{2})\s+(.+)/);
+    // ✨ 핵심 변경: 날짜와 장소를 분리하되, 유연하게 처리
+    var dateMatch = String(locationFull).match(/^(\d{2}\.\d{2}\.\d{2})\s+(.+)/);
     
-    if (!dateMatch) {
-      Logger.log("장소 형식 오류: " + locationRaw);
-      return;
+    var date = "";
+    var location = "";
+    
+    if (dateMatch) {
+      // 형식: "26.02.28 천호역 근처 5:5"
+      date = dateMatch[1]; // "26.02.28"
+      location = dateMatch[2]; // "천호역 근처 5:5"
+    } else {
+      // 날짜가 없는 경우: 전체를 장소로 처리
+      date = "미정";
+      location = String(locationFull).trim();
     }
-    
-    var date = dateMatch[1]; // "26.02.28"
-    var location = dateMatch[2]; // "천호역 근처 5:5"
     
     // 생년 추출 (앞 2자리)
     var birthYear = "";
@@ -682,7 +686,7 @@ function updateScheduleSheet(submittedRow) {
     // 참가자 정보 포맷: "닉네임{생년} 직업"
     var participantInfo = nickname + "{" + birthYear + "} " + jobType;
     
-    // 일정표에서 같은 날짜 찾기
+    // 일정표에서 같은 날짜+장소 조합 찾기
     var lastRow = scheduleSheet.getLastRow();
     var foundRow = -1;
     
@@ -690,6 +694,7 @@ function updateScheduleSheet(submittedRow) {
       var existingDate = scheduleSheet.getRange(i, 1).getValue();
       var existingLocation = scheduleSheet.getRange(i, 2).getValue();
       
+      // 날짜와 장소가 모두 일치하면 같은 그룹
       if (existingDate === date && existingLocation === location) {
         foundRow = i;
         break;
@@ -759,25 +764,30 @@ function manualUpdateSchedule() {
     var skippedCount = 0;
     
     for (var i = 2; i <= lastRow; i++) {
-      var locationRaw = formSheet.getRange(i, CONFIG.COL.LOCATION).getValue();
+      var locationFull = formSheet.getRange(i, CONFIG.COL.LOCATION).getValue();
       
       // 장소가 비어있으면 스킵
-      if (!locationRaw || String(locationRaw).trim() === "") {
+      if (!locationFull || String(locationFull).trim() === "") {
         skippedCount++;
         continue;
       }
       
-      // 장소에서 정보 추출
-      var dateMatch = String(locationRaw).match(/^(\d{2}\.\d{2}\.\d{2})\s+(.+)/);
+      // ✨ 유연한 날짜/장소 추출
+      var dateMatch = String(locationFull).match(/^(\d{2}\.\d{2}\.\d{2})\s+(.+)/);
       
-      if (!dateMatch) {
-        Logger.log("행 " + i + ": 장소 형식 오류 - " + locationRaw);
-        skippedCount++;
-        continue;
+      var date = "";
+      var location = "";
+      
+      if (dateMatch) {
+        // 형식: "26.02.28 천호역 근처 5:5"
+        date = dateMatch[1];
+        location = dateMatch[2];
+      } else {
+        // 날짜가 없는 경우: 전체를 장소로 처리
+        date = "미정";
+        location = String(locationFull).trim();
       }
       
-      var date = dateMatch[1];
-      var location = dateMatch[2];
       var key = date + "|" + location;
       
       // 참가자 정보 생성
