@@ -60,6 +60,8 @@ function onOpen() {
     .addSeparator()
     .addItem('🔍 중복 신청 확인', 'checkDuplicates')
     .addSeparator()
+    .addItem('📅 일정표 수동 업데이트 (모든 신청자)', 'manualUpdateSchedule')
+    .addSeparator()
     .addItem('⚙️ 자동화 트리거 설정', 'setupTriggers')
     .addToUi();
 }
@@ -620,10 +622,216 @@ function onFormSubmit(e) {
     // 신규 신청 표시
     sheet.getRange(lastRow, CONFIG.COL.EMAIL_SENT).setValue("✨ 신규 신청");
     
+    // ✨ 새로운 기능: 일정표 자동 업데이트
+    updateScheduleSheet(lastRow);
+    
     Logger.log("신규 신청 접수: " + email);
     
   } catch (error) {
     Logger.log("onFormSubmit 에러: " + error.message);
+  }
+}
+
+// ============================================
+// 일정표 시트 자동 업데이트 (신규 기능)
+// ============================================
+function updateScheduleSheet(submittedRow) {
+  try {
+    var ss = SpreadsheetApp.getActiveSpreadsheet();
+    var formSheet = ss.getSheetByName(CONFIG.FORM_SHEET_NAME);
+    var scheduleSheet = ss.getSheetByName(CONFIG.SCHEDULE_SHEET_NAME);
+    
+    // 일정표 시트가 없으면 생성
+    if (!scheduleSheet) {
+      scheduleSheet = ss.insertSheet(CONFIG.SCHEDULE_SHEET_NAME);
+      scheduleSheet.getRange(1, 1, 1, 4).setValues([["날짜", "장소", "참가자", "상태"]]);
+      scheduleSheet.getRange(1, 1, 1, 4).setFontWeight("bold").setBackground("#d4af37");
+      Logger.log("일정표 시트 생성 완료");
+    }
+    
+    // 제출된 데이터 가져오기
+    var locationRaw = formSheet.getRange(submittedRow, CONFIG.COL.LOCATION).getValue();
+    var nickname = formSheet.getRange(submittedRow, CONFIG.COL.NICKNAME).getValue();
+    var birth = String(formSheet.getRange(submittedRow, CONFIG.COL.BIRTH).getValue());
+    var jobType = formSheet.getRange(submittedRow, CONFIG.COL.JOB_TYPE).getValue();
+    
+    // 장소가 비어있으면 스킵
+    if (!locationRaw || String(locationRaw).trim() === "") {
+      Logger.log("장소 정보 없음 - 스킵");
+      return;
+    }
+    
+    // 장소에서 정보 추출
+    // 예: "26.02.28 천호역 근처 5:5" → 날짜: "26.02.28", 장소: "천호역 근처 5:5"
+    var dateMatch = String(locationRaw).match(/^(\d{2}\.\d{2}\.\d{2})\s+(.+)/);
+    
+    if (!dateMatch) {
+      Logger.log("장소 형식 오류: " + locationRaw);
+      return;
+    }
+    
+    var date = dateMatch[1]; // "26.02.28"
+    var location = dateMatch[2]; // "천호역 근처 5:5"
+    
+    // 생년 추출 (앞 2자리)
+    var birthYear = "";
+    if (birth && birth.length >= 2) {
+      birthYear = birth.substring(0, 2);
+    }
+    
+    // 참가자 정보 포맷: "닉네임{생년} 직업"
+    var participantInfo = nickname + "{" + birthYear + "} " + jobType;
+    
+    // 일정표에서 같은 날짜 찾기
+    var lastRow = scheduleSheet.getLastRow();
+    var foundRow = -1;
+    
+    for (var i = 2; i <= lastRow; i++) {
+      var existingDate = scheduleSheet.getRange(i, 1).getValue();
+      var existingLocation = scheduleSheet.getRange(i, 2).getValue();
+      
+      if (existingDate === date && existingLocation === location) {
+        foundRow = i;
+        break;
+      }
+    }
+    
+    if (foundRow > 0) {
+      // 기존 행에 참가자 추가
+      var existingParticipants = scheduleSheet.getRange(foundRow, 3).getValue();
+      var newParticipants = existingParticipants ? existingParticipants + " / " + participantInfo : participantInfo;
+      scheduleSheet.getRange(foundRow, 3).setValue(newParticipants);
+      scheduleSheet.getRange(foundRow, 4).setValue("참여");
+      Logger.log("기존 일정에 참가자 추가: " + date + " - " + location);
+    } else {
+      // 새로운 행 추가
+      var newRow = lastRow + 1;
+      scheduleSheet.getRange(newRow, 1).setValue(date);
+      scheduleSheet.getRange(newRow, 2).setValue(location);
+      scheduleSheet.getRange(newRow, 3).setValue(participantInfo);
+      scheduleSheet.getRange(newRow, 4).setValue("참여");
+      Logger.log("새로운 일정 생성: " + date + " - " + location);
+    }
+    
+  } catch (error) {
+    Logger.log("일정표 업데이트 에러: " + error.message);
+  }
+}
+
+// ============================================
+// 수동으로 모든 신청자 일정표 업데이트
+// ============================================
+function manualUpdateSchedule() {
+  var ui = SpreadsheetApp.getUi();
+  
+  var response = ui.alert("📅 일정표 업데이트", 
+      "모든 신청자의 정보를 일정표 시트에 업데이트합니다.\n\n" +
+      "기존 일정표 데이터는 초기화되고 새로 생성됩니다.\n\n" +
+      "계속하시겠습니까?", 
+      ui.ButtonSet.YES_NO);
+  
+  if (response !== ui.Button.YES) {
+    return;
+  }
+  
+  try {
+    var ss = SpreadsheetApp.getActiveSpreadsheet();
+    var formSheet = ss.getSheetByName(CONFIG.FORM_SHEET_NAME);
+    var scheduleSheet = ss.getSheetByName(CONFIG.SCHEDULE_SHEET_NAME);
+    
+    // 일정표 시트가 없으면 생성
+    if (!scheduleSheet) {
+      scheduleSheet = ss.insertSheet(CONFIG.SCHEDULE_SHEET_NAME);
+    } else {
+      // 기존 데이터 삭제 (헤더 제외)
+      scheduleSheet.clear();
+    }
+    
+    // 헤더 설정
+    scheduleSheet.getRange(1, 1, 1, 4).setValues([["날짜", "장소", "참가자", "상태"]]);
+    scheduleSheet.getRange(1, 1, 1, 4).setFontWeight("bold").setBackground("#d4af37");
+    
+    // 날짜별, 장소별로 참가자 그룹화
+    var scheduleMap = {}; // key: "날짜|장소", value: [참가자1, 참가자2, ...]
+    
+    var lastRow = formSheet.getLastRow();
+    var processedCount = 0;
+    var skippedCount = 0;
+    
+    for (var i = 2; i <= lastRow; i++) {
+      var locationRaw = formSheet.getRange(i, CONFIG.COL.LOCATION).getValue();
+      
+      // 장소가 비어있으면 스킵
+      if (!locationRaw || String(locationRaw).trim() === "") {
+        skippedCount++;
+        continue;
+      }
+      
+      // 장소에서 정보 추출
+      var dateMatch = String(locationRaw).match(/^(\d{2}\.\d{2}\.\d{2})\s+(.+)/);
+      
+      if (!dateMatch) {
+        Logger.log("행 " + i + ": 장소 형식 오류 - " + locationRaw);
+        skippedCount++;
+        continue;
+      }
+      
+      var date = dateMatch[1];
+      var location = dateMatch[2];
+      var key = date + "|" + location;
+      
+      // 참가자 정보 생성
+      var nickname = formSheet.getRange(i, CONFIG.COL.NICKNAME).getValue();
+      var birth = String(formSheet.getRange(i, CONFIG.COL.BIRTH).getValue());
+      var jobType = formSheet.getRange(i, CONFIG.COL.JOB_TYPE).getValue();
+      
+      var birthYear = "";
+      if (birth && birth.length >= 2) {
+        birthYear = birth.substring(0, 2);
+      }
+      
+      var participantInfo = nickname + "{" + birthYear + "} " + jobType;
+      
+      // 그룹에 추가
+      if (!scheduleMap[key]) {
+        scheduleMap[key] = {
+          date: date,
+          location: location,
+          participants: []
+        };
+      }
+      
+      scheduleMap[key].participants.push(participantInfo);
+      processedCount++;
+    }
+    
+    // 일정표 시트에 쓰기
+    var row = 2;
+    for (var key in scheduleMap) {
+      var schedule = scheduleMap[key];
+      var participantsStr = schedule.participants.join(" / ");
+      
+      scheduleSheet.getRange(row, 1).setValue(schedule.date);
+      scheduleSheet.getRange(row, 2).setValue(schedule.location);
+      scheduleSheet.getRange(row, 3).setValue(participantsStr);
+      scheduleSheet.getRange(row, 4).setValue("참여");
+      
+      row++;
+    }
+    
+    // 결과 알림
+    var message = "✅ 일정표 업데이트 완료!\n\n";
+    message += "처리된 신청자: " + processedCount + "명\n";
+    message += "스킵된 항목: " + skippedCount + "개\n";
+    message += "생성된 일정: " + Object.keys(scheduleMap).length + "개";
+    
+    ui.alert("📅 완료", message, ui.ButtonSet.OK);
+    
+    Logger.log("수동 일정표 업데이트 완료: " + processedCount + "명 처리");
+    
+  } catch (error) {
+    ui.alert("❌ 오류", "업데이트 중 오류가 발생했습니다:\n" + error.message, ui.ButtonSet.OK);
+    Logger.log("수동 일정표 업데이트 에러: " + error.message);
   }
 }
 
