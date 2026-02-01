@@ -1,0 +1,27 @@
+# robots.txt for Knowit (노잇)
+# 모든 검색 엔진이 사이트를 크롤링할 수 있도록 허용
+
+User-agent: *
+Allow: /
+
+# 사이트맵 위치
+Sitemap: https://helperseries.github.io/knowit/sitemap.xml
+
+# 크롤링 속도 (선택사항)
+Crawl-delay: 1
+
+# 주요 검색 엔진별 설정
+User-agent: Googlebot
+Allow: /
+
+User-agent: Googlebot-Image
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: Yeti
+Allow: /
+
+User-agent: Yandex
+Allow: /

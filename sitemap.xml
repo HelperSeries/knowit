@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+  
+  <!-- 메인 페이지 -->
+  <url>
+    <loc>https://helperseries.github.io/knowit/</loc>
+    <lastmod>2026-02-01</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>1.0</priority>
+    <image:image>
+      <image:loc>https://helperseries.github.io/knowit/logo.png</image:loc>
+      <image:title>노잇(Knowit) 로고</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://helperseries.github.io/knowit/space1.jpg</image:loc>
+      <image:title>라이프헬퍼 라운지</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://helperseries.github.io/knowit/space2.jpg</image:loc>
+      <image:title>노잇 모임 공간</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://helperseries.github.io/knowit/space3.jpg</image:loc>
+      <image:title>프리미엄 라운지</image:title>
+    </image:image>
+  </url>
+  
+  <!-- 섹션별 앵커 링크 -->
+  <url>
+    <loc>https://helperseries.github.io/knowit/#home</loc>
+    <lastmod>2026-02-01</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
+    <loc>https://helperseries.github.io/knowit/#reserve</loc>
+    <lastmod>2026-02-01</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.9</priority>
+  </url>
+  
+  <url>
+    <loc>https://helperseries.github.io/knowit/#about</loc>
+    <lastmod>2026-02-01</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
+    <loc>https://helperseries.github.io/knowit/#space</loc>
+    <lastmod>2026-02-01</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  
+</urlset>
