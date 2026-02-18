@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
-    <!-- SEO 메타태그 -->
     <title>노잇(Knowit) - 성공한 남녀를 위한 프리미엄 연애 모임 | 전문직 매칭</title>
     <meta name="description" content="성공한 전문직들의 프리미엄 연애 모임. 의사, 변호사, 사업가 등 검증된 남녀의 품격 있는 만남. 매주 금/토 오후 8시 진행.">
     <meta name="keywords" content="노잇, Knowit, 프리미엄 소개팅, 전문직 만남, 고급 소개팅, 매칭 서비스, 연애 모임, 라이프헬퍼, 성공한 남녀, 엄선된 만남, 프라이빗 클럽, 의사 소개팅, 변호사 만남, 전문직 여성, 예술계 여성">
@@ -12,7 +11,6 @@
     <meta name="robots" content="index, follow">
     <meta name="googlebot" content="index, follow">
     
-    <!-- Open Graph (페이스북, 카카오톡 등 SNS 공유) -->
     <meta property="og:type" content="website">
     <meta property="og:site_name" content="노잇(Knowit)">
     <meta property="og:title" content="노잇(Knowit) - 성공한 남녀를 위한 프리미엄 연애 모임">
@@ -21,77 +19,18 @@
     <meta property="og:image" content="https://helperseries.github.io/knowit/space1.jpg">
     <meta property="og:locale" content="ko_KR">
     
-    <!-- Twitter Card -->
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="노잇(Knowit) - 성공한 남녀를 위한 프리미엄 연애 모임">
-    <meta name="twitter:description" content="성공한 전문직들의 프리미엄 연애 모임">
-    <meta name="twitter:image" content="https://helperseries.github.io/knowit/space1.jpg">
-    
-    <!-- 파비콘 (브라우저 탭 아이콘) -->
     <link rel="icon" type="image/png" href="logo.png">
     <link rel="shortcut icon" type="image/png" href="logo.png">
-    <link rel="apple-touch-icon" href="logo.png">
     
-    <!-- Canonical URL -->
-    <link rel="canonical" href="https://helperseries.github.io/knowit/">
-    
-    <!-- 폰트 -->
     <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@300;500;700&family=Pretendard:wght@300;400;600&display=swap" rel="stylesheet">
     
-    <!-- 구조화된 데이터 (Schema.org - Google 검색 최적화) -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
       "@type": "Organization",
       "name": "노잇(Knowit)",
-      "alternateName": "Knowit",
       "url": "https://helperseries.github.io/knowit/",
-      "logo": "https://helperseries.github.io/knowit/logo.png",
-      "description": "성공한 전문직들의 프리미엄 프라이빗 소셜 클럽",
-      "founder": {
-        "@type": "Organization",
-        "name": "Life Helper"
-      },
-      "sameAs": [
-        "https://www.instagram.com/knowit_20__",
-        "https://lifehelper.co.kr"
-      ],
-      "contactPoint": {
-        "@type": "ContactPoint",
-        "contactType": "Customer Service",
-        "url": "https://www.instagram.com/knowit_20__"
-      }
-    }
-    </script>
-    
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "Event",
-      "name": "노잇(Knowit) 프리미엄 연애 모임",
-      "description": "성공한 전문직들의 엄선된 만남",
-      "startDate": "2026-02-28T20:00:00+09:00",
-      "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
-      "eventStatus": "https://schema.org/EventScheduled",
-      "location": {
-        "@type": "Place",
-        "name": "라이프헬퍼 라운지",
-        "address": {
-          "@type": "PostalAddress",
-          "addressCountry": "KR",
-          "addressLocality": "서울"
-        }
-      },
-      "organizer": {
-        "@type": "Organization",
-        "name": "Life Helper - Knowit",
-        "url": "https://lifehelper.co.kr"
-      },
-      "offers": {
-        "@type": "Offer",
-        "url": "https://forms.gle/q9RCXT6oCfF3wxdk7",
-        "availability": "https://schema.org/InStock"
-      }
+      "logo": "https://helperseries.github.io/knowit/logo.png"
     }
     </script>
 
@@ -304,6 +243,10 @@
         .participant-card:hover { border-color: #d4af37; background: #333; }
         .status-open { color: #4caf50; font-weight: bold; border-color: #4caf50; }
         
+        /* [NEW] 남녀 구분 스타일 추가 */
+        .card-male { border-color: #5588ff !important; color: #ddeeff; } /* 남성: 파랑 */
+        .card-female { border-color: #ff77aa !important; color: #ffdde9; } /* 여성: 분홍 */
+
         .status-badge {
             display: inline-block;
             font-size: 0.8rem;
@@ -336,7 +279,7 @@
             font-weight: bold;
         }
 
-        /* ▼▼▼ [모바일 전용 화면 설정] ▼▼▼ */
+        /* 모바일 반응형 */
         @media (max-width: 768px) {
             .mobile-br { display: block; }
             .nav-links { gap: 10px; }
@@ -347,18 +290,30 @@
                 grid-template-columns: 1fr; /* 세로 1열 */
                 gap: 30px;
             }
-            .gallery-img { height: auto; } /* 높이 제한 해제 */
+            .gallery-img { height: auto; }
 
             .board-header { display: none; }
             .schedule-row { flex-direction: column; }
             .schedule-info { width: 100%; margin-bottom: 20px; margin-right: 0; }
             .participants-grid { width: 100%; grid-template-columns: repeat(2, 1fr); }
+            
+            /* [NEW] 참가 프로세스 모바일 수정 */
+            .process-container {
+                flex-direction: column;
+                gap: 40px;
+            }
+            .process-step:not(:last-child)::after {
+                content: '↓';
+                right: auto;
+                top: auto;
+                bottom: -30px;
+                left: 50%;
+                transform: translateX(-50%);
+            }
+            .reviews-grid { grid-template-columns: 1fr; }
         }
 
-        footer { text-align: center; padding: 50px; background: #000; color: #555; font-size: 0.8rem; border-top: 1px solid #222; }
-        
         /* === [새로운 섹션 스타일] === */
-        
         /* 참가 프로세스 */
         .process-container {
             display: flex;
@@ -394,17 +349,8 @@
             color: #000;
             box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3);
         }
-        .process-title {
-            font-size: 1.2rem;
-            font-weight: bold;
-            color: #d4af37;
-            margin-bottom: 10px;
-        }
-        .process-desc {
-            color: #aaa;
-            font-size: 0.9rem;
-            line-height: 1.6;
-        }
+        .process-title { font-size: 1.2rem; font-weight: bold; color: #d4af37; margin-bottom: 10px; }
+        .process-desc { color: #aaa; font-size: 0.9rem; line-height: 1.6; }
         
         /* 회원 후기 */
         .reviews-grid {
@@ -446,17 +392,10 @@
             font-size: 0.9rem;
             text-align: right;
         }
-        .review-rating {
-            color: #d4af37;
-            margin-bottom: 15px;
-            font-size: 1.2rem;
-        }
+        .review-rating { color: #d4af37; margin-bottom: 15px; font-size: 1.2rem; }
         
         /* FAQ */
-        .faq-container {
-            max-width: 900px;
-            margin: 60px auto 0;
-        }
+        .faq-container { max-width: 900px; margin: 60px auto 0; }
         .faq-item {
             background: #1a1a1a;
             border: 1px solid #333;
@@ -465,9 +404,7 @@
             overflow: hidden;
             transition: 0.3s;
         }
-        .faq-item:hover {
-            border-color: #d4af37;
-        }
+        .faq-item:hover { border-color: #d4af37; }
         .faq-question {
             padding: 25px 30px;
             cursor: pointer;
@@ -478,13 +415,8 @@
             color: #d4af37;
             font-size: 1.1rem;
         }
-        .faq-question:hover {
-            background: #222;
-        }
-        .faq-icon {
-            font-size: 1.5rem;
-            transition: 0.3s;
-        }
+        .faq-question:hover { background: #222; }
+        .faq-icon { font-size: 1.5rem; transition: 0.3s; }
         .faq-answer {
             padding: 0 30px 25px;
             color: #ccc;
@@ -492,40 +424,10 @@
             font-size: 0.95rem;
             display: none;
         }
-        .faq-answer.active {
-            display: block;
-        }
-        .faq-item.active .faq-icon {
-            transform: rotate(180deg);
-        }
+        .faq-answer.active { display: block; }
+        .faq-item.active .faq-icon { transform: rotate(180deg); }
         
-        /* 모바일 반응형 */
-        @media (max-width: 768px) {
-            .process-container {
-                flex-direction: column;
-                gap: 40px;
-            }
-            .process-step:not(:last-child)::after {
-                content: '↓';
-                right: auto;
-                top: auto;
-                bottom: -30px;
-                left: 50%;
-                transform: translateX(-50%);
-            }
-            .reviews-grid {
-                grid-template-columns: 1fr;
-                gap: 20px;
-            }
-            .faq-question {
-                font-size: 1rem;
-                padding: 20px;
-            }
-            .faq-answer {
-                padding: 0 20px 20px;
-                font-size: 0.9rem;
-            }
-        }
+        footer { text-align: center; padding: 50px; background: #000; color: #555; font-size: 0.8rem; border-top: 1px solid #222; }
     </style>
 </head>
 <body>
@@ -608,7 +510,6 @@
         </div>
     </section>
 
-    <!-- 참가 프로세스 섹션 -->
     <section id="process" style="background: #0a0a0a;">
         <div class="container">
             <h2 class="section-title">참가 프로세스</h2>
@@ -619,49 +520,35 @@
                     <div class="process-number">1</div>
                     <div class="process-title">신청서 작성</div>
                     <div class="process-desc">
-                        구글 폼을 통해<br>
-                        간단한 정보 입력<br>
-                        <small>(소요시간: 3분)</small>
+                        구글 폼을 통해<br>간단한 정보 입력<br><small>(소요시간: 3분)</small>
                     </div>
                 </div>
-                
                 <div class="process-step">
                     <div class="process-number">2</div>
                     <div class="process-title">신원 검증</div>
                     <div class="process-desc">
-                        명함/재직증명서 등<br>
-                        서류 확인<br>
-                        <small>(1-2일 소요)</small>
+                        명함/재직증명서 등<br>서류 확인<br><small>(1-2일 소요)</small>
                     </div>
                 </div>
-                
                 <div class="process-step">
                     <div class="process-number">3</div>
                     <div class="process-title">입금 안내</div>
                     <div class="process-desc">
-                        검증 완료 후<br>
-                        참가비 안내<br>
-                        <small>(개별 연락)</small>
+                        검증 완료 후<br>참가비 안내<br><small>(개별 연락)</small>
                     </div>
                 </div>
-                
                 <div class="process-step">
                     <div class="process-number">4</div>
                     <div class="process-title">카톡방 입장</div>
                     <div class="process-desc">
-                        입금 확인 후<br>
-                        오픈채팅방 링크 발송<br>
-                        <small>(자동 발송)</small>
+                        입금 확인 후<br>오픈채팅방 링크 발송<br><small>(자동 발송)</small>
                     </div>
                 </div>
-                
                 <div class="process-step">
                     <div class="process-number">5</div>
                     <div class="process-title">모임 참여</div>
                     <div class="process-desc">
-                        레스토랑/라운지에서<br>
-                        전문 MC 진행<br>
-                        <small>(금/토 오후 8시, 2-3시간)</small>
+                        레스토랑/라운지에서<br>전문 MC 진행<br><small>(금/토 오후 8시)</small>
                     </div>
                 </div>
             </div>
@@ -672,7 +559,6 @@
         </div>
     </section>
 
-    <!-- 회원 후기 섹션 -->
     <section id="reviews">
         <div class="container">
             <h2 class="section-title">참가자 후기</h2>
@@ -687,7 +573,6 @@
                     </div>
                     <div class="review-author">- 96년생 변호사 (남)</div>
                 </div>
-                
                 <div class="review-card">
                     <div class="review-rating">⭐⭐⭐⭐⭐</div>
                     <div class="review-quote">"</div>
@@ -696,7 +581,6 @@
                     </div>
                     <div class="review-author">- 94년생 피아니스트 (여)</div>
                 </div>
-                
                 <div class="review-card">
                     <div class="review-rating">⭐⭐⭐⭐⭐</div>
                     <div class="review-quote">"</div>
@@ -705,7 +589,6 @@
                     </div>
                     <div class="review-author">- 91년생 의사 (남)</div>
                 </div>
-                
                 <div class="review-card">
                     <div class="review-rating">⭐⭐⭐⭐⭐</div>
                     <div class="review-quote">"</div>
@@ -714,7 +597,6 @@
                     </div>
                     <div class="review-author">- 98년생 디자이너 (여)</div>
                 </div>
-                
                 <div class="review-card">
                     <div class="review-rating">⭐⭐⭐⭐⭐</div>
                     <div class="review-quote">"</div>
@@ -723,7 +605,6 @@
                     </div>
                     <div class="review-author">- 89년생 사업가 (남)</div>
                 </div>
-                
                 <div class="review-card">
                     <div class="review-rating">⭐⭐⭐⭐⭐</div>
                     <div class="review-quote">"</div>
@@ -741,7 +622,6 @@
         </div>
     </section>
 
-    <!-- FAQ 섹션 -->
     <section id="faq" style="background: #0a0a0a;">
         <div class="container">
             <h2 class="section-title">자주 묻는 질문</h2>
@@ -906,8 +786,6 @@
         const SCHEDULE_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSZVZ9QslRId6OXh3owAHaqLDQvQC5Ym672BOkDxxeGXIzcmrz1Twxm-6R5Nlim_cbK4QvoisCRnq5f/pub?gid=339069128&single=true&output=csv";
         
         // 2. [공지사항] CSV 링크
-        // 대표님이 제공하신 ID(1Sy-JGo...)와 GID(544934131)를 조합해 만든 링크입니다.
-        // [주의] 시트에서 '웹에 게시' 버튼을 안 누르셨다면 이 링크는 작동하지 않습니다.
         const NOTICE_CSV_URL = "https://docs.google.com/spreadsheets/d/1Sy-JGo-sWSLh65_r53IA0H39WGeSmE_LvNNbtFN6JBs/pub?gid=544934131&single=true&output=csv";
 
         async function loadAllData() {
@@ -995,7 +873,16 @@
 
                         if(!p) return ""; 
 
+                        // [NEW] 성별 구분 로직 추가
                         let className = "participant-card";
+                        if(p.includes("(남)")) {
+                            className += " card-male";
+                            p = p.replace("(남)", ""); // 텍스트에서는 (남) 제거 (깔끔하게)
+                        } else if(p.includes("(여)")) {
+                            className += " card-female";
+                            p = p.replace("(여)", ""); // 텍스트에서는 (여) 제거
+                        }
+
                         if(p.includes("신청가능") || p.includes("남음")) {
                             className += " status-open";
                         }
