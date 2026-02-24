@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>노잇(Knowit) - 성공한 남녀를 위한 프리미엄 연애 모임</title>
+    <title>노잇(Knowit) - 아무나 입장할 수 없는 프라이빗 소셜 클럽</title>
     
     <link rel="icon" type="image/png" href="favicon.png">
     <link rel="shortcut icon" type="image/png" href="favicon.png">
@@ -12,93 +12,108 @@
     <style>
         /* === CSS 스타일 === */
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Pretendard', sans-serif; background-color: #111; color: #fff; line-height: 1.6; }
+        body { font-family: 'Pretendard', sans-serif; background-color: #0a0a0a; color: #fff; line-height: 1.6; letter-spacing: -0.02em; }
         a { text-decoration: none; color: inherit; }
         ul { list-style: none; }
         .gold-text { color: #d4af37; }
-        section { padding: 100px 5%; }
+        section { padding: 120px 5%; }
         .container { max-width: 1200px; margin: 0 auto; }
         
         /* 네비게이션 */
-        nav { display: flex; justify-content: space-between; align-items: center; padding: 15px 5%; position: fixed; width: 100%; top: 0; background: rgba(0,0,0,0.9); border-bottom: 1px solid #333; z-index: 1000; }
-        .logo-text { font-family: 'Noto Serif KR', serif; font-size: 1.5rem; font-weight: bold; color: #d4af37; }
-        .nav-links { display: flex; gap: 30px; }
-        .nav-links a { font-size: 0.9rem; font-weight: 500; transition: 0.3s; }
+        nav { display: flex; justify-content: space-between; align-items: center; padding: 20px 5%; position: fixed; width: 100%; top: 0; background: rgba(10,10,10,0.95); border-bottom: 1px solid #222; z-index: 1000; transition: all 0.3s ease; }
+        .logo-text { font-family: 'Noto Serif KR', serif; font-size: 1.8rem; font-weight: 700; color: #d4af37; letter-spacing: 0.1em; }
+        .nav-links { display: flex; gap: 40px; }
+        .nav-links a { font-size: 0.85rem; font-weight: 400; letter-spacing: 0.05em; transition: 0.3s; color: #aaa; }
         .nav-links a:hover { color: #d4af37; }
 
-        /* 헤더 */
-        header { height: 100vh; display: flex; justify-content: center; align-items: center; background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80'); background-size: cover; background-position: center; text-align: center; }
-        .main-title { font-family: 'Noto Serif KR', serif; font-size: 4rem; margin-bottom: 20px; text-shadow: 0 4px 10px rgba(0,0,0,0.5); }
-        .sub-title { font-size: 1.3rem; margin-bottom: 40px; color: #ddd; font-weight: 300; }
-        .btn-gold { display: inline-block; border: 1px solid #d4af37; color: #d4af37; padding: 15px 50px; font-size: 1rem; transition: 0.3s; cursor: pointer; background: rgba(0,0,0,0.3); }
-        .btn-gold:hover { background-color: #d4af37; color: #000; font-weight: bold; }
+        /* 헤더 (메인 히어로) */
+        header { height: 100vh; display: flex; justify-content: center; align-items: center; background: linear-gradient(rgba(10,10,10,0.7), rgba(10,10,10,0.8)), url('https://images.unsplash.com/photo-1560624052-449f5ddf0c31?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80'); background-size: cover; background-position: center; text-align: center; }
+        .hero-content { max-width: 800px; padding: 0 20px; }
+        .main-title { font-family: 'Noto Serif KR', serif; font-size: 3.5rem; margin-bottom: 25px; line-height: 1.2; font-weight: 700; text-shadow: 0 4px 20px rgba(0,0,0,0.8); }
+        .sub-title { font-size: 1.1rem; margin-bottom: 50px; color: #ccc; font-weight: 300; line-height: 1.8; }
+        .sub-title strong { color: #fff; font-weight: 400; }
+        
+        /* CTA 버튼 스타일 통일 */
+        .btn-gold { display: inline-block; border: 1px solid #d4af37; color: #d4af37; padding: 18px 45px; font-size: 1rem; letter-spacing: 0.05em; transition: all 0.4s ease; cursor: pointer; background: rgba(0,0,0,0.4); text-transform: uppercase; }
+        .btn-gold:hover { background-color: #d4af37; color: #0a0a0a; font-weight: 600; box-shadow: 0 0 20px rgba(212, 175, 55, 0.3); }
 
         /* 섹션 공통 */
-        .section-title { font-family: 'Noto Serif KR', serif; font-size: 2.5rem; color: #d4af37; text-align: center; margin-bottom: 20px; }
-        .section-desc { text-align: center; color: #ccc; margin-bottom: 60px; font-weight: 300; }
+        .section-title { font-family: 'Noto Serif KR', serif; font-size: 2.2rem; color: #d4af37; text-align: center; margin-bottom: 25px; letter-spacing: 0.05em; }
+        .section-desc { text-align: center; color: #aaa; margin-bottom: 70px; font-weight: 300; font-size: 1.05rem; line-height: 1.8; max-width: 700px; margin-left: auto; margin-right: auto; }
 
-        /* 소개 */
-        .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
-        .about-card { background: #1a1a1a; padding: 50px 30px; text-align: center; border: 1px solid #333; transition: 0.3s; }
-        .about-card:hover { border-color: #d4af37; transform: translateY(-5px); }
-        .about-card h3 { color: #d4af37; margin-bottom: 20px; font-size: 1.4rem; }
+        /* 스토리 및 차별화 (새로 추가된 영역) */
+        .story-box { background: #111; padding: 60px; border: 1px solid #222; text-align: center; margin-bottom: 80px; }
+        .story-box p { font-size: 1.1rem; color: #ddd; line-height: 2; font-weight: 300; margin-bottom: 20px; }
+        .story-box p:last-child { margin-bottom: 0; }
+        .highlight { color: #fff; font-weight: 600; border-bottom: 1px solid #d4af37; padding-bottom: 2px; }
 
-        /* 일정표 스타일 */
-        .schedule-board { background: #1a1a1a; border-radius: 4px; border: 1px solid #d4af37; margin-bottom: 40px; overflow: hidden; }
-        .board-header { display: flex; background: #222; border-bottom: 1px solid #333; padding: 15px 30px; font-weight: bold; color: #d4af37; }
+        /* 소개 (타깃 페르소나 명시로 변경) */
+        .about-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 30px; margin-bottom: 60px; }
+        .about-card { background: #151515; padding: 50px 30px; text-align: center; border: 1px solid #222; transition: 0.4s; }
+        .about-card:hover { border-color: #d4af37; transform: translateY(-5px); background: #1a1a1a; }
+        .about-card h3 { font-family: 'Noto Serif KR', serif; color: #d4af37; margin-bottom: 20px; font-size: 1.3rem; }
+        .about-card p { color: #999; font-size: 0.95rem; line-height: 1.7; }
+
+        /* 일정표 스타일 (기존 유지, 색상만 약간 톤다운) */
+        .schedule-board { background: #111; border: 1px solid #333; margin-bottom: 30px; }
+        .board-header { display: flex; background: #1a1a1a; border-bottom: 1px solid #222; padding: 20px 30px; font-size: 0.9rem; letter-spacing: 0.05em; color: #d4af37; }
         .header-date { width: 25%; min-width: 150px; }
         .header-list { width: 75%; }
-        .schedule-row { display: flex; border-bottom: 1px solid #333; padding: 30px; align-items: flex-start; }
+        .schedule-row { display: flex; border-bottom: 1px solid #222; padding: 30px; align-items: flex-start; }
         .schedule-row:last-child { border-bottom: none; }
         
-        .schedule-info { width: 25%; min-width: 150px; border-left: 3px solid #d4af37; padding-left: 15px; margin-right: 20px; flex-shrink: 0; }
-        .date-text { font-size: 1.5rem; color: #fff; font-weight: bold; font-family: 'Noto Serif KR', serif; }
-        .location-text { font-size: 1rem; color: #888; margin-top: 5px; }
+        .schedule-info { width: 25%; min-width: 150px; border-left: 2px solid #d4af37; padding-left: 20px; margin-right: 20px; flex-shrink: 0; }
+        .date-text { font-size: 1.4rem; color: #fff; font-family: 'Noto Serif KR', serif; margin-bottom: 8px; }
+        .location-text { font-size: 0.9rem; color: #777; }
         
-        /* [핵심] 성비 표시 뱃지 스타일 */
-        .gender-ratio {
-            display: inline-block;
-            margin-top: 10px;
-            padding: 5px 12px;
-            background: #2a2a2a;
-            border: 1px solid #555;
-            border-radius: 20px;
-            font-size: 0.85rem;
-            color: #ddd;
-            font-weight: bold;
-        }
-        .cnt-male { color: #5588ff; margin-right: 5px; } /* 파란색 */
-        .cnt-female { color: #ff77aa; margin-left: 5px; } /* 분홍색 */
+        /* 성비 표시 뱃지 */
+        .gender-ratio { display: inline-block; margin-top: 15px; padding: 6px 15px; background: #1a1a1a; border: 1px solid #333; font-size: 0.8rem; color: #aaa; letter-spacing: 0.05em; }
+        .cnt-male { color: #6b8fd4; margin-right: 8px; } 
+        .cnt-female { color: #d46b8f; margin-left: 8px; }
 
-        .participants-grid { width: 75%; display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
-        .participant-card { background: #2a2a2a; border: 1px solid #444; padding: 10px; border-radius: 6px; text-align: center; font-size: 0.9rem; color: #eee; display: flex; align-items: center; justify-content: center; min-height: 45px; word-break: break-all; line-height: 1.4; }
+        .participants-grid { width: 75%; display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+        .participant-card { background: #151515; border: 1px solid #222; padding: 15px 10px; text-align: center; font-size: 0.85rem; color: #ccc; display: flex; align-items: center; justify-content: center; min-height: 50px; line-height: 1.5; transition: 0.3s; }
+        .participant-card:hover { background: #1a1a1a; border-color: #444; }
         
-        /* 성별 구분 테두리 */
-        .card-male { border-color: #5588ff !important; color: #ddeeff; }
-        .card-female { border-color: #ff77aa !important; color: #ffdde9; }
-        .status-open { color: #4caf50; font-weight: bold; border-color: #4caf50; }
-        .status-badge { display: inline-block; font-size: 0.8rem; padding: 3px 8px; border-radius: 4px; margin-left: 10px; vertical-align: middle; border: 1px solid #ccc; }
+        .card-male { border-left: 2px solid #6b8fd4 !important; border-top: none; border-right: none; border-bottom: none; background: #11141a; }
+        .card-female { border-left: 2px solid #d46b8f !important; border-top: none; border-right: none; border-bottom: none; background: #1a1114; }
+        .status-open { color: #d4af37; }
+        .status-badge { display: inline-block; font-size: 0.75rem; padding: 2px 6px; margin-left: 10px; vertical-align: middle; border: 1px solid #555; color: #888; }
+
+        /* 마감 경고 박스 */
+        .warning-box { text-align: center; margin-top: 40px; padding: 30px; background: rgba(212, 175, 55, 0.05); border: 1px solid rgba(212, 175, 55, 0.2); }
+        .warning-box p { color: #aaa; font-size: 0.95rem; margin-bottom: 25px; }
+        .warning-box strong { color: #fff; }
 
         /* 공지사항 */
-        .notice-box { background: #222; padding: 30px; margin-top: 40px; border-radius: 10px; border: 1px solid #333; color: #ddd; font-size: 0.95rem; line-height: 1.8; text-align: left !important; white-space: pre-wrap; word-break: break-all; }
-        .notice-box a { color: #d4af37; text-decoration: underline; font-weight: bold; }
+        .notice-box { background: #111; padding: 40px; margin-top: 60px; border: 1px solid #222; color: #bbb; font-size: 0.9rem; line-height: 2; text-align: left !important; white-space: pre-wrap; }
+        .notice-box a { color: #d4af37; text-decoration: underline; }
 
         /* 갤러리 */
-        .gallery { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
-        .gallery-link { display: block; height: auto; background-color: #333; position: relative; overflow: hidden; border: 1px solid #333; transition: 0.3s; }
-        .gallery-link:hover { border-color: #d4af37; transform: scale(1.02); z-index: 10; }
-        .gallery-img { width: 100%; height: 250px; object-fit: cover; display: block; transition: 0.3s; }
-        .gallery-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); color: #fff; display: flex; justify-content: center; align-items: center; opacity: 0; transition: 0.3s; font-weight: bold; }
-        .gallery-link:hover .gallery-overlay { opacity: 1; }
+        .gallery { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; }
+        .gallery-link { display: block; height: auto; background-color: #111; position: relative; overflow: hidden; border: 1px solid #222; transition: 0.5s; }
+        .gallery-link:hover { border-color: #d4af37; }
+        .gallery-img { width: 100%; height: 300px; object-fit: cover; display: block; transition: 0.5s; opacity: 0.7; filter: grayscale(30%); }
+        .gallery-link:hover .gallery-img { opacity: 1; filter: grayscale(0%); transform: scale(1.05); }
+        .gallery-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.4); color: #fff; display: flex; justify-content: center; align-items: center; opacity: 0; transition: 0.3s; font-family: 'Noto Serif KR', serif; font-size: 1.2rem; letter-spacing: 0.1em; }
+        .gallery-link:hover .gallery-overlay { opacity: 1; background: rgba(0,0,0,0.2); }
+
+        footer { text-align: center; padding: 50px 20px; background: #050505; border-top: 1px solid #111; color: #666; font-size: 0.85rem; }
+        footer p { margin-bottom: 10px; }
 
         /* 모바일 */
         @media (max-width: 768px) {
-            .nav-links { gap: 10px; } .nav-links a { font-size: 0.75rem; }
+            .main-title { font-size: 2.2rem; }
+            .sub-title { font-size: 0.95rem; }
+            .nav-links { display: none; } /* 모바일에서는 깔끔하게 숨김 */
+            .about-grid { grid-template-columns: 1fr; }
             .board-header { display: none; }
-            .schedule-row { flex-direction: column; }
-            .schedule-info { width: 100%; margin-bottom: 20px; margin-right: 0; }
+            .schedule-row { flex-direction: column; padding: 20px; }
+            .schedule-info { width: 100%; margin-bottom: 20px; border-left: none; border-top: 2px solid #d4af37; padding-left: 0; padding-top: 15px; }
             .participants-grid { width: 100%; grid-template-columns: repeat(2, 1fr); }
-            .gallery { grid-template-columns: 1fr; } .gallery-img { height: auto; }
+            .gallery { grid-template-columns: 1fr; } 
+            .gallery-img { height: 250px; }
+            section { padding: 80px 5%; }
         }
     </style>
 </head>
@@ -107,58 +122,70 @@
     <nav>
         <div class="logo"><a href="#home" class="logo-text">Knowit</a></div>
         <ul class="nav-links">
-            <li><a href="#home">HOME</a></li>
+            <li><a href="#about">STORY</a></li>
             <li><a href="#reserve">LINE-UP</a></li>
-            <li><a href="#about">ABOUT</a></li>
             <li><a href="#space">SPACE</a></li>
         </ul>
     </nav>
 
     <header id="home">
         <div class="hero-content">
-            <h1 class="main-title">진짜 만남을 알게 되는 밤, <span class="gold-text">Knowit</span></h1>
-            <p class="sub-title">매주 금/토 8시, 성공한 남녀들을 위한<br>High-End Private Social Club</p>
-            <a href="https://forms.gle/q9RCXT6oCfF3wxdk7" target="_blank" class="btn-gold">첫 모임 신청하기</a>
+            <h1 class="main-title">아무나 입장할 수 없는<br>프라이빗 소셜 클럽</h1>
+            <p class="sub-title">가벼운 만남 어플에 지친 당신을 위해.<br><strong>오직 철저한 서류 검증을 통과한 분들만 모십니다.</strong></p>
+            <a href="https://forms.gle/q9RCXT6oCfF3wxdk7" target="_blank" class="btn-gold">자격 심사 신청하기</a>
         </div>
     </header>
 
-    <section id="reserve">
+    <section id="about">
         <div class="container">
-            <h2 class="section-title">THIS WEEK'S LINE-UP</h2>
-            <p class="section-desc">매주 금/토 오후 8시 동시 진행</p>
-
-            <div id="schedule-board" class="schedule-board">
-                <div class="board-header">
-                    <div class="header-date">일정 / 장소</div>
-                    <div class="header-list">참가자 리스트 (실시간)</div>
-                </div>
-                <div id="board-content">
-                    <div style="text-align:center; padding:30px; color:#888;">일정 정보를 불러오는 중입니다...</div>
-                </div>
+            <div class="story-box">
+                <p>누군지도 모르는 상대와 화면 너머로 감정을 소모하는 일, 언제까지 계속하실 겁니까.</p>
+                <p>노잇은 거짓된 프로필이 아닌, 현실의 확실한 증명을 믿습니다.<br>번거로움을 감수하고서라도 모든 참가자의 <span class="highlight">명함과 재직증명서</span>를 대조합니다.</p>
+                <p>당신이 불안감 없이 오직 눈앞의 상대방과 깊은 대화에만 집중할 수 있는<br>완벽하게 안전하고 수준 높은 환경을 제공하기 위해서입니다.</p>
             </div>
 
-            <div style="text-align: center; margin-top: 30px;">
-                <p style="margin-bottom: 20px; color: #aaa;">원하는 날짜를 확인하셨나요?</p>
-                <a href="https://forms.gle/q9RCXT6oCfF3wxdk7" target="_blank" class="btn-gold">이번 주 모임 신청하기</a>
+            <h2 class="section-title">THE GUESTS</h2>
+            <p class="section-desc">노잇은 가벼운 만남을 지양합니다. 당신의 격에 맞는 테이블이 준비되어 있습니다.</p>
+            
+            <div class="about-grid">
+                <div class="about-card">
+                    <h3>엄격한 신원 검증</h3>
+                    <p>명함, 재직증명서 등 서류를 통해 직업과 신원이 확실하게 확인된 분들만 입장 자격이 부여됩니다.</p>
+                </div>
+                <div class="about-card">
+                    <h3>성공한 남성</h3>
+                    <p>능력을 확실하게 증명한 전문직, 기업 대표, 금융권 및 대기업 재직자 분들이 참석합니다.</p>
+                </div>
+                <div class="about-card">
+                    <h3>매력적인 여성</h3>
+                    <p>우아한 감성을 지닌 무용수, 예술계 종사자, 그리고 각 분야의 전문직 여성 분들이 참석합니다.</p>
+                </div>
             </div>
         </div>
     </section>
 
-    <section id="about">
+    <section id="reserve">
         <div class="container">
-            <h2 class="section-title">WHY Knowit?</h2>
-            <div class="about-grid">
-                <div class="about-card">
-                    <h3>Premium Networking</h3>
-                    <p>성공한 <strong>전문직 남성</strong>과<br>예술계에서 활약하는 <strong>여성</strong>들의 만남.</p>
+            <h2 class="section-title">SECRET LINE-UP</h2>
+            <p class="section-desc">이번 주 금요일과 토요일, 당신의 취향에 맞는 모임을 선택하십시오.</p>
+
+            <div id="schedule-board" class="schedule-board">
+                <div class="board-header">
+                    <div class="header-date">일정 및 장소</div>
+                    <div class="header-list">실시간 참가자 현황</div>
                 </div>
-                <div class="about-card">
-                    <h3>Strict Curation</h3>
-                    <p>직업, 신원, 이미지가 <strong>엄격하게 검증된 분</strong>들만 입장할 수 있습니다.</p>
+                <div id="board-content">
+                    <div style="text-align:center; padding:50px; color:#555;">일정 데이터를 동기화 중입니다...</div>
                 </div>
             </div>
+
+            <div class="warning-box">
+                <p>프라이빗하게 진행되는 모임 특성상 남녀 각 한정된 인원만 모집하며,<br><strong>정원 초과 시 자동으로 대기 명단으로 전환됩니다.</strong></p>
+                <a href="https://forms.gle/q9RCXT6oCfF3wxdk7" target="_blank" class="btn-gold">잔여석 확인 및 심사 신청하기</a>
+            </div>
+            
             <div id="notice-content" class="notice-box">
-                <div style="text-align:center; color:#666;">공지사항을 불러오는 중입니다...</div>
+                <div style="text-align:center; color:#444;">공지사항을 불러오는 중입니다...</div>
             </div>
         </div>
     </section>
@@ -166,16 +193,16 @@
     <section id="space">
         <div class="container">
             <h2 class="section-title">THE SPACE</h2>
-            <p class="section-desc">이미지를 클릭하면 <strong>'라이프헬퍼 협업 숙소'</strong>를 보실 수 있습니다.</p>
+            <p class="section-desc">모임이 진행되는 라이프헬퍼 제휴 프라이빗 라운지입니다.</p>
             <div class="gallery">
                 <a href="https://lifehelper.co.kr/" target="_blank" class="gallery-link">
-                    <img src="space1.jpg" class="gallery-img"><div class="gallery-overlay">라이프헬퍼 구경하기</div>
+                    <img src="space1.jpg" class="gallery-img"><div class="gallery-overlay">라운지 미리보기</div>
                 </a>
                 <a href="https://lifehelper.co.kr/" target="_blank" class="gallery-link">
-                    <img src="space2.jpg" class="gallery-img"><div class="gallery-overlay">라이프헬퍼 구경하기</div>
+                    <img src="space2.jpg" class="gallery-img"><div class="gallery-overlay">라운지 미리보기</div>
                 </a>
                 <a href="https://lifehelper.co.kr/" target="_blank" class="gallery-link">
-                    <img src="space3.jpg" class="gallery-img"><div class="gallery-overlay">라이프헬퍼 구경하기</div>
+                    <img src="space3.jpg" class="gallery-img"><div class="gallery-overlay">라운지 미리보기</div>
                 </a>
             </div>
         </div>
@@ -183,7 +210,7 @@
 
     <footer>
         <p>&copy; 2026 Knowit. All Rights Reserved.</p>
-        <p>Contact: <a href="https://www.instagram.com/knowit_20__" target="_blank" style="color: #d4af37; text-decoration: underline;">Instagram @knowit_20__</a></p>
+        <p>Contact: <a href="https://www.instagram.com/knowit_20__" target="_blank" style="color: #999; text-decoration: underline;">Instagram @knowit_20__</a></p>
     </footer>
 
     <script>
@@ -207,7 +234,7 @@
                 text = text.replace(/(https?:\/\/[^\s]+)/g, '<a href="$1" target="_blank">$1</a>');
                 document.getElementById('notice-content').innerHTML = text;
             } catch (error) {
-                document.getElementById('notice-content').innerHTML = `<div style="text-align:center;">📌 공지사항을 불러오지 못했습니다.</div>`;
+                document.getElementById('notice-content').innerHTML = `<div style="text-align:center; color:#555;">공지사항을 불러오지 못했습니다.</div>`;
             }
         }
 
@@ -233,31 +260,27 @@
                     
                     const status = cols[5] ? cols[5].trim() : ""; 
 
-                    // [핵심] 성비 자동 계산 로직
-                    // 시트에 (남), (여) 라고 적힌 텍스트의 개수를 셉니다.
                     let maleCount = (participantInfo.match(/\(남\)/g) || []).length;
                     let femaleCount = (participantInfo.match(/\(여\)/g) || []).length;
 
-                    // 성비 뱃지 HTML 생성
-                    let ratioBadge = `<div class="gender-ratio"><span class="cnt-male">남 ${maleCount}</span> : <span class="cnt-female">여 ${femaleCount}</span></div>`;
+                    let ratioBadge = `<div class="gender-ratio"><span class="cnt-male">M ${maleCount}</span> | <span class="cnt-female">W ${femaleCount}</span></div>`;
 
                     let p_cards = participantInfo.split("/").map(p => {
                         p = p.trim();
                         p = p.replace(/\[참여\]/g, "").replace(/참여/g, "").replace(/"/g, "").trim();
-                        p = p.replace(/\{(\d+)\}/g, "[$1년생]").replace(/\[(\d+)\]/g, "[$1년생]");
+                        p = p.replace(/\{(\d+)\}/g, "[$1년]").replace(/\[(\d+)\]/g, "[$1년]");
                         p = p.replace(/(\[\d+년생\])\s*/g, '$1<br>');
 
                         if(!p) return ""; 
 
                         let className = "participant-card";
                         
-                        // 남녀 구분 및 색상 적용
                         if(p.includes("(남)")) {
                             className += " card-male";
-                            p = p.replace("(남)", ""); // 텍스트에서는 (남) 제거하여 깔끔하게 표시
+                            p = p.replace("(남)", ""); 
                         } else if(p.includes("(여)")) {
                             className += " card-female";
-                            p = p.replace("(여)", ""); // 텍스트에서는 (여) 제거
+                            p = p.replace("(여)", ""); 
                         }
 
                         if(p.includes("신청가능") || p.includes("남음")) className += " status-open";
@@ -265,14 +288,14 @@
                     }).join('');
 
                     let statusBadge = "";
-                    if(status.includes("모집중")) statusBadge = `<span class="status-badge" style="border:1px solid #4caf50; color:#4caf50;">● 모집중</span>`;
-                    else if (status.includes("마감") || status.includes("완료")) statusBadge = `<span class="status-badge" style="border:1px solid #ff5555; color:#ff5555;">● 마감</span>`;
+                    if(status.includes("모집중")) statusBadge = `<span class="status-badge">모집중</span>`;
+                    else if (status.includes("마감") || status.includes("완료")) statusBadge = `<span class="status-badge" style="color:#aa4444; border-color:#553333;">마감</span>`;
 
                     let htmlRow = `
                         <div class="schedule-row">
                             <div class="schedule-info">
                                 <div class="date-text">${date} ${statusBadge}</div>
-                                <div class="location-text">📍 ${location}</div>
+                                <div class="location-text">${location}</div>
                                 ${ratioBadge} </div>
                             <div class="participants-grid">${p_cards}</div>
                         </div>
@@ -281,7 +304,7 @@
                 });
             } catch (error) {
                 console.error("실패:", error);
-                boardContent.innerHTML = `<div style="text-align:center; padding:30px; color:#888;">일정을 불러오는 중입니다...</div>`;
+                boardContent.innerHTML = `<div style="text-align:center; padding:50px; color:#555;">일정을 불러오지 못했습니다.</div>`;
             }
         }
 
