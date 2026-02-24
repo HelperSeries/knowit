@@ -265,27 +265,36 @@
 
                     let ratioBadge = `<div class="gender-ratio"><span class="cnt-male">M ${maleCount}</span> | <span class="cnt-female">W ${femaleCount}</span></div>`;
 
-                    let p_cards = participantInfo.split("/").map(p => {
-                        p = p.trim();
-                        p = p.replace(/\[참여\]/g, "").replace(/참여/g, "").replace(/"/g, "").trim();
-                        p = p.replace(/\{(\d+)\}/g, "[$1년]").replace(/\[(\d+)\]/g, "[$1년]");
-                        p = p.replace(/(\[\d+년생\])\s*/g, '$1<br>');
+                    // 중복 제거를 위한 Set 객체 생성
+                    let seen = new Set();
 
-                        if(!p) return ""; 
+                    let p_cards = participantInfo.split("/")
+                        .map(p => p.trim())
+                        .filter(p => {
+                            // 공백이거나 이미 배열에 존재하는 이름이면 제외 (중복 제거 핵심 로직)
+                            if (!p) return false;
+                            if (seen.has(p)) return false;
+                            seen.add(p);
+                            return true;
+                        })
+                        .map(p => {
+                            p = p.replace(/\[참여\]/g, "").replace(/참여/g, "").replace(/"/g, "").trim();
+                            p = p.replace(/\{(\d+)\}/g, "[$1년]").replace(/\[(\d+)\]/g, "[$1년]");
+                            p = p.replace(/(\[\d+년생\])\s*/g, '$1<br>');
 
-                        let className = "participant-card";
-                        
-                        if(p.includes("(남)")) {
-                            className += " card-male";
-                            p = p.replace("(남)", ""); 
-                        } else if(p.includes("(여)")) {
-                            className += " card-female";
-                            p = p.replace("(여)", ""); 
-                        }
+                            let className = "participant-card";
+                            
+                            if(p.includes("(남)")) {
+                                className += " card-male";
+                                p = p.replace("(남)", ""); 
+                            } else if(p.includes("(여)")) {
+                                className += " card-female";
+                                p = p.replace("(여)", ""); 
+                            }
 
-                        if(p.includes("신청가능") || p.includes("남음")) className += " status-open";
-                        return `<div class="${className}">${p}</div>`;
-                    }).join('');
+                            if(p.includes("신청가능") || p.includes("남음")) className += " status-open";
+                            return `<div class="${className}">${p}</div>`;
+                        }).join('');
 
                     let statusBadge = "";
                     if(status.includes("모집중")) statusBadge = `<span class="status-badge">모집중</span>`;
